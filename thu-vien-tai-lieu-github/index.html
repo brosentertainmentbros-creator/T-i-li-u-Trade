@@ -228,10 +228,33 @@
     @media(max-width:800px){.contact-grid{grid-template-columns:1fr}.contact-panel{padding:22px}.contact-map,.contact-map iframe{min-height:340px}}
     @media(max-width:620px){.nav-actions{gap:6px}.nav-actions .library-link{display:none}.contact-section{padding:50px 0 60px}.contact-panel{padding:19px}.contact-map,.contact-map iframe{min-height:300px}.contact-intro p{font-size:14px}.contact-item{grid-template-columns:38px minmax(0,1fr);gap:11px}.contact-icon{width:38px;height:38px}.contact-value{font-size:15px}}
     @media(prefers-reduced-motion:reduce){.contact-directions{transition:none}}
+
+    /* Accessible FAQ accordion */
+    .faq-section{background:linear-gradient(160deg,#0b1d30,#112840);padding:72px 0 78px;border-top:1px solid #30475e}
+    #hoi-dap{scroll-margin-top:75px}
+    .faq-eyebrow{font-size:11px;color:#e5b76b;font-weight:800;letter-spacing:2px}
+    .faq-intro{margin-bottom:24px}.faq-intro h2{font-size:clamp(25px,3vw,38px);line-height:1.2;letter-spacing:-.03em;color:#f2f8ff;margin:8px 0 10px}.faq-intro p{margin:0;color:#adc0d3;font-size:14px;line-height:1.65}
+    .faq-list{display:grid;gap:11px;max-width:1020px}
+    .faq-item{border:1px solid #38516a;border-radius:13px;background:#0c1d30b8;overflow:hidden}
+    .faq-item[open]{background:#152d43;border-color:#8e764e}
+    .faq-item summary{list-style:none;cursor:pointer;padding:18px 53px 18px 22px;font-weight:750;color:#ecf5ff;position:relative;font-size:15px;line-height:1.5}
+    .faq-item summary::-webkit-details-marker{display:none}
+    .faq-item summary::after{content:'+';position:absolute;right:22px;top:50%;transform:translateY(-50%);font-size:24px;color:#e3b46d;font-weight:500}
+    .faq-item[open] summary::after{content:'−'}
+    .faq-item summary:hover{background:#1d39538c}
+    .faq-item summary:focus-visible{outline:3px solid #e1b96e;outline-offset:-4px}
+    .faq-answer{color:#b8c9db;border-top:1px solid #2f455a;font-size:14px;line-height:1.8;padding:17px 22px 23px}
+    .faq-answer strong{color:#f1d6ab}.faq-answer a{color:#f3c777;text-decoration:underline}
+    .faq-contact{margin-top:24px;font-size:14px;color:#9cb3c8}.faq-contact a{color:#e9bc70;font-weight:800;margin-left:7px}
+    .faq-nav-link{color:#e3c391;border-color:#725e40}
+    .cover-hit{position:absolute;inset:0;z-index:4;display:block}
+    .cover-hit:focus-visible{outline:3px solid #efc776;outline-offset:-4px}
+    .doc-cover{background:#0a1b30}
+    @media(max-width:620px){.faq-nav-link{display:none}.faq-section{padding:50px 0 55px}.faq-item summary{padding:17px 45px 17px 16px;font-size:14px}.faq-answer{padding:13px 16px 19px}}
   </style>
 </head>
 <body>
-  <header class="topbar"><div class="shell nav"><a class="brand" href="./" aria-label="Trang chủ thư viện"><span class="brand-mark"><img src="assets/logo-nghe-trader.webp" alt="Logo NGHỀ TRADER" width="51" height="51"></span><span class="brand-name"><span id="siteBrand">NGHỀ TRADER</span><span class="brand-sub">ACADEMY · THƯ VIỆN GIAO DỊCH</span></span></a><nav class="nav-actions" aria-label="Điều hướng chính"><a class="nav-link library-link" href="#thu-vien">Thư viện</a><a class="nav-link contact-nav-link" href="#lien-he">Liên hệ</a></nav></div></header>
+  <header class="topbar"><div class="shell nav"><a class="brand" href="./" aria-label="Trang chủ thư viện"><span class="brand-mark"><img src="assets/logo-nghe-trader.webp" alt="Logo NGHỀ TRADER" width="51" height="51"></span><span class="brand-name"><span id="siteBrand">NGHỀ TRADER</span><span class="brand-sub">ACADEMY · THƯ VIỆN GIAO DỊCH</span></span></a><nav class="nav-actions" aria-label="Điều hướng chính"><a class="nav-link library-link" href="#thu-vien">Thư viện</a><a class="nav-link faq-nav-link" href="#hoi-dap">Hỏi đáp</a><a class="nav-link contact-nav-link" href="#lien-he">Liên hệ</a></nav></div></header>
   <section class="hero">
     <video id="heroRecapBg" class="hero-video" muted autoplay loop playsinline preload="none" poster="assets/recap-tradepro.svg" aria-label="Video recap TradePro chuyển động làm nền trang chủ" hidden></video>
     <div class="hero-video-shade" aria-hidden="true"></div>
@@ -270,6 +293,21 @@
     <section id="resultsSection" aria-label="Danh sách tài liệu"><div class="section-head"><div><h2>Kho kiến thức giao dịch</h2><p id="resultText">Tổng hợp tài liệu dành cho bạn</p></div><div class="sort">Sắp xếp: mới nhất trước</div></div><div class="grid" id="docGrid" aria-live="polite"></div></section>
   </main>
 
+
+  <section class="faq-section" id="hoi-dap" aria-labelledby="faqTitle">
+    <div class="shell">
+      <div class="faq-intro"><span class="faq-eyebrow">GIẢI ĐÁP NHANH</span><h2 id="faqTitle">Câu hỏi thường gặp</h2><p>Hiểu đúng về PassView, Bot AI và cách kiểm chứng thông tin trước khi tham gia giao dịch.</p></div>
+      <div class="faq-list">
+        <details class="faq-item"><summary>PassView là gì, có thể đặt lệnh hoặc rút tiền không?</summary><div class="faq-answer">PassView là quyền xem tài khoản (chế độ chỉ đọc) khi được cấu hình đúng theo nền tảng. Người xem có thể theo dõi các thông tin mà hệ thống cho phép hiển thị, nhưng <strong>không được dùng quyền xem để đặt lệnh, đổi mật khẩu giao dịch hoặc rút tiền</strong>. Phạm vi hiển thị cần được kiểm tra tại nền tảng thực tế.</div></details>
+        <details class="faq-item"><summary>PassView khác gì với ảnh chụp lợi nhuận?</summary><div class="faq-answer">Ảnh chụp chỉ phản ánh một thời điểm và có thể thiếu thông tin về lịch sử lệnh, số dư hay biến động vốn. PassView có thể giúp đối chiếu số liệu trực tiếp hơn khi được cấp đúng quyền; tuy nhiên, <strong>cả hai đều không bảo đảm lợi nhuận tương lai hoặc an toàn vốn</strong>. Luôn xác minh nguồn dữ liệu, loại tài khoản và thời gian thống kê.</div></details>
+        <details class="faq-item"><summary>TradePro Bot AI có bảo đảm tạo lợi nhuận mỗi ngày không?</summary><div class="faq-answer">Không. Bot là công cụ hỗ trợ thực hiện chiến lược theo các điều kiện được thiết lập. Việc được giới thiệu là AI không đồng nghĩa với khả năng dự báo chính xác hay sinh lời chắc chắn. Kết quả phụ thuộc thị trường, cấu hình, chi phí và quản trị rủi ro; vẫn có thể thua lỗ hoặc sụt giảm tài khoản.</div></details>
+        <details class="faq-item"><summary>Bot truyền thống và Bot AI khác nhau như thế nào?</summary><div class="faq-answer">Bot truyền thống thường dựa trên tập quy tắc định sẵn. Một số hệ thống AI có thể dùng mô hình dữ liệu bổ sung, nhưng khả năng thật sự phụ thuộc thiết kế cụ thể. Khi so sánh, hãy ưu tiên cách hoạt động, mức lỗ tối đa có thể xảy ra, lịch sử kiểm chứng và tính minh bạch thay vì tên gọi.</div></details>
+        <details class="faq-item"><summary>Có cần cung cấp mật khẩu tài khoản hoặc mã OTP để xem kết quả không?</summary><div class="faq-answer">Không cung cấp mật khẩu đăng nhập, mã OTP hay quyền rút tiền cho người khác để xem nội dung. Nếu muốn quan sát tài khoản, hãy tìm hiểu cơ chế chỉ đọc được nền tảng hỗ trợ và tự kiểm tra quyền truy cập trước khi sử dụng.</div></details>
+        <details class="faq-item"><summary>Người mới nên bắt đầu từ đâu?</summary><div class="faq-answer">Nên bắt đầu với <a href="#thu-vien">Tài liệu kiến thức</a> để tìm hiểu mô hình nến, kỷ luật giao dịch và quản trị rủi ro; sau đó mới xem mục <a href="#thu-vien">So sánh và Hiểu về sản phẩm</a>. Không nên quyết định dựa trên một video, ảnh chụp thành tích hoặc cam kết lợi nhuận.</div></details>
+      </div>
+      <div class="faq-contact">Chưa tìm được câu trả lời? <a href="#lien-he">Liên hệ đội ngũ hỗ trợ ↗</a></div>
+    </div>
+  </section>
   <section class="contact-section" id="lien-he" aria-labelledby="contactTitle">
     <div class="shell">
       <div class="contact-intro">
@@ -301,13 +339,13 @@
   </section>
   <footer class="footer"><div class="shell footer-row"><div><strong id="footerBrand">NGHỀ TRADER</strong> · Kiến thức giao dịch và quản trị rủi ro.<div class="risk-note">Tài liệu mang tính giáo dục, không phải khuyến nghị đầu tư.</div></div><div class="footer-right"><a href="https://giaiphapgiaodich.com/" target="_blank" rel="noopener noreferrer">giaiphapgiaodich.com ↗</a><span>Được xuất bản trên GitHub Pages</span></div></div></footer>
   <div class="overlay" id="pdfOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="viewerTitle"><div class="viewer"><div class="viewer-head"><div id="viewerTitle" class="viewer-title">Đọc PDF</div><div class="viewer-controls"><a id="newTabLink" class="small-btn" target="_blank" rel="noopener noreferrer">Mở tab mới ↗</a><button id="closeViewer" class="close-btn" aria-label="Đóng PDF">×</button></div></div><iframe id="pdfFrame" title="Trình xem PDF" loading="lazy"></iframe><video id="videoPlayer" controls playsinline preload="metadata" style="display:none" aria-label="Trình phát video"></video></div></div>
-  <script src="data.js?v=20261112-knowledge-product-categories"></script>
+  <script src="data.js?v=20261112-real-video-thumbnails-faq"></script>
   <script>
     "use strict";
     const config = window.SITE_CONFIG || {};
     const source = Array.isArray(window.DOCUMENTS) ? window.DOCUMENTS : [];
     const docs = source.filter(d => d && typeof d.title === "string" && typeof d.file === "string" && /^(?!\/|[a-z]+:|\\|\.\.\/)[^?#]+$/i.test(d.file)).map(d => ({
-      title: d.title, file: d.file, description: String(d.description || ""), category: String(d.category || "Khác"), type: String(d.type || d.file.split(".").pop() || "Tệp").toUpperCase(), date: String(d.date || ""), size: String(d.size || ""), cover: String(d.cover || "")
+      title: d.title, file: d.file, description: String(d.description || ""), category: String(d.category || "Khác"), type: String(d.type || d.file.split(".").pop() || "Tệp").toUpperCase(), date: String(d.date || ""), size: String(d.size || ""), cover: String(d.cover || ""), coverFallback: String(d.coverFallback || "")
     })).sort((a,b)=>b.date.localeCompare(a.date));
     const $ = id => document.getElementById(id);
     const escapeHTML = str => String(str).replace(/[&<>"']/g, x => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
@@ -385,12 +423,25 @@
         const group=isVideo?'video':isPdf?'':/(DOC|WORD)/.test(doc.type)?'word':/(XLS|CSV|EXCEL)/.test(doc.type)?'excel':'other';
         const card=document.createElement('article');card.className='doc';
         card.style.animationDelay = `${Math.min(i,7)*65}ms`;
-        const coverMarkup = doc.cover ? `<div class="doc-cover-wrap"><img class="doc-cover" src="${escapeHTML(fileUrl(doc.cover))}" alt="Ảnh bìa ${escapeHTML(doc.title)}" loading="lazy">${isVideo ? '<span class="cover-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="25" height="25" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' : ''}<span class="cover-corner">${isVideo ? 'VIDEO' : escapeHTML(doc.type)}</span></div>` : `<div class="doc-cover-placeholder" aria-hidden="true"><span class="placeholder-icon">▤</span><span class="placeholder-label">TÀI LIỆU ${escapeHTML(doc.type)}</span></div>`;
+        const coverMarkup = doc.cover ? `<div class="doc-cover-wrap"><img class="doc-cover" src="${escapeHTML(fileUrl(doc.cover))}" width="640" height="360" decoding="async" alt="Ảnh bìa ${escapeHTML(doc.title)}" loading="lazy">${isVideo ? '<span class="cover-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="25" height="25" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' : ''}<span class="cover-corner">${isVideo ? 'VIDEO' : escapeHTML(doc.type)}</span></div>` : `<div class="doc-cover-placeholder" aria-hidden="true"><span class="placeholder-icon">▤</span><span class="placeholder-label">TÀI LIỆU ${escapeHTML(doc.type)}</span></div>`;
         const date= /^\d{4}-\d{2}-\d{2}$/.test(doc.date) ? doc.date.split('-').reverse().join('/') : doc.date;
         card.innerHTML = `${coverMarkup}<div class="doc-top"><div class="file-symbol ${group}" aria-hidden="true">${escapeHTML(doc.type.slice(0,5))}</div><span class="file-tag">${escapeHTML(doc.category)}</span></div><div class="doc-body"><h3>${escapeHTML(doc.title)}</h3><p class="doc-desc">${escapeHTML(doc.description||'Tài liệu được chia sẻ miễn phí để đọc và tham khảo.')}</p><div class="doc-meta"><span>${escapeHTML(date||'Tài liệu')}</span>${doc.size?`<span class="dot"></span><span>${escapeHTML(doc.size)}</span>`:''}</div></div><div class="doc-actions"></div>`;
+        const image=card.querySelector('img.doc-cover');
+        if(image && doc.coverFallback){
+          image.addEventListener('error',()=>{
+            image.src=fileUrl(doc.coverFallback);
+          },{once:true});
+        }
+        if(isVideo && card.querySelector('.doc-cover-wrap')){
+          const coverLink=document.createElement('a');
+          coverLink.className='cover-hit';
+          coverLink.href='watch.html?v='+encodeURIComponent(doc.file.split('/').pop());
+          coverLink.setAttribute('aria-label','Xem video: '+doc.title);
+          card.querySelector('.doc-cover-wrap').appendChild(coverLink);
+        }
         const actions=card.querySelector('.doc-actions');
-        const view=document.createElement((isPdf||isVideo)?'button':'a');view.className='action primary';view.innerHTML=icons.view+(isVideo?'Xem video':isPdf?'Đọc PDF':'Xem tệp');
-        if(isPdf||isVideo){view.type='button';view.addEventListener('click',()=>openViewer(doc))}else{view.href=fileUrl(doc.file);view.target='_blank';view.rel='noopener noreferrer'}
+        const view=document.createElement(isPdf?'button':'a');view.className='action primary';view.innerHTML=icons.view+(isVideo?'Xem video':isPdf?'Đọc PDF':'Xem tệp');
+        if(isPdf){view.type='button';view.addEventListener('click',()=>openViewer(doc))}else if(isVideo){view.href='watch.html?v='+encodeURIComponent(doc.file.split('/').pop())}else{view.href=fileUrl(doc.file);view.target='_blank';view.rel='noopener noreferrer'}
         const download=document.createElement('a');download.className='action';download.href=fileUrl(doc.file);download.download=doc.file.split('/').pop();download.innerHTML=icons.download+'Tải về';
         actions.append(view,download);grid.appendChild(card);
       });
@@ -419,21 +470,30 @@
     const shortRecap='tai-lieu/recap-tradepro-home.mp4';
     const fullRecap='tai-lieu/recap-tradepro.mp4';
     const fileIsLive = path => fetch(fileUrl(path),{method:'HEAD'}).then(r=>r.ok).catch(()=>false);
-    fileIsLive(shortRecap).then(ok=>{
-      if(!ok)return; // Keep the designed hero background until the MP4 has been uploaded.
-      recap.hidden=false;recap.src=fileUrl(shortRecap);
-      recap.addEventListener('playing',()=>recap.classList.add('ready'),{once:true});
-      if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !navigator.connection?.saveData)recap.play().catch(()=>{});
-    });
+    const allowMotion=!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !navigator.connection?.saveData;
+    if(allowMotion){
+      fileIsLive(shortRecap).then(ok=>{
+        if(!ok)return;
+        recap.hidden=false;
+        recap.src=fileUrl(shortRecap);
+        recap.addEventListener('playing',()=>recap.classList.add('ready'),{once:true});
+        const hero=document.querySelector('.hero');
+        if('IntersectionObserver' in window){
+          new IntersectionObserver(entries=>{
+            if(entries[0].isIntersecting && !document.hidden)recap.play().catch(()=>{});
+            else recap.pause();
+          },{threshold:0.1}).observe(hero);
+        }else{recap.play().catch(()=>{})}
+        document.addEventListener('visibilitychange',()=>{if(document.hidden)recap.pause();else if(hero.getBoundingClientRect().bottom>0 && hero.getBoundingClientRect().top<innerHeight)recap.play().catch(()=>{})});
+      });
+    }
     fileIsLive(fullRecap).then(ok=>{
       watch.disabled=!ok;
       watch.title=ok?'Xem video recap TradePro có âm thanh':'Video recap chưa được tải lên GitHub';
     });
     watch.addEventListener('click',()=>{
       if(watch.disabled)return;
-      const item=docs.find(d=>d.file===fullRecap);
-      if(item)openViewer(item);
-      else window.open(fileUrl(fullRecap),'_blank','noopener,noreferrer');
+      window.location.href='watch.html?v=recap-tradepro.mp4';
     });
     document.querySelectorAll('.category-tile').forEach(button=>button.addEventListener('click',()=>chooseCategory(button.dataset.category)));
     refreshCategoryCards();
