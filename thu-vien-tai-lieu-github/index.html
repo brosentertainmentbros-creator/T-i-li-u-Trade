@@ -176,6 +176,27 @@
     @media(max-width:800px){.hero-logo{display:block;top:23px;right:5%;width:94px;height:94px}.hero-video{object-position:60% center}.hero-content{padding-top:85px}.hero-chart{display:none}.hero-video-shade{background:linear-gradient(90deg,rgba(3,13,25,.9),rgba(4,15,29,.63)),linear-gradient(0deg,#04101dc9,transparent 72%)}}
     @media(max-width:620px){.hero-logo{width:75px;height:75px;top:15px;right:18px}.hero-content{padding-top:60px}.hero-actions{gap:10px}.hero-watch-btn{padding:12px 15px;font-size:14px}.hero-actions .hero-cta{font-size:14px}.hero{padding-bottom:92px}}
     @media(prefers-reduced-motion:reduce){.hero-video{transition:none}}
+
+    /* Two prominent clickable category cards */
+    .category-chooser{position:relative;z-index:3;margin-bottom:24px}
+    .chooser-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:18px}
+    .chooser-heading h2{font-size:clamp(22px,2.7vw,30px);line-height:1.2;margin:6px 0 0;color:#f5f7fb;letter-spacing:-.02em}
+    .chooser-heading p{color:#9aaec4;font-size:13px;margin:0 0 2px}
+    .chooser-eyebrow{color:#e6b768;font-size:11px;font-weight:800;letter-spacing:2px}
+    .category-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+    .category-tile{font:inherit;position:relative;display:flex;flex-direction:column;gap:10px;text-align:left;padding:25px;border-radius:18px;min-width:0;min-height:230px;border:1px solid #3f5670;background:radial-gradient(circle at 95% 0,#1a43634a,transparent 53%),linear-gradient(125deg,#132b42,#0c1e30);color:#eaf1f9;box-shadow:0 14px 30px #0004;transition:border-color .2s,box-shadow .2s,transform .2s}
+    .category-tile.compare{background:radial-gradient(circle at 91% 8%,#a6842b24,transparent 58%),linear-gradient(125deg,#172a3c,#101d2d)}
+    .category-tile:hover{border-color:#d5a957;transform:translateY(-3px);box-shadow:0 17px 35px #0007}
+    .category-tile.active{border-color:#e0b25f;box-shadow:inset 0 0 0 1px #e0b25f,0 13px 30px #0006}
+    .category-tile:focus-visible{outline:3px solid #e9c27e;outline-offset:4px}
+    .category-tile-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:3px}
+    .category-tile-icon{width:43px;height:43px;border-radius:12px;display:grid;place-items:center;background:#daa94f1f;border:1px solid #d4ae6475;font-size:26px;color:#e8bd70}
+    .category-tile-count{border:1px solid #496075;border-radius:99px;padding:6px 11px;color:#c2d1e3;font-size:12px;font-weight:650}
+    .category-tile strong{font-size:clamp(19px,2.2vw,26px);letter-spacing:-.025em;line-height:1.3}
+    .category-tile-desc{font-size:13px;line-height:1.6;color:#a9bdd1;max-width:410px}
+    .category-tile-action{color:#e5b96d;font-size:13px;font-weight:800;margin-top:auto;padding-top:5px}
+    @media(max-width:700px){.category-cards{grid-template-columns:1fr;gap:13px}.category-tile{min-height:0;padding:20px}.chooser-heading{align-items:flex-start;flex-direction:column;gap:7px}.chooser-heading h2{font-size:23px}.chooser-heading p{font-size:12px}}
+    @media(prefers-reduced-motion:reduce){.category-tile{transition:none}}
   </style>
 </head>
 <body>
@@ -197,12 +218,29 @@
     <div class="hero-chart" aria-hidden="true"><svg viewBox="0 0 500 350"><polyline points="0,290 50,255 90,269 130,202 175,220 220,156 260,191 311,112 350,143 407,83 461,99 500,42" fill="none" stroke="#e7b663" stroke-width="5"/><path d="M0 290L50 255L90 269L130 202L175 220L220 156L260 191L311 112L350 143L407 83L461 99L500 42L500 350H0Z" fill="#e7b663" opacity=".16"/></svg></div>
   </section>
   <main class="shell content" id="thu-vien">
+    <section class="category-chooser" aria-label="Chọn nhóm nội dung">
+      <div class="chooser-heading"><div><span class="chooser-eyebrow">CHỌN CHỦ ĐỀ</span><h2>Bạn muốn khám phá nội dung nào?</h2></div><p>Nhấn vào từng mục để xem nội dung tương ứng.</p></div>
+      <div class="category-cards">
+        <button class="category-tile knowledge" type="button" data-category="Tài liệu kiến thức" aria-pressed="false">
+          <span class="category-tile-top"><span class="category-tile-icon">▥</span><span class="category-tile-count" id="knowledgeCount">5 nội dung</span></span>
+          <strong>Tài liệu kiến thức</strong>
+          <span class="category-tile-desc">Mô hình nến, phân tích kỹ thuật và phương pháp giao dịch.</span>
+          <span class="category-tile-action">Khám phá kiến thức →</span>
+        </button>
+        <button class="category-tile compare" type="button" data-category="So sánh và Hiểu về sản phẩm" aria-pressed="false">
+          <span class="category-tile-top"><span class="category-tile-icon">◫</span><span class="category-tile-count" id="compareCount">4 nội dung</span></span>
+          <strong>So sánh và Hiểu về sản phẩm</strong>
+          <span class="category-tile-desc">PassView, Bot AI và những góc nhìn so sánh để hiểu rõ sản phẩm.</span>
+          <span class="category-tile-action">Khám phá sản phẩm →</span>
+        </button>
+      </div>
+    </section>
     <div class="toolbar"><div class="toolbar-top"><label class="search" for="searchInput"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg><input id="searchInput" placeholder="Tìm theo tên, mô tả hoặc từ khóa..." autocomplete="off" aria-label="Tìm kiếm tài liệu"></label><div class="stat"><strong id="totalCount">0</strong> nội dung<span class="stat-split" id="totalSplit"></span></div></div><div class="filters" id="filters" aria-label="Lọc theo danh mục"></div></div>
-    <section aria-label="Danh sách tài liệu"><div class="section-head"><div><h2>Kho kiến thức giao dịch</h2><p id="resultText">Tổng hợp tài liệu dành cho bạn</p></div><div class="sort">Sắp xếp: mới nhất trước</div></div><div class="grid" id="docGrid" aria-live="polite"></div></section>
+    <section id="resultsSection" aria-label="Danh sách tài liệu"><div class="section-head"><div><h2>Kho kiến thức giao dịch</h2><p id="resultText">Tổng hợp tài liệu dành cho bạn</p></div><div class="sort">Sắp xếp: mới nhất trước</div></div><div class="grid" id="docGrid" aria-live="polite"></div></section>
   </main>
   <footer class="footer"><div class="shell footer-row"><div><strong id="footerBrand">NGHỀ TRADER</strong> · Kiến thức giao dịch và quản trị rủi ro.<div class="risk-note">Tài liệu mang tính giáo dục, không phải khuyến nghị đầu tư.</div></div><div class="footer-right"><a href="https://giaiphapgiaodich.com/" target="_blank" rel="noopener noreferrer">giaiphapgiaodich.com ↗</a><span>Được xuất bản trên GitHub Pages</span></div></div></footer>
   <div class="overlay" id="pdfOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="viewerTitle"><div class="viewer"><div class="viewer-head"><div id="viewerTitle" class="viewer-title">Đọc PDF</div><div class="viewer-controls"><a id="newTabLink" class="small-btn" target="_blank" rel="noopener noreferrer">Mở tab mới ↗</a><button id="closeViewer" class="close-btn" aria-label="Đóng PDF">×</button></div></div><iframe id="pdfFrame" title="Trình xem PDF" loading="lazy"></iframe><video id="videoPlayer" controls playsinline preload="metadata" style="display:none" aria-label="Trình phát video"></video></div></div>
-  <script src="data.js?v=20261112-no-recap-card"></script>
+  <script src="data.js?v=20261112-knowledge-product-categories"></script>
   <script>
     "use strict";
     const config = window.SITE_CONFIG || {};
@@ -230,7 +268,26 @@
     $('totalSplit').textContent = `${videoCount} video · ${docs.length-videoCount} tài liệu`;
     function renderFilters() {
       const el=$('filters');el.replaceChildren();
-      categories.forEach(cat=>{const btn=document.createElement('button');btn.type='button';btn.className='filter'+(cat===activeCategory?' active':'');btn.textContent=cat;btn.setAttribute('aria-pressed',String(cat===activeCategory));btn.addEventListener('click',()=>{activeCategory=cat;renderFilters();renderDocs()});el.appendChild(btn)})
+      categories.forEach(cat=>{const btn=document.createElement('button');btn.type='button';btn.className='filter'+(cat===activeCategory?' active':'');btn.textContent=cat;btn.setAttribute('aria-pressed',String(cat===activeCategory));btn.addEventListener('click',()=>chooseCategory(cat,false));el.appendChild(btn)})
+    }
+    function chooseCategory(category,scrollToResults=true){
+      activeCategory=category;
+      $('searchInput').value='';
+      refreshCategoryCards();
+      renderFilters();
+      renderDocs();
+      if(scrollToResults)$('resultsSection').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+    }
+    function refreshCategoryCards(){
+      const counts={'Tài liệu kiến thức':0,'So sánh và Hiểu về sản phẩm':0};
+      docs.forEach(doc=>{if(Object.prototype.hasOwnProperty.call(counts,doc.category))counts[doc.category]++});
+      $('knowledgeCount').textContent=counts['Tài liệu kiến thức']+' nội dung';
+      $('compareCount').textContent=counts['So sánh và Hiểu về sản phẩm']+' nội dung';
+      document.querySelectorAll('.category-tile').forEach(button=>{
+        const active=button.dataset.category===activeCategory;
+        button.classList.toggle('active',active);
+        button.setAttribute('aria-pressed',String(active));
+      });
     }
     function openViewer(doc) {
       lastFocus=document.activeElement;
@@ -293,7 +350,7 @@
         $('totalSplit').textContent=`${vc} video · ${docs.length-vc} tài liệu`;
         categories.length=0;categories.push('Tất cả',...new Set(docs.map(d=>d.category)));
         if(activeCategory!=='Tất cả'&&!categories.includes(activeCategory))activeCategory='Tất cả';
-        renderFilters();renderDocs();
+        refreshCategoryCards();renderFilters();renderDocs();
       });
     }
     // Load the short recap only if its MP4 is actually in the public repository.
@@ -317,6 +374,8 @@
       if(item)openViewer(item);
       else window.open(fileUrl(fullRecap),'_blank','noopener,noreferrer');
     });
+    document.querySelectorAll('.category-tile').forEach(button=>button.addEventListener('click',()=>chooseCategory(button.dataset.category)));
+    refreshCategoryCards();
     checkMediaAvailability();
     renderFilters();renderDocs();
   </script>
