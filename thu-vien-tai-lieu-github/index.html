@@ -6,6 +6,7 @@
   <meta name="description" content="Thư viện tài liệu trực tuyến: tìm kiếm, đọc PDF và tải tài liệu miễn phí.">
   <meta name="theme-color" content="#111b2b">
   <title>NGHỀ TRADER | Thư viện giao dịch</title>
+  <link rel="icon" type="image/webp" href="assets/logo-nghe-trader.webp">
   <style>
     :root {--ink:#eaf2fb;--muted:#96acc3;--bg:#091421;--paper:#101f31;--stroke:#2a4056;--gold:#daa94f;--gold-soft:#243022;--navy:#07111f;--soft:#14293d}
     * {box-sizing:border-box}
@@ -18,7 +19,7 @@
     .topbar {background:#07111f;color:white;border-bottom:1px solid #263850;position:sticky;top:0;z-index:20;backdrop-filter:blur(15px)}
     .nav {min-height:75px;display:flex;align-items:center;justify-content:space-between;gap:20px}
     .brand {display:flex;align-items:center;gap:12px;font-size:17px;font-weight:800;letter-spacing:.025em}
-    .brand-mark {display:grid;place-items:center;width:42px;height:42px;background:linear-gradient(135deg,#edc980,#ac762c);border-radius:12px;color:#152234;font-size:24px}
+    .brand-mark {display:grid;place-items:center;width:51px;height:51px;background:white;border-radius:50%;overflow:hidden;border:2px solid #dbb36e;box-shadow:0 0 0 3px #dbb36e20}.brand-mark img {width:100%;height:100%;object-fit:contain;display:block}
     .nav-link {font-size:14px;color:#d9e2ed;border:1px solid #455165;padding:9px 16px;border-radius:10px;transition:.2s}
     .nav-link:hover {background:#2b3b51}
     .hero {background:radial-gradient(ellipse at 83% 10%,#21435e,transparent 53%),linear-gradient(135deg,#06101e,#132940);color:white;padding:90px 0 111px;position:relative;overflow:hidden}
@@ -92,16 +93,16 @@
     .hero-eyeline{font-size:12px;font-weight:800;letter-spacing:2px;color:#e4b662;text-transform:uppercase;margin-bottom:12px}
     .market-info{display:inline-flex;align-items:center;gap:9px;margin-top:22px;padding:9px 13px;border:1px solid #35546c;border-radius:9px;background:#152b41aa;font-size:12px;color:#c0d5e7}
     .market-info:before{content:"";width:8px;height:8px;border-radius:50%;background:#50d9a4;box-shadow:0 0 12px #50d9a4}
-    .hero-chart{position:absolute;right:1%;top:15%;width:35%;max-width:470px;height:70%;opacity:.28;background:repeating-linear-gradient(0deg,transparent 0 58px,#6789a01e 59px 60px),repeating-linear-gradient(90deg,transparent 0 66px,#6789a01e 67px 68px);border-radius:16px;pointer-events:none}
+    .hero-logo{position:absolute;right:7%;top:20%;width:205px;height:205px;object-fit:contain;border-radius:50%;border:4px solid #d5a04e;box-shadow:0 18px 55px #0008,0 0 0 16px #c79a4e12;z-index:1;background:white}.hero-chart{position:absolute;right:1%;top:15%;width:35%;max-width:470px;height:70%;opacity:.28;background:repeating-linear-gradient(0deg,transparent 0 58px,#6789a01e 59px 60px),repeating-linear-gradient(90deg,transparent 0 66px,#6789a01e 67px 68px);border-radius:16px;pointer-events:none}
     .hero-chart svg{width:100%;height:100%}
     .section-head h2{color:#f0f4fa}
     .section-head p,.sort{color:#9ab0c8}
-    @media(max-width:800px){.hero-chart{display:none}}
+    @media(max-width:800px){.hero-chart,.hero-logo{display:none}}
   </style>
 </head>
 <body>
-  <header class="topbar"><div class="shell nav"><a class="brand" href="./" aria-label="Trang chủ thư viện"><span class="brand-mark" aria-hidden="true">▤</span><span id="siteBrand">NGHỀ TRADER</span></a><a class="nav-link" href="#thu-vien">Khám phá tài liệu ↗</a></div></header>
-  <section class="hero"><div class="shell"><div class="hero-content"><span class="eyebrow">✦ NGHỀ TRADER ACADEMY</span><h1>Hiểu thị trường.<br><em>Giao dịch có kỷ luật.</em></h1><p id="siteDescription">Tìm kiếm, đọc trực tuyến và tải về các tài liệu được chia sẻ miễn phí. Mọi thứ đều được sắp xếp để bạn dễ dàng khám phá.</p><a class="hero-cta" href="#thu-vien">Khám phá video & tài liệu →</a><div class="market-info">PRICE ACTION • PHÂN TÍCH KỸ THUẬT • QUẢN TRỊ RỦI RO</div></div></div><div class="hero-chart" aria-hidden="true"><svg viewBox="0 0 500 350"><polyline points="0,290 50,255 90,269 130,202 175,220 220,156 260,191 311,112 350,143 407,83 461,99 500,42" fill="none" stroke="#e7b663" stroke-width="5"/><path d="M0 290L50 255L90 269L130 202L175 220L220 156L260 191L311 112L350 143L407 83L461 99L500 42L500 350H0Z" fill="#e7b663" opacity=".16"/></svg></div></section>
+  <header class="topbar"><div class="shell nav"><a class="brand" href="./" aria-label="Trang chủ thư viện"><span class="brand-mark"><img src="assets/logo-nghe-trader.webp" alt="Logo NGHỀ TRADER" width="51" height="51"></span><span id="siteBrand">NGHỀ TRADER</span></a><a class="nav-link" href="#thu-vien">Khám phá tài liệu ↗</a></div></header>
+  <section class="hero"><div class="shell"><div class="hero-content"><span class="eyebrow">✦ NGHỀ TRADER ACADEMY</span><h1>Hiểu thị trường.<br><em>Giao dịch có kỷ luật.</em></h1><p id="siteDescription">Tìm kiếm, đọc trực tuyến và tải về các tài liệu được chia sẻ miễn phí. Mọi thứ đều được sắp xếp để bạn dễ dàng khám phá.</p><a class="hero-cta" href="#thu-vien">Khám phá video & tài liệu →</a><div class="market-info">PRICE ACTION • PHÂN TÍCH KỸ THUẬT • QUẢN TRỊ RỦI RO</div></div></div><img class="hero-logo" src="assets/logo-nghe-trader.webp" alt="Logo chính thức NGHỀ TRADER" width="205" height="205"><div class="hero-chart" aria-hidden="true"><svg viewBox="0 0 500 350"><polyline points="0,290 50,255 90,269 130,202 175,220 220,156 260,191 311,112 350,143 407,83 461,99 500,42" fill="none" stroke="#e7b663" stroke-width="5"/><path d="M0 290L50 255L90 269L130 202L175 220L220 156L260 191L311 112L350 143L407 83L461 99L500 42L500 350H0Z" fill="#e7b663" opacity=".16"/></svg></div></section>
   <main class="shell content" id="thu-vien">
     <div class="toolbar"><div class="toolbar-top"><label class="search" for="searchInput"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg><input id="searchInput" placeholder="Tìm theo tên, mô tả hoặc từ khóa..." autocomplete="off" aria-label="Tìm kiếm tài liệu"></label><div class="stat"><strong id="totalCount">0</strong> tài liệu công khai</div></div><div class="filters" id="filters" aria-label="Lọc theo danh mục"></div></div>
     <section aria-label="Danh sách tài liệu"><div class="section-head"><div><h2>Kho kiến thức giao dịch</h2><p id="resultText">Tổng hợp tài liệu dành cho bạn</p></div><div class="sort">Sắp xếp: mới nhất trước</div></div><div class="grid" id="docGrid" aria-live="polite"></div></section>
