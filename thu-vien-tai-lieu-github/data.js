@@ -57,16 +57,6 @@ window.DOCUMENTS = [
     date: "2026-11-12",
     size: "6,2 MB"
   },
-  {
-    title: "TradePro Recap – Tổng hợp hoạt động",
-    description: "Video recap tổng hợp hoạt động và những khoảnh khắc của TradePro.",
-    category: "Recap",
-    cover: "assets/recap-tradepro.svg",
-    type: "MP4",
-    file: "tai-lieu/recap-tradepro.mp4",
-    date: "2026-11-12",
-    size: "14,8 MB"
-  },
 
   {
     title: "Nến Búa (Hammer) – Nhận diện mô hình",
