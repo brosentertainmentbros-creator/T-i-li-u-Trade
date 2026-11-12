@@ -1,0 +1,57 @@
+name: Generate real video thumbnails
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "thu-vien-tai-lieu-github/tai-lieu/*.mp4"
+      - ".github/workflows/video-thumbnails.yml"
+permissions:
+  contents: write
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out videos
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Generate fast WebP covers from real video frames
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v ffmpeg >/dev/null || { sudo apt-get update -qq; sudo apt-get install -y ffmpeg; }
+          MEDIA="thu-vien-tai-lieu-github/tai-lieu"
+          OUT="thu-vien-tai-lieu-github/assets/thumbnails"
+          mkdir -p "$OUT"
+          for video in "$MEDIA"/*.mp4; do
+            [ -f "$video" ] || continue
+            file="$(basename "$video")"
+            case "$file" in
+              recap-tradepro*.mp4) continue ;;
+              tu-hoc-vs-co-thay-kem.mp4) moment=8 ;;
+              anh-chup-vs-passview-nguoi-that.mp4) moment=56 ;;
+              lai-xe-theo-tri-nho-vs-google-maps.mp4) moment=35 ;;
+              tradepro-bot-ai.mp4) moment=70 ;;
+              tradepro-bot-cu-vs-bot-ai.mp4) moment=33 ;;
+              *) moment=1 ;;
+            esac
+            target="$OUT/$file.webp"
+            ffmpeg -hide_banner -loglevel error -nostdin -y -ss "$moment" -i "$video" \
+              -filter_complex "[0:v]split[background][foreground];[background]scale=640:360:force_original_aspect_ratio=increase,crop=640:360,boxblur=10:2,eq=brightness=-0.22:saturation=0.75[bg];[foreground]scale=-1:342:flags=lanczos[fg];[bg][fg]overlay=x=(W-w)/2:y=(H-h)/2:shortest=1[out]" \
+              -map "[out]" -frames:v 1 -c:v libwebp -quality 68 "$target"
+            test -s "$target"
+            echo "Created $target"
+          done
+      - name: Commit generated covers to public website
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "NGHE TRADER Thumbnail Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add thu-vien-tai-lieu-github/assets/thumbnails/
+          if ! git diff --cached --quiet; then
+            git commit -m "Create lightweight thumbnails from real videos [skip ci]"
+            git push origin HEAD:main
+          else
+            echo "Thumbnails unchanged"
+          fi
