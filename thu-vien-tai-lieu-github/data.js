@@ -1,6 +1,7 @@
 // DỄ SỬA: Thay tên và mô tả website ở đây.
 window.SITE_CONFIG = {
   name: "NGHỀ TRADER | THƯ VIỆN GIAO DỊCH",
+  zalo: "https://zalo.me/g/pflrrz190",
   description: "Khám phá kiến thức giao dịch qua video, tài liệu và những mô hình nến quan trọng. Học có phương pháp, giao dịch có kỷ luật."
 };
 
