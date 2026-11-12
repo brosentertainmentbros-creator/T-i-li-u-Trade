@@ -53,6 +53,7 @@
     .doc-top {padding:22px 22px 6px;display:flex;justify-content:space-between;align-items:center}
     .file-symbol {width:54px;height:60px;border-radius:12px;background:#fff2ee;color:#cc6447;display:grid;place-items:center;font-size:14px;font-weight:800;letter-spacing:.03em;position:relative}
     .file-symbol::before {content:"";position:absolute;right:0;top:0;border-top:13px solid white;border-left:13px solid #e8d2cb}
+    .file-symbol.video {background:#e9f3ff;color:#2c70a7}.file-symbol.video::before {border-left-color:#c4dced}
     .file-symbol.word {background:#edf3ff;color:#3c6db0}.file-symbol.word::before {border-left-color:#cbd9f1}
     .file-symbol.excel {background:#e7f7ef;color:#2f875c}.file-symbol.excel::before {border-left-color:#c7ead7}
     .file-symbol.other {background:#f1f0fc;color:#7065a6}.file-symbol.other::before {border-left-color:#d5d0ef}
@@ -80,7 +81,7 @@
     .small-btn {font-size:12px;padding:8px 11px;background:#edf1f5;border:1px solid #dce3ec;border-radius:8px}
     .small-btn:hover {background:#e2e9f0}
     .close-btn {border:0;background:#eef1f5;font-size:25px;line-height:28px;width:34px;height:34px;border-radius:8px}
-    .viewer iframe {width:100%;flex:1;border:0;background:#e7ebf1}
+    .viewer iframe,.viewer video {width:100%;flex:1;border:0;background:#e7ebf1;min-height:0}.viewer video {object-fit:contain;background:#101c2c}
     body.modal-open {overflow:hidden}
     @media(max-width:930px){.grid {grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media(max-width:620px){.shell{padding:0 17px}.nav{min-height:69px}.brand{font-size:14px}.brand-mark{height:38px;width:38px}.nav-link{font-size:12px;padding:8px}.hero{padding:52px 0 77px}.hero p{font-size:15px}.toolbar{padding:16px}.toolbar-top{align-items:stretch;flex-direction:column;gap:10px}.stat{align-self:flex-end}.grid{grid-template-columns:1fr}.section-head{margin-top:32px}.section-head h2{font-size:22px}.sort{display:none}.doc-body h3{min-height:auto}.doc-desc{min-height:auto}.viewer-head{padding:10px}.viewer-controls .small-btn{font-size:11px;padding:6px}.viewer-title{font-size:13px}.footer-row{flex-direction:column;align-items:flex-start}}
@@ -94,7 +95,7 @@
     <section aria-label="Danh sách tài liệu"><div class="section-head"><div><h2>Danh sách tài liệu</h2><p id="resultText">Tổng hợp tài liệu dành cho bạn</p></div><div class="sort">Sắp xếp: mới nhất trước</div></div><div class="grid" id="docGrid" aria-live="polite"></div></section>
   </main>
   <footer class="footer"><div class="shell footer-row"><div><strong id="footerBrand">THƯ VIỆN TÀI LIỆU</strong> · Chia sẻ tri thức, kết nối cộng đồng.</div><div>Được xuất bản miễn phí bằng GitHub Pages</div></div></footer>
-  <div class="overlay" id="pdfOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="viewerTitle"><div class="viewer"><div class="viewer-head"><div id="viewerTitle" class="viewer-title">Đọc PDF</div><div class="viewer-controls"><a id="newTabLink" class="small-btn" target="_blank" rel="noopener noreferrer">Mở tab mới ↗</a><button id="closeViewer" class="close-btn" aria-label="Đóng PDF">×</button></div></div><iframe id="pdfFrame" title="Trình xem PDF" loading="lazy"></iframe></div></div>
+  <div class="overlay" id="pdfOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="viewerTitle"><div class="viewer"><div class="viewer-head"><div id="viewerTitle" class="viewer-title">Đọc PDF</div><div class="viewer-controls"><a id="newTabLink" class="small-btn" target="_blank" rel="noopener noreferrer">Mở tab mới ↗</a><button id="closeViewer" class="close-btn" aria-label="Đóng PDF">×</button></div></div><iframe id="pdfFrame" title="Trình xem PDF" loading="lazy"></iframe><video id="videoPlayer" controls playsinline preload="metadata" style="display:none" aria-label="Trình phát video"></video></div></div>
   <script src="data.js"></script>
   <script>
     "use strict";
@@ -123,16 +124,29 @@
       const el=$('filters');el.replaceChildren();
       categories.forEach(cat=>{const btn=document.createElement('button');btn.type='button';btn.className='filter'+(cat===activeCategory?' active':'');btn.textContent=cat;btn.setAttribute('aria-pressed',String(cat===activeCategory));btn.addEventListener('click',()=>{activeCategory=cat;renderFilters();renderDocs()});el.appendChild(btn)})
     }
-    function openPdf(doc) {
+    function openViewer(doc) {
       lastFocus=document.activeElement;
       const url=fileUrl(doc.file);
+      const isVideo=doc.type==='MP4'||doc.file.toLowerCase().endsWith('.mp4');
+      const frame=$('pdfFrame'), player=$('videoPlayer');
       $('viewerTitle').textContent=doc.title;
       $('newTabLink').href=url;
-      $('pdfFrame').src=url+'#toolbar=1&navpanes=0';
+      if(isVideo){
+        frame.style.display='none';frame.removeAttribute('src');
+        player.style.display='block';player.src=url;player.load();
+      } else {
+        player.pause();player.removeAttribute('src');player.style.display='none';
+        frame.style.display='block';frame.src=url+'#toolbar=1&navpanes=0';
+      }
       $('pdfOverlay').classList.add('open');$('pdfOverlay').setAttribute('aria-hidden','false');
       document.body.classList.add('modal-open');$('closeViewer').focus();
     }
-    function closePdf(){ $('pdfOverlay').classList.remove('open');$('pdfOverlay').setAttribute('aria-hidden','true');$('pdfFrame').removeAttribute('src');document.body.classList.remove('modal-open');if(lastFocus) lastFocus.focus(); }
+    function closeViewer(){
+      $('pdfOverlay').classList.remove('open');$('pdfOverlay').setAttribute('aria-hidden','true');
+      $('pdfFrame').removeAttribute('src');
+      const player=$('videoPlayer');player.pause();player.removeAttribute('src');player.load();
+      document.body.classList.remove('modal-open');if(lastFocus)lastFocus.focus();
+    }
     function renderDocs(){
       const keyword=normalize($('searchInput').value.trim());
       const filtered=docs.filter(d=>(activeCategory==='Tất cả'||d.category===activeCategory) && normalize([d.title,d.description,d.category,d.type].join(' ')).includes(keyword));
@@ -141,21 +155,22 @@
       if(!filtered.length){const empty=document.createElement('div');empty.className='empty';empty.innerHTML='<div class="empty-icon">⌕</div><h3>Chưa có tài liệu phù hợp</h3><p>Hãy thử từ khóa khác hoặc chọn “Tất cả”.</p>';grid.appendChild(empty);return}
       filtered.forEach(doc=>{
         const isPdf=doc.type==='PDF'||doc.file.toLowerCase().endsWith('.pdf');
-        const group=isPdf?'':/(DOC|WORD)/.test(doc.type)?'word':/(XLS|CSV|EXCEL)/.test(doc.type)?'excel':'other';
+        const isVideo=doc.type==='MP4'||doc.file.toLowerCase().endsWith('.mp4');
+        const group=isVideo?'video':isPdf?'':/(DOC|WORD)/.test(doc.type)?'word':/(XLS|CSV|EXCEL)/.test(doc.type)?'excel':'other';
         const card=document.createElement('article');card.className='doc';
         const date= /^\d{4}-\d{2}-\d{2}$/.test(doc.date) ? doc.date.split('-').reverse().join('/') : doc.date;
         card.innerHTML = `<div class="doc-top"><div class="file-symbol ${group}" aria-hidden="true">${escapeHTML(doc.type.slice(0,5))}</div><span class="file-tag">${escapeHTML(doc.category)}</span></div><div class="doc-body"><h3>${escapeHTML(doc.title)}</h3><p class="doc-desc">${escapeHTML(doc.description||'Tài liệu được chia sẻ miễn phí để đọc và tham khảo.')}</p><div class="doc-meta"><span>${escapeHTML(date||'Tài liệu')}</span>${doc.size?`<span class="dot"></span><span>${escapeHTML(doc.size)}</span>`:''}</div></div><div class="doc-actions"></div>`;
         const actions=card.querySelector('.doc-actions');
-        const view=document.createElement(isPdf?'button':'a');view.className='action primary';view.innerHTML=icons.view+(isPdf?'Đọc PDF':'Xem tệp');
-        if(isPdf){view.type='button';view.addEventListener('click',()=>openPdf(doc))}else{view.href=fileUrl(doc.file);view.target='_blank';view.rel='noopener noreferrer'}
+        const view=document.createElement((isPdf||isVideo)?'button':'a');view.className='action primary';view.innerHTML=icons.view+(isVideo?'Xem video':isPdf?'Đọc PDF':'Xem tệp');
+        if(isPdf||isVideo){view.type='button';view.addEventListener('click',()=>openViewer(doc))}else{view.href=fileUrl(doc.file);view.target='_blank';view.rel='noopener noreferrer'}
         const download=document.createElement('a');download.className='action';download.href=fileUrl(doc.file);download.download=doc.file.split('/').pop();download.innerHTML=icons.download+'Tải về';
         actions.append(view,download);grid.appendChild(card);
       });
     }
     $('searchInput').addEventListener('input',renderDocs);
-    $('closeViewer').addEventListener('click',closePdf);
-    $('pdfOverlay').addEventListener('click',e=>{if(e.target===$('pdfOverlay'))closePdf()});
-    document.addEventListener('keydown',e=>{if(e.key==='Escape' && $('pdfOverlay').classList.contains('open'))closePdf();if(e.key==='Tab'&&$('pdfOverlay').classList.contains('open')){const controls=[$('newTabLink'),$('closeViewer')];if(e.shiftKey&&document.activeElement===controls[0]){e.preventDefault();controls[1].focus()}else if(!e.shiftKey&&document.activeElement===controls[1]){e.preventDefault();controls[0].focus()}}});
+    $('closeViewer').addEventListener('click',closeViewer);
+    $('pdfOverlay').addEventListener('click',e=>{if(e.target===$('pdfOverlay'))closeViewer()});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape' && $('pdfOverlay').classList.contains('open'))closeViewer();if(e.key==='Tab'&&$('pdfOverlay').classList.contains('open')){const controls=[$('newTabLink'),$('closeViewer')];if(e.shiftKey&&document.activeElement===controls[0]){e.preventDefault();controls[1].focus()}else if(!e.shiftKey&&document.activeElement===controls[1]){e.preventDefault();controls[0].focus()}}});
     renderFilters();renderDocs();
   </script>
 </body>
