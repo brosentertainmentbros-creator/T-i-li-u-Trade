@@ -157,38 +157,44 @@
       .doc-cover,.cover-play,.doc,.hero-cta{transition:none!important}
     }
 
-    .recap-section{position:relative;margin-top:42px;margin-bottom:58px}
-    .recap-heading{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:20px}
-    .recap-kicker{color:#e2b56a;font-size:12px;font-weight:800;letter-spacing:2px}
-    .recap-heading h2{color:#f5f8fc;font-size:clamp(24px,3vw,34px);line-height:1.22;margin:7px 0}
-    .recap-heading p{color:#9cb2c8;margin:0;font-size:14px}
-    .recap-label{color:#d7b875;background:#172a3e;border:1px solid #4b5363;border-radius:99px;padding:8px 13px;white-space:nowrap;font-size:11px;font-weight:700}
-    .recap-stage{position:relative;isolation:isolate;overflow:hidden;background:#102337;border:1px solid #4b5260;border-radius:22px;aspect-ratio:16/7.3;max-height:550px;box-shadow:0 24px 70px #0006}
-    .recap-poster,.recap-stage video{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
-    .recap-stage video{z-index:1;opacity:0;transition:opacity .8s ease}
-    .recap-stage video.ready{opacity:1}
-    .recap-shade{position:absolute;inset:0;background:linear-gradient(90deg,#04101de8 0%,#06162980 48%,#04101d0d 95%),linear-gradient(0deg,#04101daa,transparent 62%);z-index:2;pointer-events:none}
-    .recap-caption{position:absolute;z-index:3;left:clamp(22px,5%,58px);bottom:clamp(20px,12%,72px);display:flex;flex-direction:column;align-items:flex-start;gap:12px;max-width:460px}
-    .recap-caption span{color:#e6ba6f;font-size:12px;font-weight:800;letter-spacing:2px}
-    .recap-caption strong{font-size:clamp(21px,2.5vw,37px);line-height:1.2;color:white}
-    .recap-button{background:#d9ab57;border:0;border-radius:10px;color:#0b1927;font-weight:800;padding:12px 19px}
-    .recap-button:hover{background:#f0c675}
-    .recap-button:focus-visible{outline:3px solid #fff;outline-offset:3px}
-    @media(max-width:620px){.recap-section{margin-top:30px;margin-bottom:34px}.recap-heading{align-items:start}.recap-label{display:none}.recap-stage{aspect-ratio:4/4.3;border-radius:15px}.recap-shade{background:linear-gradient(0deg,#04101df0,transparent 85%)}.recap-caption{left:20px;right:20px;bottom:24px}.recap-caption strong{font-size:25px}}
-    @media(prefers-reduced-motion:reduce){.recap-stage video{transition:none}}
+    /* Video recap behind the original hero text and official brand logo */
+    .hero{isolation:isolate;background:#071726}
+    .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;opacity:0;transition:opacity .9s ease}
+    .hero-video.ready{opacity:1}
+    .hero-video-shade{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(3,13,25,.94) 0%,rgba(4,15,29,.82) 35%,rgba(3,15,30,.47) 64%,rgba(4,15,30,.7) 100%),linear-gradient(0deg,rgba(3,12,26,.44),transparent 65%)}
+    .hero::before,.hero::after{z-index:1}
+    .hero .shell{position:relative;z-index:4}
+    .hero-content{position:relative;z-index:4;max-width:740px}
+    .hero-logo{position:absolute;z-index:5}
+    .hero-chart{position:absolute;z-index:3}
+    .hero-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:28px}
+    .hero-actions .hero-cta{margin-top:0}
+    .hero-watch-btn{background:#0c2039d9;color:#fff;border:1px solid #a38b62;border-radius:11px;font-weight:750;padding:12px 19px;transition:background .2s,border-color .2s}
+    .hero-watch-btn:hover:not(:disabled){background:#1a3651;border-color:#e5bb6b}
+    .hero-watch-btn:disabled{opacity:.55;cursor:not-allowed}
+    .hero-watch-btn:focus-visible{outline:3px solid #e6b663;outline-offset:3px}
+    @media(max-width:800px){.hero-logo{display:block;top:23px;right:5%;width:94px;height:94px}.hero-video{object-position:60% center}.hero-content{padding-top:85px}.hero-chart{display:none}.hero-video-shade{background:linear-gradient(90deg,rgba(3,13,25,.9),rgba(4,15,29,.63)),linear-gradient(0deg,#04101dc9,transparent 72%)}}
+    @media(max-width:620px){.hero-logo{width:75px;height:75px;top:15px;right:18px}.hero-content{padding-top:60px}.hero-actions{gap:10px}.hero-watch-btn{padding:12px 15px;font-size:14px}.hero-actions .hero-cta{font-size:14px}.hero{padding-bottom:92px}}
+    @media(prefers-reduced-motion:reduce){.hero-video{transition:none}}
   </style>
 </head>
 <body>
   <header class="topbar"><div class="shell nav"><a class="brand" href="./" aria-label="Trang chủ thư viện"><span class="brand-mark"><img src="assets/logo-nghe-trader.webp" alt="Logo NGHỀ TRADER" width="51" height="51"></span><span class="brand-name"><span id="siteBrand">NGHỀ TRADER</span><span class="brand-sub">ACADEMY · THƯ VIỆN GIAO DỊCH</span></span></a><a class="nav-link" href="#thu-vien">Khám phá tài liệu ↗</a></div></header>
-  <section class="hero"><div class="shell"><div class="hero-content"><span class="eyebrow">✦ NGHỀ TRADER ACADEMY</span><h1>Hiểu thị trường.<br><em>Giao dịch có kỷ luật.</em></h1><p id="siteDescription">Tìm kiếm, đọc trực tuyến và tải về các tài liệu được chia sẻ miễn phí. Mọi thứ đều được sắp xếp để bạn dễ dàng khám phá.</p><a class="hero-cta" href="#thu-vien">Khám phá video & tài liệu →</a><div class="market-info">PRICE ACTION • PHÂN TÍCH KỸ THUẬT • QUẢN TRỊ RỦI RO</div></div></div><img class="hero-logo" src="assets/logo-nghe-trader.webp" alt="Logo chính thức NGHỀ TRADER" width="205" height="205"><div class="hero-chart" aria-hidden="true"><svg viewBox="0 0 500 350"><polyline points="0,290 50,255 90,269 130,202 175,220 220,156 260,191 311,112 350,143 407,83 461,99 500,42" fill="none" stroke="#e7b663" stroke-width="5"/><path d="M0 290L50 255L90 269L130 202L175 220L220 156L260 191L311 112L350 143L407 83L461 99L500 42L500 350H0Z" fill="#e7b663" opacity=".16"/></svg></div></section>
-  <section class="recap-section shell" aria-label="Video recap TradePro">
-    <div class="recap-heading"><div><span class="recap-kicker">TRẢI NGHIỆM TRADEPRO</span><h2>Những khoảnh khắc đáng nhớ</h2><p>Khám phá hành trình và hoạt động cộng đồng qua video recap.</p></div><span class="recap-label">RECAP · VIDEO</span></div>
-    <div class="recap-stage" id="recapStage">
-      <img class="recap-poster" src="assets/recap-tradepro.svg" alt="Ảnh bìa video recap TradePro">
-      <video id="heroRecap" autoplay muted loop playsinline preload="none" poster="assets/recap-tradepro.svg" aria-label="Video recap TradePro không có âm thanh" hidden></video>
-      <div class="recap-shade"></div>
-      <div class="recap-caption"><span>NGHỀ TRADER • TRADEPRO</span><strong>Hành trình được ghi lại qua từng khoảnh khắc.</strong><button class="recap-button" id="watchRecap" type="button">▶ Xem recap có âm thanh</button></div>
-    </div>
+  <section class="hero">
+    <video id="heroRecapBg" class="hero-video" muted autoplay loop playsinline preload="none" poster="assets/recap-tradepro.svg" aria-label="Video recap TradePro chuyển động làm nền trang chủ" hidden></video>
+    <div class="hero-video-shade" aria-hidden="true"></div>
+    <div class="shell"><div class="hero-content">
+      <span class="eyebrow">✦ NGHỀ TRADER ACADEMY</span>
+      <h1>Hiểu thị trường.<br><em>Giao dịch có kỷ luật.</em></h1>
+      <p id="siteDescription">Khám phá kiến thức giao dịch qua video, tài liệu và các mô hình nến quan trọng. Học có phương pháp, giao dịch có kỷ luật.</p>
+      <div class="hero-actions">
+        <a class="hero-cta" href="#thu-vien">Khám phá video & tài liệu →</a>
+        <button class="hero-watch-btn" id="watchRecapHero" type="button" disabled title="Video recap đầy đủ chưa được tải lên GitHub">▶ Xem recap</button>
+      </div>
+      <div class="market-info">PRICE ACTION • PHÂN TÍCH KỸ THUẬT • QUẢN TRỊ RỦI RO</div>
+    </div></div>
+    <img class="hero-logo" src="assets/logo-nghe-trader.webp" alt="Logo chính thức NGHỀ TRADER" width="205" height="205">
+    <div class="hero-chart" aria-hidden="true"><svg viewBox="0 0 500 350"><polyline points="0,290 50,255 90,269 130,202 175,220 220,156 260,191 311,112 350,143 407,83 461,99 500,42" fill="none" stroke="#e7b663" stroke-width="5"/><path d="M0 290L50 255L90 269L130 202L175 220L220 156L260 191L311 112L350 143L407 83L461 99L500 42L500 350H0Z" fill="#e7b663" opacity=".16"/></svg></div>
   </section>
   <main class="shell content" id="thu-vien">
     <div class="toolbar"><div class="toolbar-top"><label class="search" for="searchInput"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg><input id="searchInput" placeholder="Tìm theo tên, mô tả hoặc từ khóa..." autocomplete="off" aria-label="Tìm kiếm tài liệu"></label><div class="stat"><strong id="totalCount">0</strong> nội dung<span class="stat-split" id="totalSplit"></span></div></div><div class="filters" id="filters" aria-label="Lọc theo danh mục"></div></div>
@@ -290,18 +296,26 @@
         renderFilters();renderDocs();
       });
     }
-    const stage=$('recapStage'), recap=$('heroRecap'), watch=$('watchRecap');
-    fetch(fileUrl('tai-lieu/recap-tradepro-home.mp4'), {method:'HEAD'}).then(r=>{
-      if(!r.ok)return;
-      recap.hidden=false;
-      recap.src=fileUrl('tai-lieu/recap-tradepro-home.mp4');
+    // Load the short recap only if its MP4 is actually in the public repository.
+    const recap=$('heroRecapBg'), watch=$('watchRecapHero');
+    const shortRecap='tai-lieu/recap-tradepro-home.mp4';
+    const fullRecap='tai-lieu/recap-tradepro.mp4';
+    const fileIsLive = path => fetch(fileUrl(path),{method:'HEAD'}).then(r=>r.ok).catch(()=>false);
+    fileIsLive(shortRecap).then(ok=>{
+      if(!ok)return; // Keep the designed hero background until the MP4 has been uploaded.
+      recap.hidden=false;recap.src=fileUrl(shortRecap);
       recap.addEventListener('playing',()=>recap.classList.add('ready'),{once:true});
-      if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)recap.play().catch(()=>{});
-    }).catch(()=>{});
+      if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !navigator.connection?.saveData)recap.play().catch(()=>{});
+    });
+    fileIsLive(fullRecap).then(ok=>{
+      watch.disabled=!ok;
+      watch.title=ok?'Xem video recap TradePro có âm thanh':'Video recap chưa được tải lên GitHub';
+    });
     watch.addEventListener('click',()=>{
-      const item=docs.find(d=>d.file==='tai-lieu/recap-tradepro.mp4');
+      if(watch.disabled)return;
+      const item=docs.find(d=>d.file===fullRecap);
       if(item)openViewer(item);
-      else window.open(fileUrl('tai-lieu/recap-tradepro.mp4'),'_blank','noopener,noreferrer');
+      else window.open(fileUrl(fullRecap),'_blank','noopener,noreferrer');
     });
     checkMediaAvailability();
     renderFilters();renderDocs();
