@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Thư viện tài liệu trực tuyến: tìm kiếm, đọc PDF và tải tài liệu miễn phí.">
+  <meta name="description" content="NGHỀ TRADER Academy — thư viện video kiến thức giao dịch, mô hình nến và tài liệu học tập miễn phí.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NGHỀ TRADER Academy | Thư viện kiến thức giao dịch">
+  <meta property="og:description" content="Xem video, tìm kiếm tài liệu về giao dịch và phân tích kỹ thuật. Nội dung giáo dục miễn phí.">
+  <meta property="og:image" content="https://brosentertainmentbros-creator.github.io/T-i-li-u-Trade/thu-vien-tai-lieu-github/assets/logo-nghe-trader.webp">
   <meta name="theme-color" content="#111b2b">
   <title>NGHỀ TRADER | Thư viện giao dịch</title>
   <link rel="icon" type="image/webp" href="assets/logo-nghe-trader.webp">
@@ -98,18 +102,72 @@
     .section-head h2{color:#f0f4fa}
     .section-head p,.sort{color:#9ab0c8}
     @media(max-width:800px){.hero-chart,.hero-logo{display:none}}
+
+    /* NGHỀ TRADER — nâng cấp chuyển động và hiển thị */
+    .brand-name{display:flex;flex-direction:column;gap:3px;line-height:1.15;min-width:0}
+    .brand-sub{color:#d8ad60;font-size:10px;font-weight:700;letter-spacing:1.15px}
+    .stat{color:#9eb5c8;text-align:right}
+    .stat-split{display:block;font-size:11px;color:#d6b777;font-weight:600;letter-spacing:.015em}
+    .hero{isolation:isolate}
+    .hero::before{content:"";position:absolute;inset:-20%;z-index:0;background:radial-gradient(circle at 80% 38%,#daa94f13,transparent 33%),radial-gradient(circle at 23% 80%,#399fc916,transparent 31%);animation:ambientShift 16s ease-in-out infinite alternate;pointer-events:none}
+    .hero-content{animation:fadeUp .85s cubic-bezier(.2,.8,.2,1) both}
+    .hero-chart{z-index:0}
+    .hero-chart svg polyline{stroke-dasharray:1050;stroke-dashoffset:1050;animation:drawChart 3.3s ease-out .25s forwards}
+    .hero-chart svg path{opacity:0;animation:chartArea 1.7s ease-out 1.9s forwards}
+    .hero-logo{animation:logoFloat 7s ease-in-out infinite}
+    .market-info::before{animation:dotBreath 2.7s ease-in-out infinite}
+    .hero-cta{box-shadow:0 5px 24px #daa94f24}
+    .doc{animation:cardRise .58s cubic-bezier(.18,.8,.24,1) both;will-change:transform}
+    .doc-cover-wrap{aspect-ratio:16/9;position:relative;overflow:hidden;background:#081725;border-bottom:1px solid #33465c}
+    .doc-cover-wrap::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,#06122062,transparent 53%);opacity:.9}
+    .doc-cover{width:100%;height:100%;object-fit:cover;aspect-ratio:auto;display:block;border:0;transition:transform .65s cubic-bezier(.17,.67,.22,1)}
+    .doc:hover .doc-cover{transform:scale(1.065)}
+    .cover-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:#d7a852e8;color:#0b1929;box-shadow:0 0 0 8px #ffffff17,0 10px 30px #0009;transition:transform .25s ease,box-shadow .25s ease}
+    .doc:hover .cover-play{transform:translate(-50%,-50%) scale(1.11);box-shadow:0 0 0 13px #d7a85225,0 12px 36px #0009}
+    .cover-play svg{margin-left:3px}
+    .cover-corner{position:absolute;right:15px;top:15px;z-index:2;background:#071523d9;border:1px solid #b9915470;padding:5px 10px;border-radius:7px;font-size:10px;font-weight:800;color:#ecc785;letter-spacing:1.2px}
+    .doc-cover-placeholder{gap:8px;flex-direction:column;font-size:20px}
+    .placeholder-icon{font-size:76px;color:#e6b563}
+    .placeholder-label{font-size:12px;font-weight:700;letter-spacing:2px;color:#c9d9e9}
+    .footer-right{display:flex;align-items:flex-end;flex-direction:column;gap:5px}
+    .footer-right a{color:#ecc47b;font-weight:700}
+    .footer-right a:hover{text-decoration:underline}
+    .risk-note{color:#9ab0c8;font-size:11px;margin-top:4px}
+    .small-btn:hover{background:#2c4763;color:#fff}
+    .action:focus-visible,.filter:focus-visible,.nav-link:focus-visible,.hero-cta:focus-visible,.footer a:focus-visible,.close-btn:focus-visible{outline:3px solid #e6b663;outline-offset:3px}
+    @keyframes ambientShift{from{transform:translate(-1%,-2%) scale(1)}to{transform:translate(3%,3%) scale(1.06)}}
+    @keyframes drawChart{to{stroke-dashoffset:0}}
+    @keyframes chartArea{to{opacity:1}}
+    @keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(19px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes cardRise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes dotBreath{0%,100%{opacity:.7;box-shadow:0 0 4px #50d9a4}50%{opacity:1;box-shadow:0 0 15px #50d9a4}}
+    @media(max-width:620px){
+      .nav{gap:9px}.brand{gap:8px;font-size:15px}.brand-sub{font-size:8px;letter-spacing:.6px}
+      .nav-link{white-space:nowrap;max-width:118px;text-align:center;line-height:1.2}
+      .hero{padding-top:57px}.hero h1{font-size:clamp(32px,10vw,47px)}
+      .market-info{font-size:10px;line-height:1.7}
+      .doc-cover-wrap{aspect-ratio:16/9}
+      .footer-right{align-items:flex-start}
+    }
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .hero::before,.hero-content,.hero-chart svg polyline,.hero-chart svg path,.hero-logo,.market-info::before,.doc{animation:none!important}
+      .hero-chart svg polyline{stroke-dashoffset:0}.hero-chart svg path{opacity:1}
+      .doc-cover,.cover-play,.doc,.hero-cta{transition:none!important}
+    }
   </style>
 </head>
 <body>
-  <header class="topbar"><div class="shell nav"><a class="brand" href="./" aria-label="Trang chủ thư viện"><span class="brand-mark"><img src="assets/logo-nghe-trader.webp" alt="Logo NGHỀ TRADER" width="51" height="51"></span><span id="siteBrand">NGHỀ TRADER</span></a><a class="nav-link" href="#thu-vien">Khám phá tài liệu ↗</a></div></header>
+  <header class="topbar"><div class="shell nav"><a class="brand" href="./" aria-label="Trang chủ thư viện"><span class="brand-mark"><img src="assets/logo-nghe-trader.webp" alt="Logo NGHỀ TRADER" width="51" height="51"></span><span class="brand-name"><span id="siteBrand">NGHỀ TRADER</span><span class="brand-sub">ACADEMY · THƯ VIỆN GIAO DỊCH</span></span></a><a class="nav-link" href="#thu-vien">Khám phá tài liệu ↗</a></div></header>
   <section class="hero"><div class="shell"><div class="hero-content"><span class="eyebrow">✦ NGHỀ TRADER ACADEMY</span><h1>Hiểu thị trường.<br><em>Giao dịch có kỷ luật.</em></h1><p id="siteDescription">Tìm kiếm, đọc trực tuyến và tải về các tài liệu được chia sẻ miễn phí. Mọi thứ đều được sắp xếp để bạn dễ dàng khám phá.</p><a class="hero-cta" href="#thu-vien">Khám phá video & tài liệu →</a><div class="market-info">PRICE ACTION • PHÂN TÍCH KỸ THUẬT • QUẢN TRỊ RỦI RO</div></div></div><img class="hero-logo" src="assets/logo-nghe-trader.webp" alt="Logo chính thức NGHỀ TRADER" width="205" height="205"><div class="hero-chart" aria-hidden="true"><svg viewBox="0 0 500 350"><polyline points="0,290 50,255 90,269 130,202 175,220 220,156 260,191 311,112 350,143 407,83 461,99 500,42" fill="none" stroke="#e7b663" stroke-width="5"/><path d="M0 290L50 255L90 269L130 202L175 220L220 156L260 191L311 112L350 143L407 83L461 99L500 42L500 350H0Z" fill="#e7b663" opacity=".16"/></svg></div></section>
   <main class="shell content" id="thu-vien">
-    <div class="toolbar"><div class="toolbar-top"><label class="search" for="searchInput"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg><input id="searchInput" placeholder="Tìm theo tên, mô tả hoặc từ khóa..." autocomplete="off" aria-label="Tìm kiếm tài liệu"></label><div class="stat"><strong id="totalCount">0</strong> tài liệu công khai</div></div><div class="filters" id="filters" aria-label="Lọc theo danh mục"></div></div>
+    <div class="toolbar"><div class="toolbar-top"><label class="search" for="searchInput"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg><input id="searchInput" placeholder="Tìm theo tên, mô tả hoặc từ khóa..." autocomplete="off" aria-label="Tìm kiếm tài liệu"></label><div class="stat"><strong id="totalCount">0</strong> nội dung<span class="stat-split" id="totalSplit"></span></div></div><div class="filters" id="filters" aria-label="Lọc theo danh mục"></div></div>
     <section aria-label="Danh sách tài liệu"><div class="section-head"><div><h2>Kho kiến thức giao dịch</h2><p id="resultText">Tổng hợp tài liệu dành cho bạn</p></div><div class="sort">Sắp xếp: mới nhất trước</div></div><div class="grid" id="docGrid" aria-live="polite"></div></section>
   </main>
-  <footer class="footer"><div class="shell footer-row"><div><strong id="footerBrand">THƯ VIỆN TÀI LIỆU</strong> · Chia sẻ tri thức, kết nối cộng đồng.</div><div>Được xuất bản miễn phí bằng GitHub Pages</div></div></footer>
+  <footer class="footer"><div class="shell footer-row"><div><strong id="footerBrand">NGHỀ TRADER</strong> · Kiến thức giao dịch và quản trị rủi ro.<div class="risk-note">Tài liệu mang tính giáo dục, không phải khuyến nghị đầu tư.</div></div><div class="footer-right"><a href="https://giaiphapgiaodich.com/" target="_blank" rel="noopener noreferrer">giaiphapgiaodich.com ↗</a><span>Được xuất bản trên GitHub Pages</span></div></div></footer>
   <div class="overlay" id="pdfOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="viewerTitle"><div class="viewer"><div class="viewer-head"><div id="viewerTitle" class="viewer-title">Đọc PDF</div><div class="viewer-controls"><a id="newTabLink" class="small-btn" target="_blank" rel="noopener noreferrer">Mở tab mới ↗</a><button id="closeViewer" class="close-btn" aria-label="Đóng PDF">×</button></div></div><iframe id="pdfFrame" title="Trình xem PDF" loading="lazy"></iframe><video id="videoPlayer" controls playsinline preload="metadata" style="display:none" aria-label="Trình phát video"></video></div></div>
-  <script src="data.js?v=20261112-trader-design2"></script>
+  <script src="data.js?v=20261112-animated-trader3"></script>
   <script>
     "use strict";
     const config = window.SITE_CONFIG || {};
@@ -129,10 +187,12 @@
     let lastFocus = null;
     const categories = ['Tất cả',...new Set(docs.map(d => d.category))];
     const name = String(config.name || 'THƯ VIỆN TÀI LIỆU');
-    $('siteBrand').textContent=name; $('footerBrand').textContent=name;
+    $('siteBrand').textContent=name.split('|')[0].trim(); $('footerBrand').textContent=name.split('|')[0].trim();
     if(config.description) $('siteDescription').textContent=config.description;
     document.title = `${name} | Đọc và tải tài liệu`;
     $('totalCount').textContent = docs.length.toLocaleString('vi-VN');
+    const videoCount=docs.filter(d=>d.type==='MP4'||d.file.toLowerCase().endsWith('.mp4')).length;
+    $('totalSplit').textContent = `${videoCount} video · ${docs.length-videoCount} tài liệu`;
     function renderFilters() {
       const el=$('filters');el.replaceChildren();
       categories.forEach(cat=>{const btn=document.createElement('button');btn.type='button';btn.className='filter'+(cat===activeCategory?' active':'');btn.textContent=cat;btn.setAttribute('aria-pressed',String(cat===activeCategory));btn.addEventListener('click',()=>{activeCategory=cat;renderFilters();renderDocs()});el.appendChild(btn)})
@@ -166,13 +226,15 @@
       $('resultText').textContent = `${filtered.length} kết quả${activeCategory==='Tất cả'?'':' trong danh mục '+activeCategory}`;
       const grid=$('docGrid');grid.replaceChildren();
       if(!filtered.length){const empty=document.createElement('div');empty.className='empty';empty.innerHTML='<div class="empty-icon">⌕</div><h3>Chưa có tài liệu phù hợp</h3><p>Hãy thử từ khóa khác hoặc chọn “Tất cả”.</p>';grid.appendChild(empty);return}
-      filtered.forEach(doc=>{
+      filtered.forEach((doc,i)=>{
         const isPdf=doc.type==='PDF'||doc.file.toLowerCase().endsWith('.pdf');
         const isVideo=doc.type==='MP4'||doc.file.toLowerCase().endsWith('.mp4');
         const group=isVideo?'video':isPdf?'':/(DOC|WORD)/.test(doc.type)?'word':/(XLS|CSV|EXCEL)/.test(doc.type)?'excel':'other';
         const card=document.createElement('article');card.className='doc';
+        card.style.animationDelay = `${Math.min(i,7)*65}ms`;
+        const coverMarkup = doc.cover ? `<div class="doc-cover-wrap"><img class="doc-cover" src="${escapeHTML(fileUrl(doc.cover))}" alt="Ảnh bìa ${escapeHTML(doc.title)}" loading="lazy">${isVideo ? '<span class="cover-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="25" height="25" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' : ''}<span class="cover-corner">${isVideo ? 'VIDEO' : escapeHTML(doc.type)}</span></div>` : `<div class="doc-cover-placeholder" aria-hidden="true"><span class="placeholder-icon">▤</span><span class="placeholder-label">TÀI LIỆU ${escapeHTML(doc.type)}</span></div>`;
         const date= /^\d{4}-\d{2}-\d{2}$/.test(doc.date) ? doc.date.split('-').reverse().join('/') : doc.date;
-        card.innerHTML = `${doc.cover ? `<img class="doc-cover" src="${escapeHTML(fileUrl(doc.cover))}" alt="Ảnh bìa ${escapeHTML(doc.title)}" loading="lazy">` : `<div class="doc-cover-placeholder" aria-hidden="true">▤</div>`}<div class="doc-top"><div class="file-symbol ${group}" aria-hidden="true">${escapeHTML(doc.type.slice(0,5))}</div><span class="file-tag">${escapeHTML(doc.category)}</span></div><div class="doc-body"><h3>${escapeHTML(doc.title)}</h3><p class="doc-desc">${escapeHTML(doc.description||'Tài liệu được chia sẻ miễn phí để đọc và tham khảo.')}</p><div class="doc-meta"><span>${escapeHTML(date||'Tài liệu')}</span>${doc.size?`<span class="dot"></span><span>${escapeHTML(doc.size)}</span>`:''}</div></div><div class="doc-actions"></div>`;
+        card.innerHTML = `${coverMarkup}<div class="doc-top"><div class="file-symbol ${group}" aria-hidden="true">${escapeHTML(doc.type.slice(0,5))}</div><span class="file-tag">${escapeHTML(doc.category)}</span></div><div class="doc-body"><h3>${escapeHTML(doc.title)}</h3><p class="doc-desc">${escapeHTML(doc.description||'Tài liệu được chia sẻ miễn phí để đọc và tham khảo.')}</p><div class="doc-meta"><span>${escapeHTML(date||'Tài liệu')}</span>${doc.size?`<span class="dot"></span><span>${escapeHTML(doc.size)}</span>`:''}</div></div><div class="doc-actions"></div>`;
         const actions=card.querySelector('.doc-actions');
         const view=document.createElement((isPdf||isVideo)?'button':'a');view.className='action primary';view.innerHTML=icons.view+(isVideo?'Xem video':isPdf?'Đọc PDF':'Xem tệp');
         if(isPdf||isVideo){view.type='button';view.addEventListener('click',()=>openViewer(doc))}else{view.href=fileUrl(doc.file);view.target='_blank';view.rel='noopener noreferrer'}
