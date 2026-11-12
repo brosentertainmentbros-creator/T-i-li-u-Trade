@@ -8,6 +8,42 @@ window.SITE_CONFIG = {
 // Chú ý: mỗi mục trừ mục cuối cùng phải có dấu phẩy sau dấu }.
 window.DOCUMENTS = [
   {
+    title: "NgheTrader – NenBua",
+    description: "Video được chia sẻ trong thư viện NGHỀ TRADER.",
+    category: "Video",
+    type: "MP4",
+    file: "tai-lieu/NgheTrader_NenBua.mp4",
+    date: "2026-11-12",
+    size: "3,7 MB"
+  },
+  {
+    title: "NgheTrader – NhanChimTang",
+    description: "Video được chia sẻ trong thư viện NGHỀ TRADER.",
+    category: "Video",
+    type: "MP4",
+    file: "tai-lieu/NgheTrader_NhanChimTang.mp4",
+    date: "2026-11-12",
+    size: "3,9 MB"
+  },
+  {
+    title: "NgheTrader – SaoBang",
+    description: "Video được chia sẻ trong thư viện NGHỀ TRADER.",
+    category: "Video",
+    type: "MP4",
+    file: "tai-lieu/NgheTrader_SaoBang.mp4",
+    date: "2026-11-12",
+    size: "4,7 MB"
+  },
+  {
+    title: "Video tiếng Việt – out_vi_giong_sub",
+    description: "Video được chia sẻ trong thư viện NGHỀ TRADER.",
+    category: "Video",
+    type: "MP4",
+    file: "tai-lieu/out_vi_giong_sub.mp4",
+    date: "2026-11-12",
+    size: "5,5 MB"
+  },
+  {
     title: "Hướng dẫn sử dụng thư viện tài liệu",
     description: "Tài liệu PDF mẫu hướng dẫn cách tìm kiếm, xem trực tuyến và tải về. Bạn có thể xóa file mẫu khi đưa tài liệu thật lên.",
     category: "Hướng dẫn",
