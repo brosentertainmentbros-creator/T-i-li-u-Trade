@@ -36,6 +36,10 @@ button,input{font:inherit}
 .btn-line{border-color:#4a5d74;color:#e5edf6;background:transparent}
 .btn-line:hover{background:#1b2d42}
 .btn-sm{padding:8px 15px;font-size:14px}
+.btn-zalo{border-color:#5b8a90;background:#123541;color:#e9f8fb}
+.btn-zalo:hover{background:#1b4a56;border-color:#8ec1c5}
+.footer-zalo{color:var(--gold);font-weight:700}
+.btn-zalo:focus-visible,.footer-zalo:focus-visible{outline:3px solid #e9ba65;outline-offset:3px}
 /* hero */
 .hero{background:radial-gradient(ellipse at 85% 0,#21435e,transparent 55%),linear-gradient(135deg,#06101e,#132940);padding:54px 0 64px;border-bottom:1px solid #263850}
 .hero-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:34px;align-items:center}
@@ -146,6 +150,7 @@ footer b{color:var(--ink)}
    <div class="cta">
     <a class="btn btn-gold" href="#video">Xem thử miễn phí</a>
     <a class="btn btn-line" href="#khoa-hoc">Xem các khóa học</a>
+    <a class="btn btn-zalo" href="https://zalo.me/g/pflrrz190" target="_blank" rel="noopener noreferrer" aria-label="Tham gia Cộng đồng Zalo NGHỀ TRADER (mở tab mới)">💬 Tham gia cộng đồng Zalo ↗</a>
    </div>
   </div>
   <a class="hero-video" href="watch.html?v=recap-tradepro.mp4" aria-label="Xem video tổng quan TradePro">
@@ -160,7 +165,7 @@ footer b{color:var(--ink)}
   <a class="tile" href="#khoa-hoc"><div class="ico">🎓</div><div><b>Lớp học TradePro</b><small>Học theo lộ trình</small></div></a>
   <a class="tile" href="#video"><div class="ico">🎬</div><div><b id="vcount">Video bài học</b><small>Xem miễn phí</small></div></a>
   <a class="tile" href="#thong-bao"><div class="ico">📰</div><div><b>Tin tức thị trường</b><small>Cập nhật mỗi ngày</small></div></a>
-  <a class="tile" href="#ho-tro"><div class="ico">💬</div><div><b>Nhóm Zalo hỗ trợ</b><small>Giải đáp cho học viên</small></div></a>
+  <a class="tile" href="https://zalo.me/g/pflrrz190" target="_blank" rel="noopener noreferrer"><div class="ico">💬</div><div><b>Cộng đồng Zalo</b><small>Nhấn để tham gia nhóm ↗</small></div></a>
  </div>
 
  <section id="khoa-hoc">
@@ -208,7 +213,7 @@ footer b{color:var(--ink)}
     <h3>Hỗ trợ và đăng ký</h3>
     <div class="help">
      <a class="btn btn-gold" href="https://giaiphapgiaodich.com" target="_blank" rel="noopener">Truy cập giaiphapgiaodich.com</a>
-     <a class="btn btn-line" href="#" id="zalo">Vào nhóm Zalo hỗ trợ</a>
+     <a class="btn btn-zalo" href="https://zalo.me/g/pflrrz190" id="zalo" target="_blank" rel="noopener noreferrer">💬 Tham gia Cộng đồng Zalo ↗</a>
      <a class="btn btn-line" href="#video">Xem thử trước khi tham gia</a>
      <a class="btn btn-line" href="thu-vien.html">Mở thư viện đầy đủ</a>
     </div>
@@ -227,7 +232,7 @@ footer b{color:var(--ink)}
 </main>
 
 <footer>
- <div class="shell"><b>NGHỀ TRADER</b> · giaiphapgiaodich.com<br>Nội dung chỉ nhằm mục đích giáo dục, không phải khuyến nghị đầu tư. Giao dịch có rủi ro.</div>
+ <div class="shell"><b>NGHỀ TRADER</b> · giaiphapgiaodich.com · <a class="footer-zalo" href="https://zalo.me/g/pflrrz190" target="_blank" rel="noopener noreferrer">Cộng đồng Zalo ↗</a><br>Nội dung chỉ nhằm mục đích giáo dục, không phải khuyến nghị đầu tư. Giao dịch có rủi ro.</div>
 </footer>
 
 <script src="data.js"></script>
@@ -259,10 +264,6 @@ footer b{color:var(--ink)}
  }
  document.getElementById('q').addEventListener('input',function(e){q=e.target.value;drawVids();
   if(q)document.getElementById('video').scrollIntoView({behavior:'smooth'})});
- document.getElementById('zalo').addEventListener('click',function(e){
-  var z=window.SITE_CONFIG&&window.SITE_CONFIG.zalo;
-  if(z){this.href=z;this.target='_blank';this.rel='noopener'}else{e.preventDefault();alert('Link nhóm Zalo chưa được cập nhật.')}
- });
  drawChips();drawVids();
 })();
 </script>
