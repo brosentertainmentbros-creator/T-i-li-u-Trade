@@ -197,10 +197,41 @@
     .category-tile-action{color:#e5b96d;font-size:13px;font-weight:800;margin-top:auto;padding-top:5px}
     @media(max-width:700px){.category-cards{grid-template-columns:1fr;gap:13px}.category-tile{min-height:0;padding:20px}.chooser-heading{align-items:flex-start;flex-direction:column;gap:7px}.chooser-heading h2{font-size:23px}.chooser-heading p{font-size:12px}}
     @media(prefers-reduced-motion:reduce){.category-tile{transition:none}}
+
+    /* Contact section — accessible, responsive, dark navy and gold */
+    .nav-actions{display:flex;align-items:center;gap:10px;flex-shrink:0}
+    .contact-nav-link{border-color:#a4824e;color:#f0c77c}
+    .contact-nav-link:hover{background:#463722}
+    #lien-he,#thu-vien{scroll-margin-top:88px}
+    .contact-section{position:relative;padding:70px 0 84px;background:radial-gradient(ellipse at 85% 0,#23455a33,transparent 45%),#0a1828;border-top:1px solid #31455a}
+    .contact-intro{margin-bottom:28px}
+    .contact-kicker{font-size:11px;font-weight:800;letter-spacing:2px;color:#e4b866}
+    .contact-intro h2{font-size:clamp(27px,3.1vw,40px);color:#f4f8ff;line-height:1.2;margin:8px 0 12px}
+    .contact-intro p{font-size:15px;line-height:1.65;color:#a8bbcf;margin:0}
+    .contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.13fr);gap:22px;align-items:stretch}
+    .contact-panel{border:1px solid #344e69;border-radius:19px;background:linear-gradient(155deg,#132a40,#0d1d30);padding:24px;display:flex;flex-direction:column;gap:6px}
+    .contact-item{display:grid;grid-template-columns:42px minmax(0,1fr);gap:14px;padding:17px 0;border-bottom:1px solid #2c4058}
+    .contact-item:first-child{padding-top:3px}
+    .contact-item:nth-child(3){border-bottom:0}
+    .contact-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:#d6a64e22;border:1px solid #d6a64e5a;color:#eac073;font-size:22px}
+    .contact-item>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+    .contact-label{color:#90aac3;font-size:12px;font-weight:700;letter-spacing:.035em}
+    .contact-value{color:#f5f9ff;font-weight:750;font-size:clamp(15px,1.5vw,19px);overflow-wrap:anywhere}
+    a.contact-value:hover{color:#f1ca82;text-decoration:underline}
+    .contact-address{font-weight:650;line-height:1.5}
+    .contact-help{font-size:12px;color:#8ea8c1}
+    .contact-directions{display:inline-flex;align-items:center;justify-content:center;margin-top:auto;border-radius:11px;padding:13px 16px;background:#d5a555;color:#132034;text-align:center;font-size:14px;font-weight:800;transition:background .2s ease}
+    .contact-directions:hover{background:#efc47a}
+    .contact-map{border:1px solid #40556c;overflow:hidden;border-radius:19px;background:#132338;min-height:425px;box-shadow:0 14px 35px #0004}
+    .contact-map iframe{display:block;width:100%;height:100%;min-height:425px}
+    .contact-nav-link:focus-visible,.contact-directions:focus-visible,.contact-value:focus-visible{outline:3px solid #edc478;outline-offset:3px}
+    @media(max-width:800px){.contact-grid{grid-template-columns:1fr}.contact-panel{padding:22px}.contact-map,.contact-map iframe{min-height:340px}}
+    @media(max-width:620px){.nav-actions{gap:6px}.nav-actions .library-link{display:none}.contact-section{padding:50px 0 60px}.contact-panel{padding:19px}.contact-map,.contact-map iframe{min-height:300px}.contact-intro p{font-size:14px}.contact-item{grid-template-columns:38px minmax(0,1fr);gap:11px}.contact-icon{width:38px;height:38px}.contact-value{font-size:15px}}
+    @media(prefers-reduced-motion:reduce){.contact-directions{transition:none}}
   </style>
 </head>
 <body>
-  <header class="topbar"><div class="shell nav"><a class="brand" href="./" aria-label="Trang chủ thư viện"><span class="brand-mark"><img src="assets/logo-nghe-trader.webp" alt="Logo NGHỀ TRADER" width="51" height="51"></span><span class="brand-name"><span id="siteBrand">NGHỀ TRADER</span><span class="brand-sub">ACADEMY · THƯ VIỆN GIAO DỊCH</span></span></a><a class="nav-link" href="#thu-vien">Khám phá tài liệu ↗</a></div></header>
+  <header class="topbar"><div class="shell nav"><a class="brand" href="./" aria-label="Trang chủ thư viện"><span class="brand-mark"><img src="assets/logo-nghe-trader.webp" alt="Logo NGHỀ TRADER" width="51" height="51"></span><span class="brand-name"><span id="siteBrand">NGHỀ TRADER</span><span class="brand-sub">ACADEMY · THƯ VIỆN GIAO DỊCH</span></span></a><nav class="nav-actions" aria-label="Điều hướng chính"><a class="nav-link library-link" href="#thu-vien">Thư viện</a><a class="nav-link contact-nav-link" href="#lien-he">Liên hệ</a></nav></div></header>
   <section class="hero">
     <video id="heroRecapBg" class="hero-video" muted autoplay loop playsinline preload="none" poster="assets/recap-tradepro.svg" aria-label="Video recap TradePro chuyển động làm nền trang chủ" hidden></video>
     <div class="hero-video-shade" aria-hidden="true"></div>
@@ -238,6 +269,36 @@
     <div class="toolbar"><div class="toolbar-top"><label class="search" for="searchInput"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg><input id="searchInput" placeholder="Tìm theo tên, mô tả hoặc từ khóa..." autocomplete="off" aria-label="Tìm kiếm tài liệu"></label><div class="stat"><strong id="totalCount">0</strong> nội dung<span class="stat-split" id="totalSplit"></span></div></div><div class="filters" id="filters" aria-label="Lọc theo danh mục"></div></div>
     <section id="resultsSection" aria-label="Danh sách tài liệu"><div class="section-head"><div><h2>Kho kiến thức giao dịch</h2><p id="resultText">Tổng hợp tài liệu dành cho bạn</p></div><div class="sort">Sắp xếp: mới nhất trước</div></div><div class="grid" id="docGrid" aria-live="polite"></div></section>
   </main>
+
+  <section class="contact-section" id="lien-he" aria-labelledby="contactTitle">
+    <div class="shell">
+      <div class="contact-intro">
+        <span class="contact-kicker">NGHỀ TRADER · HỖ TRỢ</span>
+        <h2 id="contactTitle">Liên hệ với chúng tôi</h2>
+        <p>Cần tìm hiểu thêm về tài liệu và sản phẩm? Hãy liên hệ qua điện thoại hoặc email.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-panel">
+          <div class="contact-item">
+            <span class="contact-icon" aria-hidden="true">☎</span>
+            <div><span class="contact-label">Điện thoại</span><a href="tel:+84905890399" class="contact-value">0905 890 399</a><span class="contact-help">Nhấn để gọi điện</span></div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon" aria-hidden="true">✉</span>
+            <div><span class="contact-label">Email hỗ trợ</span><a href="mailto:support@giaiphapgiaodich.com" class="contact-value">support@giaiphapgiaodich.com</a><span class="contact-help">Nhấn để gửi email</span></div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon" aria-hidden="true">⌖</span>
+            <div><span class="contact-label">Địa điểm trên bản đồ · TMLabs Coffee</span><span class="contact-value contact-address">84A Nguyễn Cửu Vân, Phường Gia Định, TP. Hồ Chí Minh</span><span class="contact-help">Khu vực Bình Thạnh (cũ)</span></div>
+          </div>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=TMLabs%20Coffee%2084A%20Nguyen%20Cuu%20Van%20Ho%20Chi%20Minh" target="_blank" rel="noopener noreferrer" class="contact-directions">Xem đường đi trên Google Maps ↗</a>
+        </div>
+        <div class="contact-map" aria-label="Bản đồ địa điểm TMLabs Coffee">
+          <iframe title="Bản đồ TMLabs Coffee — 84A Nguyễn Cửu Vân" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5358.266182259869!2d106.70271301180566!3d10.79682478930846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529002cfcc87b%3A0x29252424e29d0a3b!2sTMLabs%20Coffee!5e1!3m2!1svi!2s!4v1794466311318!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
   <footer class="footer"><div class="shell footer-row"><div><strong id="footerBrand">NGHỀ TRADER</strong> · Kiến thức giao dịch và quản trị rủi ro.<div class="risk-note">Tài liệu mang tính giáo dục, không phải khuyến nghị đầu tư.</div></div><div class="footer-right"><a href="https://giaiphapgiaodich.com/" target="_blank" rel="noopener noreferrer">giaiphapgiaodich.com ↗</a><span>Được xuất bản trên GitHub Pages</span></div></div></footer>
   <div class="overlay" id="pdfOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="viewerTitle"><div class="viewer"><div class="viewer-head"><div id="viewerTitle" class="viewer-title">Đọc PDF</div><div class="viewer-controls"><a id="newTabLink" class="small-btn" target="_blank" rel="noopener noreferrer">Mở tab mới ↗</a><button id="closeViewer" class="close-btn" aria-label="Đóng PDF">×</button></div></div><iframe id="pdfFrame" title="Trình xem PDF" loading="lazy"></iframe><video id="videoPlayer" controls playsinline preload="metadata" style="display:none" aria-label="Trình phát video"></video></div></div>
   <script src="data.js?v=20261112-knowledge-product-categories"></script>
