@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08192b">
+<meta name="description" content="Xem video đào tạo và giới thiệu sản phẩm của NGHỀ TRADER Academy: mô hình nến, PassView và Bot AI.">
+<title>Xem video | NGHỀ TRADER Academy</title>
+<link rel="icon" type="image/webp" href="assets/logo-nghe-trader.webp">
+<style>
+:root{color-scheme:dark;--bg:#071626;--surface:#10253b;--surface2:#142d45;--line:#334c65;--ink:#f4f8fc;--muted:#a7bad0;--gold:#e0af5b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 80% -10%,#203b55,transparent 42%),var(--bg);color:var(--ink);font:15px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}a{color:inherit;text-decoration:none}button,select{font:inherit}button{cursor:pointer}.shell{width:min(1220px,calc(100% - 40px));margin:auto}
+header{border-bottom:1px solid #2c435a;background:#09192bbf;backdrop-filter:blur(12px)}.topbar{min-height:79px;display:flex;justify-content:space-between;align-items:center;gap:15px}
+.brand{display:flex;align-items:center;gap:13px;font-size:17px;font-weight:850;letter-spacing:.02em}.brand img{width:50px;height:50px;object-fit:contain}.brand small{display:block;color:var(--gold);font-size:10px;letter-spacing:1.8px;font-weight:700}.navlinks{display:flex;gap:11px}.navlinks a,.back{border:1px solid #40556d;background:#12293d;border-radius:10px;padding:9px 14px;font-weight:700;font-size:13px}.navlinks a:hover,.back:hover{border-color:var(--gold)}
+.crumbs{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:27px 0 20px;color:var(--muted);font-size:13px}.crumbs a:hover{color:var(--gold)}.crumbs strong{color:#e9c789}
+.layout{display:grid;grid-template-columns:minmax(0,1.85fr) minmax(265px,1fr);gap:25px;align-items:start;padding-bottom:60px}
+.kicker{color:var(--gold);font-size:11px;font-weight:850;letter-spacing:1.8px;text-transform:uppercase}.heading{margin:8px 0 16px;font-size:clamp(25px,3.6vw,38px);letter-spacing:-.035em;line-height:1.22}
+.player-shell{background:#030c14;border:1px solid #455d71;border-radius:16px;overflow:hidden;box-shadow:0 20px 65px #0006;position:relative}.player-shell video{display:block;aspect-ratio:16/9;max-height:72vh;width:100%;object-fit:contain;background:#000}.player-shell video:focus-visible{outline:3px solid var(--gold)}
+.player-tools{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:15px 0 0}.player-tools button,.player-tools a,.player-tools select{background:#152c42;border:1px solid #3a556c;color:#e5eef9;border-radius:9px;padding:10px 13px;font-weight:700;font-size:13px}.player-tools button:hover,.player-tools a:hover,.player-tools select:hover{border-color:#dbaf64}.player-tools .button-gold{background:#d8a652;color:#0b1c30;border-color:#d8a652}.player-tools label{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}.player-tools .share-notice{color:#b4d9b4;font-size:12px}
+.summary-panel{margin-top:24px;border:1px solid var(--line);background:linear-gradient(140deg,#142a3f,#0d1e31);padding:25px;border-radius:16px}.summary-panel h2{font-size:20px;margin:0 0 9px}.summary-panel p{margin:0;color:#bccbdd;line-height:1.75}.meta-tags{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.meta-tags span{background:#263b50;border:1px solid #4b6076;color:#d5e1ec;border-radius:99px;font-size:12px;padding:5px 11px}.risk-note{margin-top:18px!important;font-size:12px!important;color:#8fa5bb!important;border-top:1px solid #2e445b;padding-top:14px}
+aside{background:linear-gradient(155deg,#11283d,#0b1b2d);border:1px solid var(--line);border-radius:17px;overflow:hidden;position:sticky;top:20px}.aside-title{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:22px 20px;border-bottom:1px solid var(--line)}.aside-title h2{margin:0;font-size:19px}.aside-title span{color:#91abc5;font-size:12px}.related{display:flex;flex-direction:column}.related-link{display:grid;grid-template-columns:112px minmax(0,1fr);gap:12px;padding:14px 17px;border-bottom:1px solid #2c4155;transition:background .2s}.related-link:last-child{border:0}.related-link:hover{background:#1e3a54}.related-link.active{background:#2b4052}.related-link img{width:112px;height:76px;object-fit:cover;border-radius:9px;border:1px solid #425268;background:#061321}.related-link strong{font-size:13px;line-height:1.45;display:block;color:#ebf3fa}.related-link small{font-size:11px;color:#9db2c7;display:block;margin-top:4px}.next{display:block;margin:15px 17px 18px;text-align:center;border-radius:10px;padding:11px;background:#d9ac63;color:#0b1e2d;font-weight:800;font-size:13px}.next:hover{background:#f1c782}
+.error{margin:12px 0 0;color:#edbc8a;display:none}.error.visible{display:block}.footer{border-top:1px solid var(--line);padding:24px 0;color:#9eb1c7;font-size:13px}.footer .shell{display:flex;gap:16px;justify-content:space-between;flex-wrap:wrap}
+a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #f0ca80;outline-offset:3px}
+@media(max-width:920px){.layout{grid-template-columns:1fr}aside{position:static}.related{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:630px){.shell{width:min(100% - 28px,1220px)}.topbar{min-height:68px}.brand{font-size:13px}.brand img{width:41px;height:41px}.brand small{font-size:9px}.navlinks a:last-child{display:none}.crumbs{padding:18px 0}.related{grid-template-columns:1fr}.related-link{grid-template-columns:110px minmax(0,1fr)}.summary-panel{padding:19px}.player-tools{gap:8px}.player-tools button,.player-tools a,.player-tools select{padding:9px 10px}.heading{font-size:26px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="shell topbar">
+  <a class="brand" href="./" aria-label="Trở lại NGHỀ TRADER Academy"><img src="assets/logo-nghe-trader.webp" alt="Logo NGHỀ TRADER" width="50" height="50"><span>NGHỀ TRADER<small>ACADEMY · THƯ VIỆN GIAO DỊCH</small></span></a>
+  <nav class="navlinks" aria-label="Điều hướng"><a href="./#thu-vien">← Thư viện</a><a href="./#hoi-dap">Hỏi đáp</a></nav>
+</div></header>
+<main class="shell">
+  <nav class="crumbs" aria-label="Đường dẫn"><a href="./">Trang chủ</a><span>›</span><a href="./#thu-vien">Thư viện video</a><span>›</span><strong id="breadcrumb">Đang tải bài học...</strong></nav>
+  <div class="layout">
+    <article>
+      <div class="kicker" id="categoryName">NGHỀ TRADER ACADEMY</div>
+      <h1 class="heading" id="videoTitle">Video kiến thức giao dịch</h1>
+      <div class="player-shell"><video id="player" controls playsinline preload="metadata" controlsList="nodownload" aria-label="Phát video bài học"></video></div>
+      <p id="videoError" class="error" role="status">Video tạm thời không thể phát. Hãy thử tải lại trang hoặc dùng nút tải video.</p>
+      <div class="player-tools">
+        <button type="button" id="rewind" aria-label="Lùi 10 giây">↶ 10 giây</button>
+        <button type="button" id="forward" aria-label="Tua tới 10 giây">10 giây ↷</button>
+        <label for="speed">Tốc độ
+          <select id="speed" aria-label="Chọn tốc độ phát"><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.25">1,25×</option><option value="1.5">1,5×</option><option value="2">2×</option></select>
+        </label>
+        <button id="share" type="button">↗ Chia sẻ</button>
+        <a id="download" class="button-gold" download>Tải video ↓</a>
+        <span id="shareNotice" class="share-notice" role="status"></span>
+      </div>
+      <section class="summary-panel" aria-labelledby="summaryHeading">
+        <h2 id="summaryHeading">Giới thiệu nội dung</h2>
+        <p id="description">Khám phá kiến thức giao dịch và những nội dung hữu ích từ NGHỀ TRADER Academy.</p>
+        <div class="meta-tags"><span id="type">VIDEO MP4</span><span id="date">Thư viện</span><span id="categoryTag">Kiến thức</span></div>
+        <p class="risk-note">Nội dung chỉ phục vụ mục đích giáo dục và giới thiệu sản phẩm, không phải khuyến nghị đầu tư. Giao dịch tài chính có rủi ro và kết quả trong quá khứ không đảm bảo kết quả tương lai.</p>
+      </section>
+    </article>
+    <aside aria-labelledby="relatedHeading">
+      <div class="aside-title"><h2 id="relatedHeading">Xem tiếp</h2><span id="relatedCount">0 video</span></div>
+      <div class="related" id="related"></div>
+      <a class="next" id="nextLesson" href="./#thu-vien">Khám phá video tiếp theo →</a>
+    </aside>
+  </div>
+</main>
+<footer class="footer"><div class="shell"><span>© NGHỀ TRADER Academy · Học có phương pháp, giao dịch có kỷ luật.</span><a href="./#lien-he">Liên hệ hỗ trợ ↗</a></div></footer>
+<script src="data.js?v=20261112-knowledge-product-categories"></script>
+<script>
+"use strict";
+const docs=(Array.isArray(window.DOCUMENTS)?window.DOCUMENTS:[]).filter(function(d){return d.type==="MP4"&&/^tai-lieu\/[\w().-]+\.mp4$/i.test(d.file)});
+const recap={title:"TradePro Recap – Tổng hợp hoạt động",description:"Video recap tổng hợp các hoạt động và khoảnh khắc của cộng đồng NGHỀ TRADER.",category:"Hoạt động cộng đồng",cover:"assets/recap-tradepro.svg",type:"MP4",file:"tai-lieu/recap-tradepro.mp4",size:"14,8 MB",date:"2026-11-12"};
+const all=docs.concat([recap]);
+const id=new URLSearchParams(location.search).get("v");
+const current=all.find(function(d){return d.file.split("/").pop()===id})||docs[0];
+const $=function(id){return document.getElementById(id)};
+const clean=function(value){return String(value||"")};
+const linkFor=function(d){return "watch.html?v="+encodeURIComponent(d.file.split("/").pop())};
+if(current){
+  document.title=current.title+" | NGHỀ TRADER Academy";
+  $("breadcrumb").textContent=current.title;
+  $("categoryName").textContent=current.category;
+  $("videoTitle").textContent=current.title;
+  $("description").textContent=clean(current.description);
+  $("type").textContent="VIDEO MP4"+(current.size?" · "+current.size:"");
+  $("date").textContent=current.date?current.date.split("-").reverse().join("/"):"NGHỀ TRADER";
+  $("categoryTag").textContent=current.category;
+  const player=$("player");
+  player.src=current.file;
+  player.poster=current.cover||"assets/logo-nghe-trader.webp";
+  $("download").href=current.file;
+  $("download").download=current.file.split("/").pop();
+  player.addEventListener("error",function(){$("videoError").classList.add("visible")});
+  $("rewind").addEventListener("click",function(){player.currentTime=Math.max(0,player.currentTime-10)});
+  $("forward").addEventListener("click",function(){if(Number.isFinite(player.duration))player.currentTime=Math.min(player.duration,player.currentTime+10)});
+  $("speed").addEventListener("change",function(e){player.playbackRate=Number(e.target.value)});
+  $("share").addEventListener("click",function(){
+    if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(location.href).then(function(){$("shareNotice").textContent="Đã sao chép liên kết"},function(){$("shareNotice").textContent="Sao chép liên kết ở thanh địa chỉ"});
+    else $("shareNotice").textContent="Sao chép liên kết ở thanh địa chỉ";
+  });
+  const playlist=docs.filter(function(d){return d.category===current.category&&d.file!==current.file});
+  const related=(playlist.length?playlist:docs.filter(function(d){return d.file!==current.file})).slice(0,6);
+  $("relatedCount").textContent=related.length+" video";
+  related.forEach(function(d){
+    const a=document.createElement("a");a.className="related-link";a.href=linkFor(d);
+    const img=document.createElement("img");img.src=d.cover||"assets/logo-nghe-trader.webp";img.alt="Ảnh bìa "+d.title;img.loading="lazy";img.decoding="async";img.width=112;img.height=76;
+    const body=document.createElement("span");
+    const heading=document.createElement("strong");heading.textContent=d.title;
+    const meta=document.createElement("small");meta.textContent=d.category;
+    body.append(heading,meta);a.append(img,body);$("related").appendChild(a);
+  });
+  const idx=docs.findIndex(function(d){return d.file===current.file});
+  const next=related[0]||docs[(idx+1)%docs.length];
+  if(next){$("nextLesson").href=linkFor(next);$("nextLesson").textContent="Xem: "+next.title+" →"}
+}
+</script>
+</body>
+</html>
