@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NGHỀ TRADER Academy — thư viện video kiến thức giao dịch, mô hình nến và tài liệu học tập miễn phí.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="NGHỀ TRADER Academy | Thư viện kiến thức giao dịch">
+  <meta property="og:description" content="Xem video, tìm kiếm tài liệu về giao dịch và phân tích kỹ thuật. Nội dung giáo dục miễn phí.">
+  <meta property="og:image" content="https://brosentertainmentbros-creator.github.io/T-i-li-u-Trade/thu-vien-tai-lieu-github/assets/logo-nghe-trader.webp">
+  <meta name="theme-color" content="#111b2b">
+  <title>NGHỀ TRADER | Thư viện giao dịch</title>
+  <link rel="icon" type="image/webp" href="assets/logo-nghe-trader.webp">
+  <style>
+    :root {--ink:#eaf2fb;--muted:#96acc3;--bg:#091421;--paper:#101f31;--stroke:#2a4056;--gold:#daa94f;--gold-soft:#243022;--navy:#07111f;--soft:#14293d}
+    * {box-sizing:border-box}
+    html {scroll-behavior:smooth}
+    body {margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.55}
+    button,input {font:inherit}
+    button {cursor:pointer}
+    a {color:inherit;text-decoration:none}
+    .shell {max-width:1160px;margin:auto;padding:0 26px}
+    .topbar {background:#07111f;color:white;border-bottom:1px solid #263850;position:sticky;top:0;z-index:20;backdrop-filter:blur(15px)}
+    .nav {min-height:75px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand {display:flex;align-items:center;gap:12px;font-size:17px;font-weight:800;letter-spacing:.025em}
+    .brand-mark {display:grid;place-items:center;width:51px;height:51px;background:white;border-radius:50%;overflow:hidden;border:2px solid #dbb36e;box-shadow:0 0 0 3px #dbb36e20}.brand-mark img {width:100%;height:100%;object-fit:contain;display:block}
+    .nav-link {font-size:14px;color:#d9e2ed;border:1px solid #455165;padding:9px 16px;border-radius:10px;transition:.2s}
+    .nav-link:hover {background:#2b3b51}
+    .hero {background:radial-gradient(ellipse at 83% 10%,#21435e,transparent 53%),linear-gradient(135deg,#06101e,#132940);color:white;padding:90px 0 111px;position:relative;overflow:hidden}
+    .hero::after {content:"";position:absolute;right:-60px;bottom:-260px;width:480px;height:480px;border:1px solid #45546a;border-radius:50%;box-shadow:0 0 0 70px #1e2d4047,0 0 0 145px #1e2d4026;pointer-events:none}
+    .hero-content {position:relative;z-index:1;max-width:780px}
+    .eyebrow {display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:30px;border:1px solid #586277;color:#e6c386;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:800}
+    .hero h1 {font-size:clamp(36px,5vw,61px);letter-spacing:-.045em;line-height:1.12;margin:22px 0 16px;font-weight:800}
+    .hero h1 em {color:#e7b763;font-style:normal}
+    .hero p {font-size:17px;color:#cbd6e4;max-width:610px;margin:0}
+    .hero-cta {display:inline-flex;margin-top:28px;background:var(--gold);color:#141c27;font-weight:750;border-radius:11px;padding:12px 21px;transition:.2s}
+    .hero-cta:hover {background:#e2b464;transform:translateY(-1px)}
+    .content {position:relative;margin-top:-36px;padding-bottom:80px}
+    .toolbar {background:#102237;border:1px solid #38506a;box-shadow:0 16px 44px #0005;border-radius:18px;padding:22px;position:relative;z-index:2}
+    .toolbar-top {display:flex;justify-content:space-between;gap:22px;align-items:center}
+    .search {position:relative;flex:1}
+    .search svg {position:absolute;left:18px;top:50%;transform:translateY(-50%);color:#8090a2}
+    .search input {display:block;width:100%;border:1px solid #34506b;background:#091827;border-radius:12px;padding:16px 16px 16px 50px;outline:none;color:var(--ink);transition:.2s}
+    .search input:focus {border-color:var(--gold);box-shadow:0 0 0 3px #dca95b2a;background:#0b1a2b}
+    .stat {flex-shrink:0;color:#647184;font-size:14px}
+    .stat strong {font-size:22px;color:#eabb67;vertical-align:middle;margin-right:3px}
+    .filters {display:flex;gap:9px;flex-wrap:wrap;margin-top:19px}
+    .filter {border:1px solid #34506b;border-radius:999px;background:#13283d;color:#d2e2f1;padding:8px 14px;font-size:13px;font-weight:650;transition:.2s}
+    .filter:hover {border-color:var(--gold)}
+    .filter.active {background:var(--gold);color:#111a26;border-color:var(--gold)}
+    .section-head {display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin:40px 0 21px}
+    .section-head h2 {margin:0 0 4px;font-size:26px;letter-spacing:-.025em}
+    .section-head p {margin:0;color:var(--muted);font-size:14px}
+    .sort {font-size:13px;color:#657186;white-space:nowrap}
+    .grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+    .doc {min-width:0;background:#112338;border-radius:18px;border:1px solid #2b425b;box-shadow:0 12px 30px #0003;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+    .doc:hover {transform:translateY(-5px);box-shadow:0 18px 46px #0008;border-color:#c79a50}
+    .doc-top {padding:22px 22px 6px;display:flex;justify-content:space-between;align-items:center}
+    .file-symbol {width:54px;height:60px;border-radius:12px;background:#fff2ee;color:#cc6447;display:grid;place-items:center;font-size:14px;font-weight:800;letter-spacing:.03em;position:relative}
+    .file-symbol::before {content:"";position:absolute;right:0;top:0;border-top:13px solid white;border-left:13px solid #e8d2cb}
+    .file-symbol.video {background:#e9f3ff;color:#2c70a7}.file-symbol.video::before {border-left-color:#c4dced}
+    .file-symbol.word {background:#edf3ff;color:#3c6db0}.file-symbol.word::before {border-left-color:#cbd9f1}
+    .file-symbol.excel {background:#e7f7ef;color:#2f875c}.file-symbol.excel::before {border-left-color:#c7ead7}
+    .file-symbol.other {background:#f1f0fc;color:#7065a6}.file-symbol.other::before {border-left-color:#d5d0ef}
+    .file-tag {font-size:11px;font-weight:750;background:#1a3548;color:#e1bd7b;border:1px solid #345671;border-radius:100px;padding:5px 10px}
+    .doc-body {padding:14px 22px 18px;flex:1}
+    .doc-body h3 {font-size:18px;line-height:1.35;margin:0 0 8px;min-height:48px;overflow-wrap:anywhere}
+    .doc-desc {color:#b0c0d0;font-size:13px;line-height:1.65;margin:0;min-height:66px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .doc-meta {display:flex;align-items:center;gap:7px;font-size:12px;color:#8ba5be;margin-top:15px;flex-wrap:wrap}
+    .dot {height:3px;width:3px;background:#abb3be;border-radius:100%}
+    .doc-actions {padding:14px 22px 20px;border-top:1px solid #30465d;display:flex;gap:10px}
+    .action {flex:1;display:inline-flex;justify-content:center;align-items:center;gap:7px;padding:10px 10px;border-radius:10px;border:1px solid #39536a;font-size:13px;font-weight:720;background:#182e44;color:#eaf2fb;min-width:0}
+    .action:hover {background:#27425b}.action.primary {background:#d6a64e;color:#0b1724;border-color:#d6a64e}.action.primary:hover {background:#e9bc69}
+    .action svg {height:16px;width:16px;flex-shrink:0}
+    .empty {grid-column:1/-1;text-align:center;background:#102237;border:1px dashed #bdc8d5;border-radius:17px;padding:60px 20px;color:var(--muted)}
+    .empty-icon {font-size:38px;margin-bottom:8px}.empty h3 {margin:0 0 5px;color:var(--ink)}.empty p {margin:0}
+    .footer {background:#101c2c;color:#95a5b9;padding:26px 0;font-size:13px}
+    .footer-row {display:flex;justify-content:space-between;gap:20px;align-items:center}
+    .footer strong {color:#f4f6f8}
+    .overlay {position:fixed;inset:0;background:#071020cc;display:none;align-items:center;justify-content:center;z-index:50;padding:15px}
+    .overlay.open {display:flex}
+    .viewer {background:#102237;border-radius:16px;width:min(1100px,100%);height:min(94vh,900px);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 25px 90px #0006}
+    .viewer-head {padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--stroke);color:#eef4fa}
+    .viewer-title {font-weight:730;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+    .viewer-controls {display:flex;gap:8px;align-items:center;flex-shrink:0}
+    .small-btn {font-size:12px;padding:8px 11px;background:#20384f;color:#eaf2fb;border:1px solid #40556b;border-radius:8px}
+    .small-btn:hover {background:#e2e9f0}
+    .close-btn {border:0;background:#e6b567;color:#152135;font-size:25px;line-height:28px;width:34px;height:34px;border-radius:8px}
+    .viewer iframe,.viewer video {width:100%;flex:1;border:0;background:#e7ebf1;min-height:0}.viewer video {object-fit:contain;background:#101c2c}
+    body.modal-open {overflow:hidden}
+    @media(max-width:930px){.grid {grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:620px){.shell{padding:0 17px}.nav{min-height:69px}.brand{font-size:14px}.brand-mark{height:38px;width:38px}.nav-link{font-size:12px;padding:8px}.hero{padding:52px 0 77px}.hero p{font-size:15px}.toolbar{padding:16px}.toolbar-top{align-items:stretch;flex-direction:column;gap:10px}.stat{align-self:flex-end}.grid{grid-template-columns:1fr}.section-head{margin-top:32px}.section-head h2{font-size:22px}.sort{display:none}.doc-body h3{min-height:auto}.doc-desc{min-height:auto}.viewer-head{padding:10px}.viewer-controls .small-btn{font-size:11px;padding:6px}.viewer-title{font-size:13px}.footer-row{flex-direction:column;align-items:flex-start}}
+    .doc-cover{aspect-ratio:16/9;display:block;width:100%;object-fit:cover;background:#0d1c2c;border-bottom:1px solid #34485a}
+    .doc-cover-placeholder{aspect-ratio:16/9;background:radial-gradient(circle at 70% 30%,#2c4c62,#0b1829);display:grid;place-items:center;font-size:68px;color:#d9aa57}
+    .doc-top {padding-top:15px}
+    .brand-mark{font-weight:900}
+    .hero-eyeline{font-size:12px;font-weight:800;letter-spacing:2px;color:#e4b662;text-transform:uppercase;margin-bottom:12px}
+    .market-info{display:inline-flex;align-items:center;gap:9px;margin-top:22px;padding:9px 13px;border:1px solid #35546c;border-radius:9px;background:#152b41aa;font-size:12px;color:#c0d5e7}
+    .market-info:before{content:"";width:8px;height:8px;border-radius:50%;background:#50d9a4;box-shadow:0 0 12px #50d9a4}
+    .hero-logo{position:absolute;right:7%;top:20%;width:205px;height:205px;object-fit:contain;border-radius:50%;border:4px solid #d5a04e;box-shadow:0 18px 55px #0008,0 0 0 16px #c79a4e12;z-index:1;background:white}.hero-chart{position:absolute;right:1%;top:15%;width:35%;max-width:470px;height:70%;opacity:.28;background:repeating-linear-gradient(0deg,transparent 0 58px,#6789a01e 59px 60px),repeating-linear-gradient(90deg,transparent 0 66px,#6789a01e 67px 68px);border-radius:16px;pointer-events:none}
+    .hero-chart svg{width:100%;height:100%}
+    .section-head h2{color:#f0f4fa}
+    .section-head p,.sort{color:#9ab0c8}
+    @media(max-width:800px){.hero-chart,.hero-logo{display:none}}
+
+    /* NGHỀ TRADER — nâng cấp chuyển động và hiển thị */
+    .brand-name{display:flex;flex-direction:column;gap:3px;line-height:1.15;min-width:0}
+    .brand-sub{color:#d8ad60;font-size:10px;font-weight:700;letter-spacing:1.15px}
+    .stat{color:#9eb5c8;text-align:right}
+    .stat-split{display:block;font-size:11px;color:#d6b777;font-weight:600;letter-spacing:.015em}
+    .hero{isolation:isolate}
+    .hero::before{content:"";position:absolute;inset:-20%;z-index:0;background:radial-gradient(circle at 80% 38%,#daa94f13,transparent 33%),radial-gradient(circle at 23% 80%,#399fc916,transparent 31%);animation:ambientShift 16s ease-in-out infinite alternate;pointer-events:none}
+    .hero-content{animation:fadeUp .85s cubic-bezier(.2,.8,.2,1) both}
+    .hero-chart{z-index:0}
+    .hero-chart svg polyline{stroke-dasharray:1050;stroke-dashoffset:1050;animation:drawChart 3.3s ease-out .25s forwards}
+    .hero-chart svg path{opacity:0;animation:chartArea 1.7s ease-out 1.9s forwards}
+    .hero-logo{animation:logoFloat 7s ease-in-out infinite}
+    .market-info::before{animation:dotBreath 2.7s ease-in-out infinite}
+    .hero-cta{box-shadow:0 5px 24px #daa94f24}
+    .doc{animation:cardRise .58s cubic-bezier(.18,.8,.24,1) both;will-change:transform}
+    .doc-cover-wrap{aspect-ratio:16/9;position:relative;overflow:hidden;background:#081725;border-bottom:1px solid #33465c}
+    .doc-cover-wrap::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,#06122062,transparent 53%);opacity:.9}
+    .doc-cover{width:100%;height:100%;object-fit:cover;aspect-ratio:auto;display:block;border:0;transition:transform .65s cubic-bezier(.17,.67,.22,1)}
+    .doc:hover .doc-cover{transform:scale(1.065)}
+    .cover-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:#d7a852e8;color:#0b1929;box-shadow:0 0 0 8px #ffffff17,0 10px 30px #0009;transition:transform .25s ease,box-shadow .25s ease}
+    .doc:hover .cover-play{transform:translate(-50%,-50%) scale(1.11);box-shadow:0 0 0 13px #d7a85225,0 12px 36px #0009}
+    .cover-play svg{margin-left:3px}
+    .cover-corner{position:absolute;right:15px;top:15px;z-index:2;background:#071523d9;border:1px solid #b9915470;padding:5px 10px;border-radius:7px;font-size:10px;font-weight:800;color:#ecc785;letter-spacing:1.2px}
+    .doc-cover-placeholder{gap:8px;flex-direction:column;font-size:20px}
+    .placeholder-icon{font-size:76px;color:#e6b563}
+    .placeholder-label{font-size:12px;font-weight:700;letter-spacing:2px;color:#c9d9e9}
+    .footer-right{display:flex;align-items:flex-end;flex-direction:column;gap:5px}
+    .footer-right a{color:#ecc47b;font-weight:700}
+    .footer-right a:hover{text-decoration:underline}
+    .risk-note{color:#9ab0c8;font-size:11px;margin-top:4px}
+    .small-btn:hover{background:#2c4763;color:#fff}
+    .action:focus-visible,.filter:focus-visible,.nav-link:focus-visible,.hero-cta:focus-visible,.footer a:focus-visible,.close-btn:focus-visible{outline:3px solid #e6b663;outline-offset:3px}
+    @keyframes ambientShift{from{transform:translate(-1%,-2%) scale(1)}to{transform:translate(3%,3%) scale(1.06)}}
+    @keyframes drawChart{to{stroke-dashoffset:0}}
+    @keyframes chartArea{to{opacity:1}}
+    @keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(19px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes cardRise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes dotBreath{0%,100%{opacity:.7;box-shadow:0 0 4px #50d9a4}50%{opacity:1;box-shadow:0 0 15px #50d9a4}}
+    @media(max-width:620px){
+      .nav{gap:9px}.brand{gap:8px;font-size:15px}.brand-sub{font-size:8px;letter-spacing:.6px}
+      .nav-link{white-space:nowrap;max-width:118px;text-align:center;line-height:1.2}
+      .hero{padding-top:57px}.hero h1{font-size:clamp(32px,10vw,47px)}
+      .market-info{font-size:10px;line-height:1.7}
+      .doc-cover-wrap{aspect-ratio:16/9}
+      .footer-right{align-items:flex-start}
+    }
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .hero::before,.hero-content,.hero-chart svg polyline,.hero-chart svg path,.hero-logo,.market-info::before,.doc{animation:none!important}
+      .hero-chart svg polyline{stroke-dashoffset:0}.hero-chart svg path{opacity:1}
+      .doc-cover,.cover-play,.doc,.hero-cta{transition:none!important}
+    }
+
+    /* Video recap behind the original hero text and official brand logo */
+    .hero{isolation:isolate;background:#071726}
+    .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;opacity:0;transition:opacity .9s ease}
+    .hero-video.ready{opacity:1}
+    .hero-video-shade{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(3,13,25,.94) 0%,rgba(4,15,29,.82) 35%,rgba(3,15,30,.47) 64%,rgba(4,15,30,.7) 100%),linear-gradient(0deg,rgba(3,12,26,.44),transparent 65%)}
+    .hero::before,.hero::after{z-index:1}
+    .hero .shell{position:relative;z-index:4}
+    .hero-content{position:relative;z-index:4;max-width:740px}
+    .hero-logo{position:absolute;z-index:5}
+    .hero-chart{position:absolute;z-index:3}
+    .hero-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:28px}
+    .hero-actions .hero-cta{margin-top:0}
+    .hero-watch-btn{background:#0c2039d9;color:#fff;border:1px solid #a38b62;border-radius:11px;font-weight:750;padding:12px 19px;transition:background .2s,border-color .2s}
+    .hero-watch-btn:hover:not(:disabled){background:#1a3651;border-color:#e5bb6b}
+    .hero-watch-btn:disabled{opacity:.55;cursor:not-allowed}
+    .hero-watch-btn:focus-visible{outline:3px solid #e6b663;outline-offset:3px}
+    @media(max-width:800px){.hero-logo{display:block;top:23px;right:5%;width:94px;height:94px}.hero-video{object-position:60% center}.hero-content{padding-top:85px}.hero-chart{display:none}.hero-video-shade{background:linear-gradient(90deg,rgba(3,13,25,.9),rgba(4,15,29,.63)),linear-gradient(0deg,#04101dc9,transparent 72%)}}
+    @media(max-width:620px){.hero-logo{width:75px;height:75px;top:15px;right:18px}.hero-content{padding-top:60px}.hero-actions{gap:10px}.hero-watch-btn{padding:12px 15px;font-size:14px}.hero-actions .hero-cta{font-size:14px}.hero{padding-bottom:92px}}
+    @media(prefers-reduced-motion:reduce){.hero-video{transition:none}}
+
+    /* Two prominent clickable category cards */
+    .category-chooser{position:relative;z-index:3;margin-bottom:24px}
+    .chooser-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:18px}
+    .chooser-heading h2{font-size:clamp(22px,2.7vw,30px);line-height:1.2;margin:6px 0 0;color:#f5f7fb;letter-spacing:-.02em}
+    .chooser-heading p{color:#9aaec4;font-size:13px;margin:0 0 2px}
+    .chooser-eyebrow{color:#e6b768;font-size:11px;font-weight:800;letter-spacing:2px}
+    .category-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+    .category-tile{font:inherit;position:relative;display:flex;flex-direction:column;gap:10px;text-align:left;padding:25px;border-radius:18px;min-width:0;min-height:230px;border:1px solid #3f5670;background:radial-gradient(circle at 95% 0,#1a43634a,transparent 53%),linear-gradient(125deg,#132b42,#0c1e30);color:#eaf1f9;box-shadow:0 14px 30px #0004;transition:border-color .2s,box-shadow .2s,transform .2s}
+    .category-tile.compare{background:radial-gradient(circle at 91% 8%,#a6842b24,transparent 58%),linear-gradient(125deg,#172a3c,#101d2d)}
+    .category-tile:hover{border-color:#d5a957;transform:translateY(-3px);box-shadow:0 17px 35px #0007}
+    .category-tile.active{border-color:#e0b25f;box-shadow:inset 0 0 0 1px #e0b25f,0 13px 30px #0006}
+    .category-tile:focus-visible{outline:3px solid #e9c27e;outline-offset:4px}
+    .category-tile-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:3px}
+    .category-tile-icon{width:43px;height:43px;border-radius:12px;display:grid;place-items:center;background:#daa94f1f;border:1px solid #d4ae6475;font-size:26px;color:#e8bd70}
+    .category-tile-count{border:1px solid #496075;border-radius:99px;padding:6px 11px;color:#c2d1e3;font-size:12px;font-weight:650}
+    .category-tile strong{font-size:clamp(19px,2.2vw,26px);letter-spacing:-.025em;line-height:1.3}
+    .category-tile-desc{font-size:13px;line-height:1.6;color:#a9bdd1;max-width:410px}
+    .category-tile-action{color:#e5b96d;font-size:13px;font-weight:800;margin-top:auto;padding-top:5px}
+    @media(max-width:700px){.category-cards{grid-template-columns:1fr;gap:13px}.category-tile{min-height:0;padding:20px}.chooser-heading{align-items:flex-start;flex-direction:column;gap:7px}.chooser-heading h2{font-size:23px}.chooser-heading p{font-size:12px}}
+    @media(prefers-reduced-motion:reduce){.category-tile{transition:none}}
+
+    /* Contact section — accessible, responsive, dark navy and gold */
+    .nav-actions{display:flex;align-items:center;gap:10px;flex-shrink:0}
+    .contact-nav-link{border-color:#a4824e;color:#f0c77c}
+    .contact-nav-link:hover{background:#463722}
+    #lien-he,#thu-vien{scroll-margin-top:88px}
+    .contact-section{position:relative;padding:70px 0 84px;background:radial-gradient(ellipse at 85% 0,#23455a33,transparent 45%),#0a1828;border-top:1px solid #31455a}
+    .contact-intro{margin-bottom:28px}
+    .contact-kicker{font-size:11px;font-weight:800;letter-spacing:2px;color:#e4b866}
+    .contact-intro h2{font-size:clamp(27px,3.1vw,40px);color:#f4f8ff;line-height:1.2;margin:8px 0 12px}
+    .contact-intro p{font-size:15px;line-height:1.65;color:#a8bbcf;margin:0}
+    .contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.13fr);gap:22px;align-items:stretch}
+    .contact-panel{border:1px solid #344e69;border-radius:19px;background:linear-gradient(155deg,#132a40,#0d1d30);padding:24px;display:flex;flex-direction:column;gap:6px}
+    .contact-item{display:grid;grid-template-columns:42px minmax(0,1fr);gap:14px;padding:17px 0;border-bottom:1px solid #2c4058}
+    .contact-item:first-child{padding-top:3px}
+    .contact-item:nth-child(3){border-bottom:0}
+    .contact-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:#d6a64e22;border:1px solid #d6a64e5a;color:#eac073;font-size:22px}
+    .contact-item>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+    .contact-label{color:#90aac3;font-size:12px;font-weight:700;letter-spacing:.035em}
+    .contact-value{color:#f5f9ff;font-weight:750;font-size:clamp(15px,1.5vw,19px);overflow-wrap:anywhere}
+    a.contact-value:hover{color:#f1ca82;text-decoration:underline}
+    .contact-address{font-weight:650;line-height:1.5}
+    .contact-help{font-size:12px;color:#8ea8c1}
+    .contact-directions{display:inline-flex;align-items:center;justify-content:center;margin-top:auto;border-radius:11px;padding:13px 16px;background:#d5a555;color:#132034;text-align:center;font-size:14px;font-weight:800;transition:background .2s ease}
+    .contact-directions:hover{background:#efc47a}
+    .contact-map{border:1px solid #40556c;overflow:hidden;border-radius:19px;background:#132338;min-height:425px;box-shadow:0 14px 35px #0004}
+    .contact-map iframe{display:block;width:100%;height:100%;min-height:425px}
+    .contact-nav-link:focus-visible,.contact-directions:focus-visible,.contact-value:focus-visible{outline:3px solid #edc478;outline-offset:3px}
+    @media(max-width:800px){.contact-grid{grid-template-columns:1fr}.contact-panel{padding:22px}.contact-map,.contact-map iframe{min-height:340px}}
+    @media(max-width:620px){.nav-actions{gap:6px}.nav-actions .library-link{display:none}.contact-section{padding:50px 0 60px}.contact-panel{padding:19px}.contact-map,.contact-map iframe{min-height:300px}.contact-intro p{font-size:14px}.contact-item{grid-template-columns:38px minmax(0,1fr);gap:11px}.contact-icon{width:38px;height:38px}.contact-value{font-size:15px}}
+    @media(prefers-reduced-motion:reduce){.contact-directions{transition:none}}
+
+    /* Accessible FAQ accordion */
+    .faq-section{background:linear-gradient(160deg,#0b1d30,#112840);padding:72px 0 78px;border-top:1px solid #30475e}
+    #hoi-dap{scroll-margin-top:75px}
+    .faq-eyebrow{font-size:11px;color:#e5b76b;font-weight:800;letter-spacing:2px}
+    .faq-intro{margin-bottom:24px}.faq-intro h2{font-size:clamp(25px,3vw,38px);line-height:1.2;letter-spacing:-.03em;color:#f2f8ff;margin:8px 0 10px}.faq-intro p{margin:0;color:#adc0d3;font-size:14px;line-height:1.65}
+    .faq-list{display:grid;gap:11px;max-width:1020px}
+    .faq-item{border:1px solid #38516a;border-radius:13px;background:#0c1d30b8;overflow:hidden}
+    .faq-item[open]{background:#152d43;border-color:#8e764e}
+    .faq-item summary{list-style:none;cursor:pointer;padding:18px 53px 18px 22px;font-weight:750;color:#ecf5ff;position:relative;font-size:15px;line-height:1.5}
+    .faq-item summary::-webkit-details-marker{display:none}
+    .faq-item summary::after{content:'+';position:absolute;right:22px;top:50%;transform:translateY(-50%);font-size:24px;color:#e3b46d;font-weight:500}
+    .faq-item[open] summary::after{content:'−'}
+    .faq-item summary:hover{background:#1d39538c}
+    .faq-item summary:focus-visible{outline:3px solid #e1b96e;outline-offset:-4px}
+    .faq-answer{color:#b8c9db;border-top:1px solid #2f455a;font-size:14px;line-height:1.8;padding:17px 22px 23px}
+    .faq-answer strong{color:#f1d6ab}.faq-answer a{color:#f3c777;text-decoration:underline}
+    .faq-contact{margin-top:24px;font-size:14px;color:#9cb3c8}.faq-contact a{color:#e9bc70;font-weight:800;margin-left:7px}
+    .faq-nav-link{color:#e3c391;border-color:#725e40}
+    .cover-hit{position:absolute;inset:0;z-index:4;display:block}
+    .cover-hit:focus-visible{outline:3px solid #efc776;outline-offset:-4px}
+    .doc-cover{background:#0a1b30}
+    @media(max-width:620px){.faq-nav-link{display:none}.faq-section{padding:50px 0 55px}.faq-item summary{padding:17px 45px 17px 16px;font-size:14px}.faq-answer{padding:13px 16px 19px}}
+  </style>
+</head>
+<body>
+  <header class="topbar"><div class="shell nav"><a class="brand" href="./" aria-label="Trang chủ thư viện"><span class="brand-mark"><img src="assets/logo-nghe-trader.webp" alt="Logo NGHỀ TRADER" width="51" height="51"></span><span class="brand-name"><span id="siteBrand">NGHỀ TRADER</span><span class="brand-sub">ACADEMY · THƯ VIỆN GIAO DỊCH</span></span></a><nav class="nav-actions" aria-label="Điều hướng chính"><a class="nav-link library-link" href="#thu-vien">Thư viện</a><a class="nav-link faq-nav-link" href="#hoi-dap">Hỏi đáp</a><a class="nav-link contact-nav-link" href="#lien-he">Liên hệ</a></nav></div></header>
+  <section class="hero">
+    <video id="heroRecapBg" class="hero-video" muted autoplay loop playsinline preload="none" poster="assets/recap-tradepro.svg" aria-label="Video recap TradePro chuyển động làm nền trang chủ" hidden></video>
+    <div class="hero-video-shade" aria-hidden="true"></div>
+    <div class="shell"><div class="hero-content">
+      <span class="eyebrow">✦ NGHỀ TRADER ACADEMY</span>
+      <h1>Hiểu thị trường.<br><em>Giao dịch có kỷ luật.</em></h1>
+      <p id="siteDescription">Khám phá kiến thức giao dịch qua video, tài liệu và các mô hình nến quan trọng. Học có phương pháp, giao dịch có kỷ luật.</p>
+      <div class="hero-actions">
+        <a class="hero-cta" href="#thu-vien">Khám phá video & tài liệu →</a>
+        <button class="hero-watch-btn" id="watchRecapHero" type="button" disabled title="Video recap đầy đủ chưa được tải lên GitHub">▶ Xem recap</button>
+      </div>
+      <div class="market-info">PRICE ACTION • PHÂN TÍCH KỸ THUẬT • QUẢN TRỊ RỦI RO</div>
+    </div></div>
+    <img class="hero-logo" src="assets/logo-nghe-trader.webp" alt="Logo chính thức NGHỀ TRADER" width="205" height="205">
+    <div class="hero-chart" aria-hidden="true"><svg viewBox="0 0 500 350"><polyline points="0,290 50,255 90,269 130,202 175,220 220,156 260,191 311,112 350,143 407,83 461,99 500,42" fill="none" stroke="#e7b663" stroke-width="5"/><path d="M0 290L50 255L90 269L130 202L175 220L220 156L260 191L311 112L350 143L407 83L461 99L500 42L500 350H0Z" fill="#e7b663" opacity=".16"/></svg></div>
+  </section>
+  <main class="shell content" id="thu-vien">
+    <section class="category-chooser" aria-label="Chọn nhóm nội dung">
+      <div class="chooser-heading"><div><span class="chooser-eyebrow">CHỌN CHỦ ĐỀ</span><h2>Bạn muốn khám phá nội dung nào?</h2></div><p>Nhấn vào từng mục để xem nội dung tương ứng.</p></div>
+      <div class="category-cards">
+        <button class="category-tile knowledge" type="button" data-category="Tài liệu kiến thức" aria-pressed="false">
+          <span class="category-tile-top"><span class="category-tile-icon">▥</span><span class="category-tile-count" id="knowledgeCount">5 nội dung</span></span>
+          <strong>Tài liệu kiến thức</strong>
+          <span class="category-tile-desc">Mô hình nến, phân tích kỹ thuật và phương pháp giao dịch.</span>
+          <span class="category-tile-action">Khám phá kiến thức →</span>
+        </button>
+        <button class="category-tile compare" type="button" data-category="So sánh và Hiểu về sản phẩm" aria-pressed="false">
+          <span class="category-tile-top"><span class="category-tile-icon">◫</span><span class="category-tile-count" id="compareCount">4 nội dung</span></span>
+          <strong>So sánh và Hiểu về sản phẩm</strong>
+          <span class="category-tile-desc">PassView, Bot AI và những góc nhìn so sánh để hiểu rõ sản phẩm.</span>
+          <span class="category-tile-action">Khám phá sản phẩm →</span>
+        </button>
+      </div>
+    </section>
+    <div class="toolbar"><div class="toolbar-top"><label class="search" for="searchInput"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg><input id="searchInput" placeholder="Tìm theo tên, mô tả hoặc từ khóa..." autocomplete="off" aria-label="Tìm kiếm tài liệu"></label><div class="stat"><strong id="totalCount">0</strong> nội dung<span class="stat-split" id="totalSplit"></span></div></div><div class="filters" id="filters" aria-label="Lọc theo danh mục"></div></div>
+    <section id="resultsSection" aria-label="Danh sách tài liệu"><div class="section-head"><div><h2>Kho kiến thức giao dịch</h2><p id="resultText">Tổng hợp tài liệu dành cho bạn</p></div><div class="sort">Sắp xếp: mới nhất trước</div></div><div class="grid" id="docGrid" aria-live="polite"></div></section>
+  </main>
+
+
+  <section class="faq-section" id="hoi-dap" aria-labelledby="faqTitle">
+    <div class="shell">
+      <div class="faq-intro"><span class="faq-eyebrow">GIẢI ĐÁP NHANH</span><h2 id="faqTitle">Câu hỏi thường gặp</h2><p>Hiểu đúng về PassView, Bot AI và cách kiểm chứng thông tin trước khi tham gia giao dịch.</p></div>
+      <div class="faq-list">
+        <details class="faq-item"><summary>PassView là gì, có thể đặt lệnh hoặc rút tiền không?</summary><div class="faq-answer">PassView là quyền xem tài khoản (chế độ chỉ đọc) khi được cấu hình đúng theo nền tảng. Người xem có thể theo dõi các thông tin mà hệ thống cho phép hiển thị, nhưng <strong>không được dùng quyền xem để đặt lệnh, đổi mật khẩu giao dịch hoặc rút tiền</strong>. Phạm vi hiển thị cần được kiểm tra tại nền tảng thực tế.</div></details>
+        <details class="faq-item"><summary>PassView khác gì với ảnh chụp lợi nhuận?</summary><div class="faq-answer">Ảnh chụp chỉ phản ánh một thời điểm và có thể thiếu thông tin về lịch sử lệnh, số dư hay biến động vốn. PassView có thể giúp đối chiếu số liệu trực tiếp hơn khi được cấp đúng quyền; tuy nhiên, <strong>cả hai đều không bảo đảm lợi nhuận tương lai hoặc an toàn vốn</strong>. Luôn xác minh nguồn dữ liệu, loại tài khoản và thời gian thống kê.</div></details>
+        <details class="faq-item"><summary>TradePro Bot AI có bảo đảm tạo lợi nhuận mỗi ngày không?</summary><div class="faq-answer">Không. Bot là công cụ hỗ trợ thực hiện chiến lược theo các điều kiện được thiết lập. Việc được giới thiệu là AI không đồng nghĩa với khả năng dự báo chính xác hay sinh lời chắc chắn. Kết quả phụ thuộc thị trường, cấu hình, chi phí và quản trị rủi ro; vẫn có thể thua lỗ hoặc sụt giảm tài khoản.</div></details>
+        <details class="faq-item"><summary>Bot truyền thống và Bot AI khác nhau như thế nào?</summary><div class="faq-answer">Bot truyền thống thường dựa trên tập quy tắc định sẵn. Một số hệ thống AI có thể dùng mô hình dữ liệu bổ sung, nhưng khả năng thật sự phụ thuộc thiết kế cụ thể. Khi so sánh, hãy ưu tiên cách hoạt động, mức lỗ tối đa có thể xảy ra, lịch sử kiểm chứng và tính minh bạch thay vì tên gọi.</div></details>
+        <details class="faq-item"><summary>Có cần cung cấp mật khẩu tài khoản hoặc mã OTP để xem kết quả không?</summary><div class="faq-answer">Không cung cấp mật khẩu đăng nhập, mã OTP hay quyền rút tiền cho người khác để xem nội dung. Nếu muốn quan sát tài khoản, hãy tìm hiểu cơ chế chỉ đọc được nền tảng hỗ trợ và tự kiểm tra quyền truy cập trước khi sử dụng.</div></details>
+        <details class="faq-item"><summary>Người mới nên bắt đầu từ đâu?</summary><div class="faq-answer">Nên bắt đầu với <a href="#thu-vien">Tài liệu kiến thức</a> để tìm hiểu mô hình nến, kỷ luật giao dịch và quản trị rủi ro; sau đó mới xem mục <a href="#thu-vien">So sánh và Hiểu về sản phẩm</a>. Không nên quyết định dựa trên một video, ảnh chụp thành tích hoặc cam kết lợi nhuận.</div></details>
+      </div>
+      <div class="faq-contact">Chưa tìm được câu trả lời? <a href="#lien-he">Liên hệ đội ngũ hỗ trợ ↗</a></div>
+    </div>
+  </section>
+  <section class="contact-section" id="lien-he" aria-labelledby="contactTitle">
+    <div class="shell">
+      <div class="contact-intro">
+        <span class="contact-kicker">NGHỀ TRADER · HỖ TRỢ</span>
+        <h2 id="contactTitle">Liên hệ với chúng tôi</h2>
+        <p>Cần tìm hiểu thêm về tài liệu và sản phẩm? Hãy liên hệ qua điện thoại hoặc email.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-panel">
+          <div class="contact-item">
+            <span class="contact-icon" aria-hidden="true">☎</span>
+            <div><span class="contact-label">Điện thoại</span><a href="tel:+84905890399" class="contact-value">0905 890 399</a><span class="contact-help">Nhấn để gọi điện</span></div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon" aria-hidden="true">✉</span>
+            <div><span class="contact-label">Email hỗ trợ</span><a href="mailto:support@giaiphapgiaodich.com" class="contact-value">support@giaiphapgiaodich.com</a><span class="contact-help">Nhấn để gửi email</span></div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon" aria-hidden="true">⌖</span>
+            <div><span class="contact-label">Địa điểm trên bản đồ · TMLabs Coffee</span><span class="contact-value contact-address">84A Nguyễn Cửu Vân, Phường Gia Định, TP. Hồ Chí Minh</span><span class="contact-help">Khu vực Bình Thạnh (cũ)</span></div>
+          </div>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=TMLabs%20Coffee%2084A%20Nguyen%20Cuu%20Van%20Ho%20Chi%20Minh" target="_blank" rel="noopener noreferrer" class="contact-directions">Xem đường đi trên Google Maps ↗</a>
+        </div>
+        <div class="contact-map" aria-label="Bản đồ địa điểm TMLabs Coffee">
+          <iframe title="Bản đồ TMLabs Coffee — 84A Nguyễn Cửu Vân" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5358.266182259869!2d106.70271301180566!3d10.79682478930846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529002cfcc87b%3A0x29252424e29d0a3b!2sTMLabs%20Coffee!5e1!3m2!1svi!2s!4v1794466311318!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="footer"><div class="shell footer-row"><div><strong id="footerBrand">NGHỀ TRADER</strong> · Kiến thức giao dịch và quản trị rủi ro.<div class="risk-note">Tài liệu mang tính giáo dục, không phải khuyến nghị đầu tư.</div></div><div class="footer-right"><a href="https://giaiphapgiaodich.com/" target="_blank" rel="noopener noreferrer">giaiphapgiaodich.com ↗</a><span>Được xuất bản trên GitHub Pages</span></div></div></footer>
+  <div class="overlay" id="pdfOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="viewerTitle"><div class="viewer"><div class="viewer-head"><div id="viewerTitle" class="viewer-title">Đọc PDF</div><div class="viewer-controls"><a id="newTabLink" class="small-btn" target="_blank" rel="noopener noreferrer">Mở tab mới ↗</a><button id="closeViewer" class="close-btn" aria-label="Đóng PDF">×</button></div></div><iframe id="pdfFrame" title="Trình xem PDF" loading="lazy"></iframe><video id="videoPlayer" controls playsinline preload="metadata" style="display:none" aria-label="Trình phát video"></video></div></div>
+  <script src="data.js?v=20261112-real-video-thumbnails-faq"></script>
+  <script>
+    "use strict";
+    const config = window.SITE_CONFIG || {};
+    const source = Array.isArray(window.DOCUMENTS) ? window.DOCUMENTS : [];
+    const docs = source.filter(d => d && typeof d.title === "string" && typeof d.file === "string" && /^(?!\/|[a-z]+:|\\|\.\.\/)[^?#]+$/i.test(d.file)).map(d => ({
+      title: d.title, file: d.file, description: String(d.description || ""), category: String(d.category || "Khác"), type: String(d.type || d.file.split(".").pop() || "Tệp").toUpperCase(), date: String(d.date || ""), size: String(d.size || ""), cover: String(d.cover || ""), coverFallback: String(d.coverFallback || "")
+    })).sort((a,b)=>b.date.localeCompare(a.date));
+    const $ = id => document.getElementById(id);
+    const escapeHTML = str => String(str).replace(/[&<>"']/g, x => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
+    const normalize = s => String(s||"").normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase();
+    const fileUrl = path => new URL(path.split('/').map(encodeURIComponent).join('/'), document.baseURI).href;
+    const icons = {
+      view:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>',
+      download:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 17v3h16v-3"/></svg>'
+    };
+    let activeCategory = 'Tất cả';
+    let lastFocus = null;
+    const categories = ['Tất cả',...new Set(docs.map(d => d.category))];
+    const name = String(config.name || 'THƯ VIỆN TÀI LIỆU');
+    $('siteBrand').textContent=name.split('|')[0].trim(); $('footerBrand').textContent=name.split('|')[0].trim();
+    if(config.description) $('siteDescription').textContent=config.description;
+    document.title = `${name} | Đọc và tải tài liệu`;
+    $('totalCount').textContent = docs.length.toLocaleString('vi-VN');
+    const videoCount=docs.filter(d=>d.type==='MP4'||d.file.toLowerCase().endsWith('.mp4')).length;
+    $('totalSplit').textContent = `${videoCount} video · ${docs.length-videoCount} tài liệu`;
+    function renderFilters() {
+      const el=$('filters');el.replaceChildren();
+      categories.forEach(cat=>{const btn=document.createElement('button');btn.type='button';btn.className='filter'+(cat===activeCategory?' active':'');btn.textContent=cat;btn.setAttribute('aria-pressed',String(cat===activeCategory));btn.addEventListener('click',()=>chooseCategory(cat,false));el.appendChild(btn)})
+    }
+    function chooseCategory(category,scrollToResults=true){
+      activeCategory=category;
+      $('searchInput').value='';
+      refreshCategoryCards();
+      renderFilters();
+      renderDocs();
+      if(scrollToResults)$('resultsSection').scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+    }
+    function refreshCategoryCards(){
+      const counts={'Tài liệu kiến thức':0,'So sánh và Hiểu về sản phẩm':0};
+      docs.forEach(doc=>{if(Object.prototype.hasOwnProperty.call(counts,doc.category))counts[doc.category]++});
+      $('knowledgeCount').textContent=counts['Tài liệu kiến thức']+' nội dung';
+      $('compareCount').textContent=counts['So sánh và Hiểu về sản phẩm']+' nội dung';
+      document.querySelectorAll('.category-tile').forEach(button=>{
+        const active=button.dataset.category===activeCategory;
+        button.classList.toggle('active',active);
+        button.setAttribute('aria-pressed',String(active));
+      });
+    }
+    function openViewer(doc) {
+      lastFocus=document.activeElement;
+      const url=fileUrl(doc.file);
+      const isVideo=doc.type==='MP4'||doc.file.toLowerCase().endsWith('.mp4');
+      const frame=$('pdfFrame'), player=$('videoPlayer');
+      $('viewerTitle').textContent=doc.title;
+      $('newTabLink').href=url;
+      if(isVideo){
+        frame.style.display='none';frame.removeAttribute('src');
+        player.style.display='block';player.src=url;player.load();
+      } else {
+        player.pause();player.removeAttribute('src');player.style.display='none';
+        frame.style.display='block';frame.src=url+'#toolbar=1&navpanes=0';
+      }
+      $('pdfOverlay').classList.add('open');$('pdfOverlay').setAttribute('aria-hidden','false');
+      document.body.classList.add('modal-open');$('closeViewer').focus();
+    }
+    function closeViewer(){
+      $('pdfOverlay').classList.remove('open');$('pdfOverlay').setAttribute('aria-hidden','true');
+      $('pdfFrame').removeAttribute('src');
+      const player=$('videoPlayer');player.pause();player.removeAttribute('src');player.load();
+      document.body.classList.remove('modal-open');if(lastFocus)lastFocus.focus();
+    }
+    function renderDocs(){
+      const keyword=normalize($('searchInput').value.trim());
+      const filtered=docs.filter(d=>(activeCategory==='Tất cả'||d.category===activeCategory) && normalize([d.title,d.description,d.category,d.type].join(' ')).includes(keyword));
+      $('resultText').textContent = `${filtered.length} kết quả${activeCategory==='Tất cả'?'':' trong danh mục '+activeCategory}`;
+      const grid=$('docGrid');grid.replaceChildren();
+      if(!filtered.length){const empty=document.createElement('div');empty.className='empty';empty.innerHTML='<div class="empty-icon">⌕</div><h3>Chưa có tài liệu phù hợp</h3><p>Hãy thử từ khóa khác hoặc chọn “Tất cả”.</p>';grid.appendChild(empty);return}
+      filtered.forEach((doc,i)=>{
+        const isPdf=doc.type==='PDF'||doc.file.toLowerCase().endsWith('.pdf');
+        const isVideo=doc.type==='MP4'||doc.file.toLowerCase().endsWith('.mp4');
+        const group=isVideo?'video':isPdf?'':/(DOC|WORD)/.test(doc.type)?'word':/(XLS|CSV|EXCEL)/.test(doc.type)?'excel':'other';
+        const card=document.createElement('article');card.className='doc';
+        card.style.animationDelay = `${Math.min(i,7)*65}ms`;
+        const coverMarkup = doc.cover ? `<div class="doc-cover-wrap"><img class="doc-cover" src="${escapeHTML(fileUrl(doc.cover))}" width="640" height="360" decoding="async" alt="Ảnh bìa ${escapeHTML(doc.title)}" loading="lazy">${isVideo ? '<span class="cover-play" aria-hidden="true"><svg viewBox="0 0 24 24" width="25" height="25" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' : ''}<span class="cover-corner">${isVideo ? 'VIDEO' : escapeHTML(doc.type)}</span></div>` : `<div class="doc-cover-placeholder" aria-hidden="true"><span class="placeholder-icon">▤</span><span class="placeholder-label">TÀI LIỆU ${escapeHTML(doc.type)}</span></div>`;
+        const date= /^\d{4}-\d{2}-\d{2}$/.test(doc.date) ? doc.date.split('-').reverse().join('/') : doc.date;
+        card.innerHTML = `${coverMarkup}<div class="doc-top"><div class="file-symbol ${group}" aria-hidden="true">${escapeHTML(doc.type.slice(0,5))}</div><span class="file-tag">${escapeHTML(doc.category)}</span></div><div class="doc-body"><h3>${escapeHTML(doc.title)}</h3><p class="doc-desc">${escapeHTML(doc.description||'Tài liệu được chia sẻ miễn phí để đọc và tham khảo.')}</p><div class="doc-meta"><span>${escapeHTML(date||'Tài liệu')}</span>${doc.size?`<span class="dot"></span><span>${escapeHTML(doc.size)}</span>`:''}</div></div><div class="doc-actions"></div>`;
+        const image=card.querySelector('img.doc-cover');
+        if(image && doc.coverFallback){
+          image.addEventListener('error',()=>{
+            image.src=fileUrl(doc.coverFallback);
+          },{once:true});
+        }
+        if(isVideo && card.querySelector('.doc-cover-wrap')){
+          const coverLink=document.createElement('a');
+          coverLink.className='cover-hit';
+          coverLink.href='watch.html?v='+encodeURIComponent(doc.file.split('/').pop());
+          coverLink.setAttribute('aria-label','Xem video: '+doc.title);
+          card.querySelector('.doc-cover-wrap').appendChild(coverLink);
+        }
+        const actions=card.querySelector('.doc-actions');
+        const view=document.createElement(isPdf?'button':'a');view.className='action primary';view.innerHTML=icons.view+(isVideo?'Xem video':isPdf?'Đọc PDF':'Xem tệp');
+        if(isPdf){view.type='button';view.addEventListener('click',()=>openViewer(doc))}else if(isVideo){view.href='watch.html?v='+encodeURIComponent(doc.file.split('/').pop())}else{view.href=fileUrl(doc.file);view.target='_blank';view.rel='noopener noreferrer'}
+        const download=document.createElement('a');download.className='action';download.href=fileUrl(doc.file);download.download=doc.file.split('/').pop();download.innerHTML=icons.download+'Tải về';
+        actions.append(view,download);grid.appendChild(card);
+      });
+    }
+    $('searchInput').addEventListener('input',renderDocs);
+    $('closeViewer').addEventListener('click',closeViewer);
+    $('pdfOverlay').addEventListener('click',e=>{if(e.target===$('pdfOverlay'))closeViewer()});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape' && $('pdfOverlay').classList.contains('open'))closeViewer();if(e.key==='Tab'&&$('pdfOverlay').classList.contains('open')){const controls=[$('newTabLink'),$('closeViewer')];if(e.shiftKey&&document.activeElement===controls[0]){e.preventDefault();controls[1].focus()}else if(!e.shiftKey&&document.activeElement===controls[1]){e.preventDefault();controls[0].focus()}}});
+    // Only display new entries after their media files have been uploaded.
+    const fileChecks = new Map();
+    function checkMediaAvailability() {
+      const pending = docs.filter(d => /^(?:tu-hoc-vs-co-thay-kem|anh-chup-vs-passview-nguoi-that|lai-xe-theo-tri-nho-vs-google-maps|tradepro-bot-ai|tradepro-bot-cu-vs-bot-ai|recap-tradepro)\.mp4$/i.test(d.file.split('/').pop()));
+      Promise.all(pending.map(d => fetch(fileUrl(d.file), {method:'HEAD'}).then(r=>[d.file,r.ok]).catch(()=>[d.file,false]))).then(results=>{
+        results.forEach(([file,ok])=>fileChecks.set(file,ok));
+        for (let i=docs.length-1;i>=0;i--) if(fileChecks.get(docs[i].file)===false)docs.splice(i,1);
+        $('totalCount').textContent=docs.length.toLocaleString('vi-VN');
+        const vc=docs.filter(d=>d.type==='MP4').length;
+        $('totalSplit').textContent=`${vc} video · ${docs.length-vc} tài liệu`;
+        categories.length=0;categories.push('Tất cả',...new Set(docs.map(d=>d.category)));
+        if(activeCategory!=='Tất cả'&&!categories.includes(activeCategory))activeCategory='Tất cả';
+        refreshCategoryCards();renderFilters();renderDocs();
+      });
+    }
+    // Load the short recap only if its MP4 is actually in the public repository.
+    const recap=$('heroRecapBg'), watch=$('watchRecapHero');
+    const shortRecap='tai-lieu/recap-tradepro-home.mp4';
+    const fullRecap='tai-lieu/recap-tradepro.mp4';
+    const fileIsLive = path => fetch(fileUrl(path),{method:'HEAD'}).then(r=>r.ok).catch(()=>false);
+    const allowMotion=!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !navigator.connection?.saveData;
+    if(allowMotion){
+      fileIsLive(shortRecap).then(ok=>{
+        if(!ok)return;
+        recap.hidden=false;
+        recap.src=fileUrl(shortRecap);
+        recap.addEventListener('playing',()=>recap.classList.add('ready'),{once:true});
+        const hero=document.querySelector('.hero');
+        if('IntersectionObserver' in window){
+          new IntersectionObserver(entries=>{
+            if(entries[0].isIntersecting && !document.hidden)recap.play().catch(()=>{});
+            else recap.pause();
+          },{threshold:0.1}).observe(hero);
+        }else{recap.play().catch(()=>{})}
+        document.addEventListener('visibilitychange',()=>{if(document.hidden)recap.pause();else if(hero.getBoundingClientRect().bottom>0 && hero.getBoundingClientRect().top<innerHeight)recap.play().catch(()=>{})});
+      });
+    }
+    fileIsLive(fullRecap).then(ok=>{
+      watch.disabled=!ok;
+      watch.title=ok?'Xem video recap TradePro có âm thanh':'Video recap chưa được tải lên GitHub';
+    });
+    watch.addEventListener('click',()=>{
+      if(watch.disabled)return;
+      window.location.href='watch.html?v=recap-tradepro.mp4';
+    });
+    document.querySelectorAll('.category-tile').forEach(button=>button.addEventListener('click',()=>chooseCategory(button.dataset.category)));
+    refreshCategoryCards();
+    checkMediaAvailability();
+    renderFilters();renderDocs();
+  </script>
+</body>
+</html>
