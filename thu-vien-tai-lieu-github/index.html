@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Thư viện tài liệu trực tuyến: tìm kiếm, đọc PDF và tải tài liệu miễn phí.">
+  <meta name="theme-color" content="#111b2b">
+  <title>Thư viện tài liệu | Đọc và tải miễn phí</title>
+  <style>
+    :root {--ink:#142235;--muted:#617084;--bg:#f5f7fa;--paper:#ffffff;--stroke:#e1e7ed;--gold:#c99742;--gold-soft:#fbf4e8;--navy:#101c2c;--soft:#f1f5f8}
+    * {box-sizing:border-box}
+    html {scroll-behavior:smooth}
+    body {margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.55}
+    button,input {font:inherit}
+    button {cursor:pointer}
+    a {color:inherit;text-decoration:none}
+    .shell {max-width:1160px;margin:auto;padding:0 26px}
+    .topbar {background:var(--navy);color:white;border-bottom:1px solid #2b3547}
+    .nav {min-height:75px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand {display:flex;align-items:center;gap:12px;font-size:17px;font-weight:800;letter-spacing:.025em}
+    .brand-mark {display:grid;place-items:center;width:42px;height:42px;background:linear-gradient(135deg,#edc980,#ac762c);border-radius:12px;color:#152234;font-size:24px}
+    .nav-link {font-size:14px;color:#d9e2ed;border:1px solid #455165;padding:9px 16px;border-radius:10px;transition:.2s}
+    .nav-link:hover {background:#2b3b51}
+    .hero {background:radial-gradient(ellipse at 83% 10%,#283951,transparent 50%),linear-gradient(135deg,#101c2c,#17273c);color:white;padding:74px 0 86px;position:relative;overflow:hidden}
+    .hero::after {content:"";position:absolute;right:-60px;bottom:-260px;width:480px;height:480px;border:1px solid #45546a;border-radius:50%;box-shadow:0 0 0 70px #1e2d4047,0 0 0 145px #1e2d4026;pointer-events:none}
+    .hero-content {position:relative;z-index:1;max-width:780px}
+    .eyebrow {display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:30px;border:1px solid #586277;color:#e6c386;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:800}
+    .hero h1 {font-size:clamp(36px,5vw,61px);letter-spacing:-.045em;line-height:1.12;margin:22px 0 16px;font-weight:800}
+    .hero h1 em {color:#e0b56b;font-style:normal}
+    .hero p {font-size:17px;color:#cbd6e4;max-width:610px;margin:0}
+    .hero-cta {display:inline-flex;margin-top:28px;background:var(--gold);color:#141c27;font-weight:750;border-radius:11px;padding:12px 21px;transition:.2s}
+    .hero-cta:hover {background:#e2b464;transform:translateY(-1px)}
+    .content {position:relative;margin-top:-36px;padding-bottom:80px}
+    .toolbar {background:white;border:1px solid var(--stroke);box-shadow:0 12px 28px #14213413;border-radius:18px;padding:22px;position:relative;z-index:2}
+    .toolbar-top {display:flex;justify-content:space-between;gap:22px;align-items:center}
+    .search {position:relative;flex:1}
+    .search svg {position:absolute;left:18px;top:50%;transform:translateY(-50%);color:#8090a2}
+    .search input {display:block;width:100%;border:1px solid #d9e1e9;background:#f8fafc;border-radius:12px;padding:16px 16px 16px 50px;outline:none;color:var(--ink);transition:.2s}
+    .search input:focus {border-color:var(--gold);box-shadow:0 0 0 3px #dca95b2a;background:white}
+    .stat {flex-shrink:0;color:#647184;font-size:14px}
+    .stat strong {font-size:22px;color:var(--ink);vertical-align:middle;margin-right:3px}
+    .filters {display:flex;gap:9px;flex-wrap:wrap;margin-top:19px}
+    .filter {border:1px solid var(--stroke);border-radius:999px;background:#fff;color:#516176;padding:8px 14px;font-size:13px;font-weight:650;transition:.2s}
+    .filter:hover {border-color:var(--gold)}
+    .filter.active {background:var(--navy);color:white;border-color:var(--navy)}
+    .section-head {display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin:40px 0 21px}
+    .section-head h2 {margin:0 0 4px;font-size:26px;letter-spacing:-.025em}
+    .section-head p {margin:0;color:var(--muted);font-size:14px}
+    .sort {font-size:13px;color:#657186;white-space:nowrap}
+    .grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+    .doc {min-width:0;background:white;border-radius:16px;border:1px solid var(--stroke);box-shadow:0 5px 15px #19273609;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+    .doc:hover {transform:translateY(-3px);box-shadow:0 12px 30px #19273618}
+    .doc-top {padding:22px 22px 6px;display:flex;justify-content:space-between;align-items:center}
+    .file-symbol {width:54px;height:60px;border-radius:12px;background:#fff2ee;color:#cc6447;display:grid;place-items:center;font-size:14px;font-weight:800;letter-spacing:.03em;position:relative}
+    .file-symbol::before {content:"";position:absolute;right:0;top:0;border-top:13px solid white;border-left:13px solid #e8d2cb}
+    .file-symbol.word {background:#edf3ff;color:#3c6db0}.file-symbol.word::before {border-left-color:#cbd9f1}
+    .file-symbol.excel {background:#e7f7ef;color:#2f875c}.file-symbol.excel::before {border-left-color:#c7ead7}
+    .file-symbol.other {background:#f1f0fc;color:#7065a6}.file-symbol.other::before {border-left-color:#d5d0ef}
+    .file-tag {font-size:11px;font-weight:750;background:#f3f5f8;color:#5b6778;border:1px solid #e8edf2;border-radius:100px;padding:5px 10px}
+    .doc-body {padding:14px 22px 18px;flex:1}
+    .doc-body h3 {font-size:18px;line-height:1.35;margin:0 0 8px;min-height:48px;overflow-wrap:anywhere}
+    .doc-desc {color:#69798a;font-size:13px;line-height:1.65;margin:0;min-height:66px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .doc-meta {display:flex;align-items:center;gap:7px;font-size:12px;color:#8993a0;margin-top:15px;flex-wrap:wrap}
+    .dot {height:3px;width:3px;background:#abb3be;border-radius:100%}
+    .doc-actions {padding:14px 22px 20px;border-top:1px solid #edf0f5;display:flex;gap:10px}
+    .action {flex:1;display:inline-flex;justify-content:center;align-items:center;gap:7px;padding:10px 10px;border-radius:10px;border:1px solid #dfe6ee;font-size:13px;font-weight:720;background:white;color:#33445a;min-width:0}
+    .action:hover {background:#f2f5f8}.action.primary {background:#1c3047;color:white;border-color:#1c3047}.action.primary:hover {background:#30475f}
+    .action svg {height:16px;width:16px;flex-shrink:0}
+    .empty {grid-column:1/-1;text-align:center;background:white;border:1px dashed #bdc8d5;border-radius:17px;padding:60px 20px;color:var(--muted)}
+    .empty-icon {font-size:38px;margin-bottom:8px}.empty h3 {margin:0 0 5px;color:var(--ink)}.empty p {margin:0}
+    .footer {background:#101c2c;color:#95a5b9;padding:26px 0;font-size:13px}
+    .footer-row {display:flex;justify-content:space-between;gap:20px;align-items:center}
+    .footer strong {color:#f4f6f8}
+    .overlay {position:fixed;inset:0;background:#071020cc;display:none;align-items:center;justify-content:center;z-index:50;padding:15px}
+    .overlay.open {display:flex}
+    .viewer {background:white;border-radius:16px;width:min(1100px,100%);height:min(94vh,900px);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 25px 90px #0006}
+    .viewer-head {padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--stroke)}
+    .viewer-title {font-weight:730;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+    .viewer-controls {display:flex;gap:8px;align-items:center;flex-shrink:0}
+    .small-btn {font-size:12px;padding:8px 11px;background:#edf1f5;border:1px solid #dce3ec;border-radius:8px}
+    .small-btn:hover {background:#e2e9f0}
+    .close-btn {border:0;background:#eef1f5;font-size:25px;line-height:28px;width:34px;height:34px;border-radius:8px}
+    .viewer iframe {width:100%;flex:1;border:0;background:#e7ebf1}
+    body.modal-open {overflow:hidden}
+    @media(max-width:930px){.grid {grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:620px){.shell{padding:0 17px}.nav{min-height:69px}.brand{font-size:14px}.brand-mark{height:38px;width:38px}.nav-link{font-size:12px;padding:8px}.hero{padding:52px 0 77px}.hero p{font-size:15px}.toolbar{padding:16px}.toolbar-top{align-items:stretch;flex-direction:column;gap:10px}.stat{align-self:flex-end}.grid{grid-template-columns:1fr}.section-head{margin-top:32px}.section-head h2{font-size:22px}.sort{display:none}.doc-body h3{min-height:auto}.doc-desc{min-height:auto}.viewer-head{padding:10px}.viewer-controls .small-btn{font-size:11px;padding:6px}.viewer-title{font-size:13px}.footer-row{flex-direction:column;align-items:flex-start}}
+  </style>
+</head>
+<body>
+  <header class="topbar"><div class="shell nav"><a class="brand" href="./" aria-label="Trang chủ thư viện"><span class="brand-mark" aria-hidden="true">▤</span><span id="siteBrand">THƯ VIỆN TÀI LIỆU</span></a><a class="nav-link" href="#thu-vien">Khám phá tài liệu ↗</a></div></header>
+  <section class="hero"><div class="shell"><div class="hero-content"><span class="eyebrow">✦ KHO TRI THỨC MỞ</span><h1>Tri thức hữu ích.<br><em>Trong tầm tay bạn.</em></h1><p id="siteDescription">Tìm kiếm, đọc trực tuyến và tải về các tài liệu được chia sẻ miễn phí. Mọi thứ đều được sắp xếp để bạn dễ dàng khám phá.</p><a class="hero-cta" href="#thu-vien">Khám phá thư viện →</a></div></div></section>
+  <main class="shell content" id="thu-vien">
+    <div class="toolbar"><div class="toolbar-top"><label class="search" for="searchInput"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg><input id="searchInput" placeholder="Tìm theo tên, mô tả hoặc từ khóa..." autocomplete="off" aria-label="Tìm kiếm tài liệu"></label><div class="stat"><strong id="totalCount">0</strong> tài liệu công khai</div></div><div class="filters" id="filters" aria-label="Lọc theo danh mục"></div></div>
+    <section aria-label="Danh sách tài liệu"><div class="section-head"><div><h2>Danh sách tài liệu</h2><p id="resultText">Tổng hợp tài liệu dành cho bạn</p></div><div class="sort">Sắp xếp: mới nhất trước</div></div><div class="grid" id="docGrid" aria-live="polite"></div></section>
+  </main>
+  <footer class="footer"><div class="shell footer-row"><div><strong id="footerBrand">THƯ VIỆN TÀI LIỆU</strong> · Chia sẻ tri thức, kết nối cộng đồng.</div><div>Được xuất bản miễn phí bằng GitHub Pages</div></div></footer>
+  <div class="overlay" id="pdfOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="viewerTitle"><div class="viewer"><div class="viewer-head"><div id="viewerTitle" class="viewer-title">Đọc PDF</div><div class="viewer-controls"><a id="newTabLink" class="small-btn" target="_blank" rel="noopener noreferrer">Mở tab mới ↗</a><button id="closeViewer" class="close-btn" aria-label="Đóng PDF">×</button></div></div><iframe id="pdfFrame" title="Trình xem PDF" loading="lazy"></iframe></div></div>
+  <script src="data.js"></script>
+  <script>
+    "use strict";
+    const config = window.SITE_CONFIG || {};
+    const source = Array.isArray(window.DOCUMENTS) ? window.DOCUMENTS : [];
+    const docs = source.filter(d => d && typeof d.title === "string" && typeof d.file === "string" && /^(?!\/|[a-z]+:|\\|\.\.\/)[^?#]+$/i.test(d.file)).map(d => ({
+      title: d.title, file: d.file, description: String(d.description || ""), category: String(d.category || "Khác"), type: String(d.type || d.file.split(".").pop() || "Tệp").toUpperCase(), date: String(d.date || ""), size: String(d.size || "")
+    })).sort((a,b)=>b.date.localeCompare(a.date));
+    const $ = id => document.getElementById(id);
+    const escapeHTML = str => String(str).replace(/[&<>"']/g, x => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
+    const normalize = s => String(s||"").normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase();
+    const fileUrl = path => new URL(path.split('/').map(encodeURIComponent).join('/'), document.baseURI).href;
+    const icons = {
+      view:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>',
+      download:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 17v3h16v-3"/></svg>'
+    };
+    let activeCategory = 'Tất cả';
+    let lastFocus = null;
+    const categories = ['Tất cả',...new Set(docs.map(d => d.category))];
+    const name = String(config.name || 'THƯ VIỆN TÀI LIỆU');
+    $('siteBrand').textContent=name; $('footerBrand').textContent=name;
+    if(config.description) $('siteDescription').textContent=config.description;
+    document.title = `${name} | Đọc và tải tài liệu`;
+    $('totalCount').textContent = docs.length.toLocaleString('vi-VN');
+    function renderFilters() {
+      const el=$('filters');el.replaceChildren();
+      categories.forEach(cat=>{const btn=document.createElement('button');btn.type='button';btn.className='filter'+(cat===activeCategory?' active':'');btn.textContent=cat;btn.setAttribute('aria-pressed',String(cat===activeCategory));btn.addEventListener('click',()=>{activeCategory=cat;renderFilters();renderDocs()});el.appendChild(btn)})
+    }
+    function openPdf(doc) {
+      lastFocus=document.activeElement;
+      const url=fileUrl(doc.file);
+      $('viewerTitle').textContent=doc.title;
+      $('newTabLink').href=url;
+      $('pdfFrame').src=url+'#toolbar=1&navpanes=0';
+      $('pdfOverlay').classList.add('open');$('pdfOverlay').setAttribute('aria-hidden','false');
+      document.body.classList.add('modal-open');$('closeViewer').focus();
+    }
+    function closePdf(){ $('pdfOverlay').classList.remove('open');$('pdfOverlay').setAttribute('aria-hidden','true');$('pdfFrame').removeAttribute('src');document.body.classList.remove('modal-open');if(lastFocus) lastFocus.focus(); }
+    function renderDocs(){
+      const keyword=normalize($('searchInput').value.trim());
+      const filtered=docs.filter(d=>(activeCategory==='Tất cả'||d.category===activeCategory) && normalize([d.title,d.description,d.category,d.type].join(' ')).includes(keyword));
+      $('resultText').textContent = `${filtered.length} kết quả${activeCategory==='Tất cả'?'':' trong danh mục '+activeCategory}`;
+      const grid=$('docGrid');grid.replaceChildren();
+      if(!filtered.length){const empty=document.createElement('div');empty.className='empty';empty.innerHTML='<div class="empty-icon">⌕</div><h3>Chưa có tài liệu phù hợp</h3><p>Hãy thử từ khóa khác hoặc chọn “Tất cả”.</p>';grid.appendChild(empty);return}
+      filtered.forEach(doc=>{
+        const isPdf=doc.type==='PDF'||doc.file.toLowerCase().endsWith('.pdf');
+        const group=isPdf?'':/(DOC|WORD)/.test(doc.type)?'word':/(XLS|CSV|EXCEL)/.test(doc.type)?'excel':'other';
+        const card=document.createElement('article');card.className='doc';
+        const date= /^\d{4}-\d{2}-\d{2}$/.test(doc.date) ? doc.date.split('-').reverse().join('/') : doc.date;
+        card.innerHTML = `<div class="doc-top"><div class="file-symbol ${group}" aria-hidden="true">${escapeHTML(doc.type.slice(0,5))}</div><span class="file-tag">${escapeHTML(doc.category)}</span></div><div class="doc-body"><h3>${escapeHTML(doc.title)}</h3><p class="doc-desc">${escapeHTML(doc.description||'Tài liệu được chia sẻ miễn phí để đọc và tham khảo.')}</p><div class="doc-meta"><span>${escapeHTML(date||'Tài liệu')}</span>${doc.size?`<span class="dot"></span><span>${escapeHTML(doc.size)}</span>`:''}</div></div><div class="doc-actions"></div>`;
+        const actions=card.querySelector('.doc-actions');
+        const view=document.createElement(isPdf?'button':'a');view.className='action primary';view.innerHTML=icons.view+(isPdf?'Đọc PDF':'Xem tệp');
+        if(isPdf){view.type='button';view.addEventListener('click',()=>openPdf(doc))}else{view.href=fileUrl(doc.file);view.target='_blank';view.rel='noopener noreferrer'}
+        const download=document.createElement('a');download.className='action';download.href=fileUrl(doc.file);download.download=doc.file.split('/').pop();download.innerHTML=icons.download+'Tải về';
+        actions.append(view,download);grid.appendChild(card);
+      });
+    }
+    $('searchInput').addEventListener('input',renderDocs);
+    $('closeViewer').addEventListener('click',closePdf);
+    $('pdfOverlay').addEventListener('click',e=>{if(e.target===$('pdfOverlay'))closePdf()});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape' && $('pdfOverlay').classList.contains('open'))closePdf();if(e.key==='Tab'&&$('pdfOverlay').classList.contains('open')){const controls=[$('newTabLink'),$('closeViewer')];if(e.shiftKey&&document.activeElement===controls[0]){e.preventDefault();controls[1].focus()}else if(!e.shiftKey&&document.activeElement===controls[1]){e.preventDefault();controls[0].focus()}}});
+    renderFilters();renderDocs();
+  </script>
+</body>
+</html>
