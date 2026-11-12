@@ -8,6 +8,67 @@ window.SITE_CONFIG = {
 // Chú ý: mỗi mục trừ mục cuối cùng phải có dấu phẩy sau dấu }.
 window.DOCUMENTS = [
   {
+    title: "Tự học hay có người hướng dẫn?",
+    description: "So sánh trải nghiệm tự học và có người hướng dẫn trong quá trình tiếp cận kiến thức giao dịch.",
+    category: "Video kiến thức",
+    cover: "assets/tu-hoc-co-thay-kem.svg",
+    type: "MP4",
+    file: "tai-lieu/tu-hoc-vs-co-thay-kem.mp4",
+    date: "2026-11-12",
+    size: "12,6 MB"
+  },
+  {
+    title: "Ảnh chụp kết quả và PassView: Khác biệt về minh bạch",
+    description: "Tìm hiểu sự khác nhau giữa ảnh chụp và quyền xem thông tin tài khoản qua PassView.",
+    category: "Video kiến thức",
+    cover: "assets/passview-minh-bach.svg",
+    type: "MP4",
+    file: "tai-lieu/anh-chup-vs-passview-nguoi-that.mp4",
+    date: "2026-11-12",
+    size: "11 MB"
+  },
+  {
+    title: "Giao dịch theo trí nhớ hay theo hệ thống?",
+    description: "Ví dụ so sánh việc tìm đường bằng trí nhớ và Google Maps để nói về phương pháp giao dịch.",
+    category: "Video kiến thức",
+    cover: "assets/google-maps-giao-dich.svg",
+    type: "MP4",
+    file: "tai-lieu/lai-xe-theo-tri-nho-vs-google-maps.mp4",
+    date: "2026-11-12",
+    size: "7,9 MB"
+  },
+  {
+    title: "TradePro Bot AI – Giới thiệu hệ thống",
+    description: "Video giới thiệu công cụ giao dịch tự động và cách tiếp cận quản trị rủi ro.",
+    category: "Video kiến thức",
+    cover: "assets/tradepro-bot-ai.svg",
+    type: "MP4",
+    file: "tai-lieu/tradepro-bot-ai.mp4",
+    date: "2026-11-12",
+    size: "14,6 MB"
+  },
+  {
+    title: "Bot truyền thống và Bot AI – Điểm khác biệt",
+    description: "So sánh hai hướng tiếp cận tự động hóa giao dịch và các điểm cần lưu ý.",
+    category: "Video kiến thức",
+    cover: "assets/bot-cu-va-bot-ai.svg",
+    type: "MP4",
+    file: "tai-lieu/tradepro-bot-cu-vs-bot-ai.mp4",
+    date: "2026-11-12",
+    size: "6,2 MB"
+  },
+  {
+    title: "TradePro Recap – Tổng hợp hoạt động",
+    description: "Video recap tổng hợp hoạt động và những khoảnh khắc của TradePro.",
+    category: "Recap",
+    cover: "assets/recap-tradepro.svg",
+    type: "MP4",
+    file: "tai-lieu/recap-tradepro.mp4",
+    date: "2026-11-12",
+    size: "14,8 MB"
+  },
+
+  {
     title: "Nến Búa (Hammer) – Nhận diện mô hình",
     description: "Tìm hiểu mô hình nến búa trong phân tích hành động giá.",
     category: "Video kiến thức",
