@@ -9,6 +9,73 @@ window.SITE_CONFIG = {
 // Chú ý: mỗi mục trừ mục cuối cùng phải có dấu phẩy sau dấu }.
 window.DOCUMENTS = [
   {
+    title: "Nến Búa Ngược (Inverted Hammer)",
+    description: "Nhận biết nến búa ngược, bóng trên dài và những điều kiện cần quan sát trước khi đánh giá khả năng đảo chiều.",
+    category: "Tài liệu kiến thức",
+    cover: "assets/covers/NgheTrader_BuaNguoc.svg",
+    coverFallback: "assets/logo-nghe-trader.webp",
+    type: "MP4",
+    file: "tai-lieu/NgheTrader_BuaNguoc.mp4",
+    date: "2026-11-13",
+    size: "4,7 MB"
+  },
+  {
+    title: "Nến Doji – Tín hiệu do dự của thị trường",
+    description: "Hiểu đặc điểm thân nến Doji, trạng thái cân bằng cung cầu và vai trò của bối cảnh xu hướng.",
+    category: "Tài liệu kiến thức",
+    cover: "assets/covers/NgheTrader_Doji.svg",
+    coverFallback: "assets/logo-nghe-trader.webp",
+    type: "MP4",
+    file: "tai-lieu/NgheTrader_Doji.mp4",
+    date: "2026-11-13",
+    size: "4,8 MB"
+  },
+  {
+    title: "Nến Người Treo Cổ (Hanging Man)",
+    description: "Nhận diện mẫu hình người treo cổ ở vùng giá tăng và các tín hiệu xác nhận cần theo dõi.",
+    category: "Tài liệu kiến thức",
+    cover: "assets/covers/NgheTrader_NguoiTreoCo.svg",
+    coverFallback: "assets/logo-nghe-trader.webp",
+    type: "MP4",
+    file: "tai-lieu/NgheTrader_NguoiTreoCo.mp4",
+    date: "2026-11-13",
+    size: "5,7 MB"
+  },
+  {
+    title: "Nến Nhấn Chìm Giảm (Bearish Engulfing)",
+    description: "Tìm hiểu cấu trúc hai nến nhấn chìm giảm và cách đánh giá tín hiệu trong bối cảnh xu hướng.",
+    category: "Tài liệu kiến thức",
+    cover: "assets/covers/NgheTrader_NhanChimGiam.svg",
+    coverFallback: "assets/logo-nghe-trader.webp",
+    type: "MP4",
+    file: "tai-lieu/NgheTrader_NhanChimGiam.mp4",
+    date: "2026-11-13",
+    size: "5,8 MB"
+  },
+  {
+    title: "Nến Sao Hôm (Evening Star)",
+    description: "Khám phá mô hình ba nến Sao Hôm, thường được quan sát khi đà tăng có dấu hiệu suy yếu.",
+    category: "Tài liệu kiến thức",
+    cover: "assets/covers/NgheTrader_SaoHom.svg",
+    coverFallback: "assets/logo-nghe-trader.webp",
+    type: "MP4",
+    file: "tai-lieu/NgheTrader_SaoHom.mp4",
+    date: "2026-11-13",
+    size: "9,9 MB"
+  },
+  {
+    title: "Nến Sao Mai (Morning Star)",
+    description: "Tìm hiểu mô hình ba nến Sao Mai và các yếu tố cần xem xét khi tìm tín hiệu hồi phục.",
+    category: "Tài liệu kiến thức",
+    cover: "assets/covers/NgheTrader_SaoMai.svg",
+    coverFallback: "assets/logo-nghe-trader.webp",
+    type: "MP4",
+    file: "tai-lieu/NgheTrader_SaoMai.mp4",
+    date: "2026-11-13",
+    size: "7,2 MB"
+  },
+
+  {
     title: "Tự học hay có người hướng dẫn?",
     description: "So sánh trải nghiệm tự học và có người hướng dẫn trong quá trình tiếp cận kiến thức giao dịch.",
     category: "So sánh và Hiểu về sản phẩm",
