@@ -24,6 +24,21 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #f0c
 @media(max-width:920px){.layout{grid-template-columns:1fr}aside{position:static}.related{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:630px){.shell{width:min(100% - 28px,1220px)}.topbar{min-height:68px}.brand{font-size:13px}.brand img{width:41px;height:41px}.brand small{font-size:9px}.navlinks a:last-child{display:none}.crumbs{padding:18px 0}.related{grid-template-columns:1fr}.related-link{grid-template-columns:110px minmax(0,1fr)}.summary-panel{padding:19px}.player-tools{gap:8px}.player-tools button,.player-tools a,.player-tools select{padding:9px 10px}.heading{font-size:26px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+
+/* Learning path playlist and sequential navigation */
+.lesson-progress{font-size:12px;line-height:1.5;color:#e5bb70;background:#e6b05c15;border:1px solid #80633a66;border-radius:10px;padding:10px 13px;margin:8px 15px 2px}
+.related-link.active{background:#263d52;border-left:3px solid #e4b15e}
+.related-link[aria-current="page"] strong{color:#f3cc84}
+.lesson-navigation{display:flex;gap:9px;align-items:stretch;padding:14px 15px 2px}
+.lesson-navigation a{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;line-height:1.45;padding:12px 13px;border-radius:10px;text-align:center;font-weight:750;font-size:13px}
+.lesson-navigation .prev{color:#d8e7f5;border:1px solid #52647a;background:#1a344b}
+.lesson-navigation .next{background:#d9ac63;color:#0b1e2d}
+.lesson-navigation .next:hover{background:#f1c782}
+.lesson-navigation [hidden]{display:none!important}
+.auto-next{display:flex;align-items:center;gap:8px;margin:12px 17px 18px;font-size:12px;color:#b6c8d8;cursor:pointer}
+.auto-next input{accent-color:#e3b264;width:16px;height:16px}
+.auto-next input:disabled{opacity:.5}
+@media(max-width:630px){.lesson-navigation{flex-direction:column}.lesson-progress{margin-left:13px;margin-right:13px}}
 </style>
 </head>
 <body>
@@ -57,28 +72,37 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #f0c
       </section>
     </article>
     <aside aria-labelledby="relatedHeading">
-      <div class="aside-title"><h2 id="relatedHeading">Xem tiếp</h2><span id="relatedCount">0 video</span></div>
+      <div class="aside-title"><h2 id="relatedHeading">Lộ trình bài học</h2><span id="relatedCount">0 video</span></div>
+      <p class="lesson-progress" id="lessonProgress" aria-live="polite">Chọn video để học theo thứ tự.</p>
       <div class="related" id="related"></div>
-      <a class="next" id="nextLesson" href="./#thu-vien">Khám phá video tiếp theo →</a>
+      <div class="lesson-navigation"><a class="prev" id="prevLesson" href="./?category=Tài%20liệu%20kiến%20thức#thu-vien" hidden>← Bài trước</a><a class="next" id="nextLesson" href="./?category=Tài%20liệu%20kiến%20thức#thu-vien">Bài tiếp theo →</a></div>
+      <label class="auto-next" for="autoNext"><input type="checkbox" id="autoNext"> Tự chuyển bài khi xem hết video</label>
     </aside>
   </div>
 </main>
 <footer class="footer"><div class="shell"><span>© NGHỀ TRADER Academy · Học có phương pháp, giao dịch có kỷ luật.</span><a href="./#lien-he">Liên hệ hỗ trợ ↗</a><a href="https://zalo.me/g/pflrrz190" target="_blank" rel="noopener noreferrer">💬 Cộng đồng Zalo ↗</a></div></footer>
-<script src="data.js?v=20261113-15-videos-new-covers"></script>
+<script src="data.js?v=20261113-learning-path-v2"></script>
 <script>
 "use strict";
+
 const docs=(Array.isArray(window.DOCUMENTS)?window.DOCUMENTS:[]).filter(function(d){return d.type==="MP4"&&/^tai-lieu\/[\w().-]+\.mp4$/i.test(d.file)});
-const recap={title:"TradePro Recap – Tổng hợp hoạt động",description:"Video recap tổng hợp các hoạt động và khoảnh khắc của cộng đồng NGHỀ TRADER.",category:"Hoạt động cộng đồng",cover:"assets/recap-tradepro.svg",type:"MP4",file:"tai-lieu/recap-tradepro.mp4",size:"14,8 MB",date:"2026-11-12"};
+const recap={title:"TradePro Recap – Tổng hợp hoạt động",description:"Video recap tổng hợp các hoạt động và khoảnh khắc của cộng đồng NGHỀ TRADER.",category:"Hoạt động cộng đồng",lessonGroup:"Recap",lessonOrder:1,cover:"assets/recap-tradepro.svg",type:"MP4",file:"tai-lieu/recap-tradepro.mp4",size:"14,8 MB",date:"2026-11-12"};
 const all=docs.concat([recap]);
 const id=new URLSearchParams(location.search).get("v");
 const current=all.find(function(d){return d.file.split("/").pop()===id})||docs[0];
 const $=function(id){return document.getElementById(id)};
 const clean=function(value){return String(value||"")};
 const linkFor=function(d){return "watch.html?v="+encodeURIComponent(d.file.split("/").pop())};
+const learningOrder=["Kiến thức nền tảng","Nến trung tính","Nến tăng","Nến giảm"];
+const curriculum=docs.filter(d=>d.category==="Tài liệu kiến thức").sort((a,b)=>{
+  const difference=learningOrder.indexOf(a.lessonGroup)-learningOrder.indexOf(b.lessonGroup);
+  return difference||Number(a.lessonOrder||99)-Number(b.lessonOrder||99);
+});
+const productLessons=docs.filter(d=>d.category==="So sánh và Hiểu về sản phẩm").sort((a,b)=>Number(a.lessonOrder||99)-Number(b.lessonOrder||99));
 if(current){
   document.title=current.title+" | NGHỀ TRADER Academy";
   $("breadcrumb").textContent=current.title;
-  $("categoryName").textContent=current.category;
+  $("categoryName").textContent=current.lessonGroup||current.category;
   $("videoTitle").textContent=current.title;
   $("description").textContent=clean(current.description);
   $("type").textContent="VIDEO MP4"+(current.size?" · "+current.size:"");
@@ -97,20 +121,39 @@ if(current){
     if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(location.href).then(function(){$("shareNotice").textContent="Đã sao chép liên kết"},function(){$("shareNotice").textContent="Sao chép liên kết ở thanh địa chỉ"});
     else $("shareNotice").textContent="Sao chép liên kết ở thanh địa chỉ";
   });
-  const playlist=docs.filter(function(d){return d.category===current.category&&d.file!==current.file});
-  const related=(playlist.length?playlist:docs.filter(function(d){return d.file!==current.file})).slice(0,6);
-  $("relatedCount").textContent=related.length+" video";
-  related.forEach(function(d){
-    const a=document.createElement("a");a.className="related-link";a.href=linkFor(d);
+  // Learning lessons follow foundational concepts → neutral → bullish → bearish.
+  // Product introductions form a separate four-video playlist.
+  const pathway=current.category==="Tài liệu kiến thức"?curriculum:current.category==="So sánh và Hiểu về sản phẩm"?productLessons:[recap];
+  const position=pathway.findIndex(d=>d.file===current.file);
+  const prev=position>0?pathway[position-1]:null;
+  const next=position>=0&&position<pathway.length-1?pathway[position+1]:null;
+  const groupLessons=pathway.filter(d=>d.lessonGroup===current.lessonGroup);
+  const sequence=groupLessons.length?groupLessons:pathway;
+  $("relatedHeading").textContent=current.file===recap.file?"Video cộng đồng":current.lessonGroup||"Lộ trình bài học";
+  $("relatedCount").textContent=sequence.length+" video";
+  $("lessonProgress").textContent=current.file===recap.file?"Video tổng hợp hoạt động":("Bài "+(position+1)+" / "+pathway.length+" trong lộ trình "+(current.category==="Tài liệu kiến thức"?"kiến thức":"sản phẩm"));
+  sequence.forEach(function(d,i){
+    const a=document.createElement("a");a.className="related-link"+(d.file===current.file?" active":"");a.href=linkFor(d);
+    if(d.file===current.file)a.setAttribute("aria-current","page");
     const img=document.createElement("img");img.src=d.cover||"assets/logo-nghe-trader.webp";img.alt="Ảnh bìa "+d.title;img.loading="lazy";img.decoding="async";img.width=112;img.height=76;
+    if(d.coverFallback)img.addEventListener("error",function(){img.src=d.coverFallback},{once:true});
     const body=document.createElement("span");
-    const heading=document.createElement("strong");heading.textContent=d.title;
-    const meta=document.createElement("small");meta.textContent=d.category;
+    const heading=document.createElement("strong");heading.textContent=(i+1)+". "+d.title;
+    const meta=document.createElement("small");meta.textContent=d.file===current.file?"Đang xem":d.lessonGroup||d.category;
     body.append(heading,meta);a.append(img,body);$("related").appendChild(a);
   });
-  const idx=docs.findIndex(function(d){return d.file===current.file});
-  const next=related[0]||docs[(idx+1)%docs.length];
-  if(next){$("nextLesson").href=linkFor(next);$("nextLesson").textContent="Xem: "+next.title+" →"}
+  const prevBtn=$("prevLesson"), nextBtn=$("nextLesson");
+  prevBtn.hidden=!prev;
+  if(prev){prevBtn.href=linkFor(prev);prevBtn.textContent="← Bài trước";}
+  if(next){nextBtn.href=linkFor(next);nextBtn.textContent="Bài tiếp theo → "+next.title;}
+  else{
+    nextBtn.href="./?category="+encodeURIComponent(current.category==="Hoạt động cộng đồng"?"Tất cả":current.category)+"#thu-vien";
+    nextBtn.textContent=current.file===recap.file?"Khám phá thư viện video →":"Hoàn thành lộ trình · Xem lại danh mục →";
+    $("autoNext").disabled=true;
+  }
+  player.addEventListener("ended",function(){
+    if(next&&$("autoNext").checked)window.location.assign(linkFor(next));
+  });
 }
 </script>
 </body>
