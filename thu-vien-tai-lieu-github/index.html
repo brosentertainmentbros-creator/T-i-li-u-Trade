@@ -24,6 +24,15 @@
     .nav {min-height:75px;display:flex;align-items:center;justify-content:space-between;gap:20px}
     .brand {display:flex;align-items:center;gap:12px;font-size:17px;font-weight:800;letter-spacing:.025em}
     .brand-mark {display:grid;place-items:center;width:51px;height:51px;background:white;border-radius:50%;overflow:hidden;border:2px solid #dbb36e;box-shadow:0 0 0 3px #dbb36e20}.brand-mark img {width:100%;height:100%;object-fit:contain;display:block}
+    .nav-dd{position:relative}
+    .nav-dd summary{list-style:none;cursor:pointer;user-select:none}
+    .nav-dd summary::-webkit-details-marker{display:none}
+    .nav-dd[open] summary{background:#2b3b51;border-color:#d6a64e}
+    .dd-list{position:absolute;right:0;top:calc(100% + 8px);min-width:230px;background:#0f2236;border:1px solid #455165;border-radius:12px;padding:6px;z-index:70;box-shadow:0 18px 40px #0008}
+    .dd-list a{display:block;padding:11px 13px;border-radius:8px;color:#eaf3fc;font-size:14px;white-space:nowrap}
+    .dd-list a:hover,.dd-list a:focus-visible{background:#244766;outline:none}
+    .nav-actions{flex-wrap:wrap;justify-content:flex-end}
+    @media(max-width:620px){.dd-list{position:fixed;left:12px;right:12px;top:74px;min-width:0}.nav-dd summary{max-width:none}}
     .nav-link {font-size:14px;color:#d9e2ed;border:1px solid #455165;padding:9px 16px;border-radius:10px;transition:.2s}
     .nav-link:hover {background:#2b3b51}
     .hero {background:radial-gradient(ellipse at 83% 10%,#21435e,transparent 53%),linear-gradient(135deg,#06101e,#132940);color:white;padding:90px 0 111px;position:relative;overflow:hidden}
@@ -261,7 +270,7 @@
   </style>
 </head>
 <body>
-  <header class="topbar"><div class="shell nav"><a class="brand" href="./" aria-label="Trang chủ thư viện"><span class="brand-mark"><img src="assets/logo-nghe-trader.webp" alt="Logo NGHỀ TRADER" width="51" height="51"></span><span class="brand-name"><span id="siteBrand">NGHỀ TRADER</span><span class="brand-sub">ACADEMY · THƯ VIỆN GIAO DỊCH</span></span></a><nav class="nav-actions" aria-label="Điều hướng chính"><a class="nav-link library-link" href="#thu-vien">Thư viện</a><a class="nav-link faq-nav-link" href="#hoi-dap">Hỏi đáp</a><a class="nav-link contact-nav-link" href="#lien-he">Liên hệ</a></nav></div></header>
+  <header class="topbar"><div class="shell nav"><a class="brand" href="https://giaiphapgiaodich.com/" target="_blank" rel="noopener noreferrer" aria-label="Mở website giaiphapgiaodich.com trong tab mới"><span class="brand-mark"><img src="assets/logo-nghe-trader.webp" alt="Logo NGHỀ TRADER" width="51" height="51"></span><span class="brand-name"><span id="siteBrand">NGHỀ TRADER</span><span class="brand-sub">ACADEMY · THƯ VIỆN GIAO DỊCH</span></span></a><nav class="nav-actions" aria-label="Điều hướng chính"><a class="nav-link library-link" href="#thu-vien">Thư viện</a><a class="nav-link faq-nav-link" href="#hoi-dap">Hỏi đáp</a><details class="nav-dd"><summary class="nav-link">Facebook <span aria-hidden="true">▾</span></summary><div class="dd-list"><a href="https://www.facebook.com/profile.php?id=61583021393693" target="_blank" rel="noopener noreferrer">Trang Facebook 1 ↗</a><a href="https://www.facebook.com/dautudedangtradepro" target="_blank" rel="noopener noreferrer">dautudedangtradepro ↗</a></div></details><details class="nav-dd"><summary class="nav-link">TikTok <span aria-hidden="true">▾</span></summary><div class="dd-list"><a href="https://www.tiktok.com/@ngh.trader7" target="_blank" rel="noopener noreferrer">@ngh.trader7 ↗</a><a href="https://www.tiktok.com/@giangdoan1394" target="_blank" rel="noopener noreferrer">@giangdoan1394 ↗</a></div></details><a class="nav-link contact-nav-link" href="#lien-he">Liên hệ</a></nav></div></header>
   <section class="hero">
     <video id="heroRecapBg" class="hero-video" muted autoplay loop playsinline preload="none" poster="assets/recap-tradepro.svg" aria-label="Video recap TradePro chuyển động làm nền trang chủ" hidden></video>
     <div class="hero-video-shade" aria-hidden="true"></div>
@@ -519,5 +528,11 @@
     checkMediaAvailability();
     renderFilters();renderDocs();
   </script>
+<script>
+(function(){var dds=[].slice.call(document.querySelectorAll('.nav-dd'));
+dds.forEach(function(d){d.addEventListener('toggle',function(){if(d.open)dds.forEach(function(o){if(o!==d)o.open=false})})});
+document.addEventListener('click',function(e){dds.forEach(function(d){if(!d.contains(e.target))d.open=false})});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')dds.forEach(function(d){d.open=false})});})();
+</script>
 </body>
 </html>
