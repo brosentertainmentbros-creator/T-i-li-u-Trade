@@ -11,6 +11,8 @@ window.DOCUMENTS = [
   {
     title: "Nến Búa Ngược (Inverted Hammer)",
     description: "Nhận biết nến búa ngược, bóng trên dài và những điều kiện cần quan sát trước khi đánh giá khả năng đảo chiều.",
+    lessonGroup: "Nến tăng",
+    lessonOrder: 2,
     category: "Tài liệu kiến thức",
     cover: "assets/covers/NgheTrader_BuaNguoc.svg",
     coverFallback: "assets/logo-nghe-trader.webp",
@@ -22,6 +24,8 @@ window.DOCUMENTS = [
   {
     title: "Nến Doji – Tín hiệu do dự của thị trường",
     description: "Hiểu đặc điểm thân nến Doji, trạng thái cân bằng cung cầu và vai trò của bối cảnh xu hướng.",
+    lessonGroup: "Nến trung tính",
+    lessonOrder: 1,
     category: "Tài liệu kiến thức",
     cover: "assets/covers/NgheTrader_Doji.svg",
     coverFallback: "assets/logo-nghe-trader.webp",
@@ -33,6 +37,8 @@ window.DOCUMENTS = [
   {
     title: "Nến Người Treo Cổ (Hanging Man)",
     description: "Nhận diện mẫu hình người treo cổ ở vùng giá tăng và các tín hiệu xác nhận cần theo dõi.",
+    lessonGroup: "Nến giảm",
+    lessonOrder: 1,
     category: "Tài liệu kiến thức",
     cover: "assets/covers/NgheTrader_NguoiTreoCo.svg",
     coverFallback: "assets/logo-nghe-trader.webp",
@@ -44,6 +50,8 @@ window.DOCUMENTS = [
   {
     title: "Nến Nhấn Chìm Giảm (Bearish Engulfing)",
     description: "Tìm hiểu cấu trúc hai nến nhấn chìm giảm và cách đánh giá tín hiệu trong bối cảnh xu hướng.",
+    lessonGroup: "Nến giảm",
+    lessonOrder: 2,
     category: "Tài liệu kiến thức",
     cover: "assets/covers/NgheTrader_NhanChimGiam.svg",
     coverFallback: "assets/logo-nghe-trader.webp",
@@ -55,6 +63,8 @@ window.DOCUMENTS = [
   {
     title: "Nến Sao Hôm (Evening Star)",
     description: "Khám phá mô hình ba nến Sao Hôm, thường được quan sát khi đà tăng có dấu hiệu suy yếu.",
+    lessonGroup: "Nến giảm",
+    lessonOrder: 4,
     category: "Tài liệu kiến thức",
     cover: "assets/covers/NgheTrader_SaoHom.svg",
     coverFallback: "assets/logo-nghe-trader.webp",
@@ -66,6 +76,8 @@ window.DOCUMENTS = [
   {
     title: "Nến Sao Mai (Morning Star)",
     description: "Tìm hiểu mô hình ba nến Sao Mai và các yếu tố cần xem xét khi tìm tín hiệu hồi phục.",
+    lessonGroup: "Nến tăng",
+    lessonOrder: 4,
     category: "Tài liệu kiến thức",
     cover: "assets/covers/NgheTrader_SaoMai.svg",
     coverFallback: "assets/logo-nghe-trader.webp",
@@ -78,6 +90,8 @@ window.DOCUMENTS = [
   {
     title: "Tự học hay có người hướng dẫn?",
     description: "So sánh trải nghiệm tự học và có người hướng dẫn trong quá trình tiếp cận kiến thức giao dịch.",
+    lessonGroup: "Hiểu về sản phẩm",
+    lessonOrder: 1,
     category: "So sánh và Hiểu về sản phẩm",
     cover: "assets/covers/tu-hoc-vs-co-thay-kem.webp",
     coverFallback: "assets/tu-hoc-co-thay-kem.svg",
@@ -89,6 +103,8 @@ window.DOCUMENTS = [
   {
     title: "Ảnh chụp kết quả và PassView: Khác biệt về minh bạch",
     description: "Tìm hiểu sự khác nhau giữa ảnh chụp và quyền xem thông tin tài khoản qua PassView.",
+    lessonGroup: "Hiểu về sản phẩm",
+    lessonOrder: 2,
     category: "So sánh và Hiểu về sản phẩm",
     cover: "assets/covers/anh-chup-vs-passview-nguoi-that.webp",
     coverFallback: "assets/passview-minh-bach.svg",
@@ -100,6 +116,8 @@ window.DOCUMENTS = [
   {
     title: "Giao dịch theo trí nhớ hay theo hệ thống?",
     description: "Ví dụ so sánh việc tìm đường bằng trí nhớ và Google Maps để nói về phương pháp giao dịch.",
+    lessonGroup: "Kiến thức nền tảng",
+    lessonOrder: 1,
     category: "Tài liệu kiến thức",
     cover: "assets/covers/lai-xe-theo-tri-nho-vs-google-maps.webp",
     coverFallback: "assets/google-maps-giao-dich.svg",
@@ -111,6 +129,8 @@ window.DOCUMENTS = [
   {
     title: "TradePro Bot AI – Giới thiệu hệ thống",
     description: "Video giới thiệu công cụ giao dịch tự động và cách tiếp cận quản trị rủi ro.",
+    lessonGroup: "Hiểu về sản phẩm",
+    lessonOrder: 3,
     category: "So sánh và Hiểu về sản phẩm",
     cover: "assets/covers/tradepro-bot-ai.webp",
     coverFallback: "assets/tradepro-bot-ai.svg",
@@ -122,6 +142,8 @@ window.DOCUMENTS = [
   {
     title: "Bot truyền thống và Bot AI – Điểm khác biệt",
     description: "So sánh hai hướng tiếp cận tự động hóa giao dịch và các điểm cần lưu ý.",
+    lessonGroup: "Hiểu về sản phẩm",
+    lessonOrder: 4,
     category: "So sánh và Hiểu về sản phẩm",
     cover: "assets/covers/tradepro-bot-cu-vs-bot-ai.webp",
     coverFallback: "assets/bot-cu-va-bot-ai.svg",
@@ -134,6 +156,8 @@ window.DOCUMENTS = [
   {
     title: "Nến Búa (Hammer) – Nhận diện mô hình",
     description: "Tìm hiểu mô hình nến búa trong phân tích hành động giá.",
+    lessonGroup: "Nến tăng",
+    lessonOrder: 1,
     category: "Tài liệu kiến thức",
     cover: "assets/covers/NgheTrader_NenBua.webp",
     coverFallback: "assets/nen-bua.svg",
@@ -145,6 +169,8 @@ window.DOCUMENTS = [
   {
     title: "Nến Nhấn Chìm Tăng – Bullish Engulfing",
     description: "Video kiến thức về mô hình nến nhấn chìm tăng và cách quan sát tín hiệu giá.",
+    lessonGroup: "Nến tăng",
+    lessonOrder: 3,
     category: "Tài liệu kiến thức",
     cover: "assets/covers/NgheTrader_NhanChimTang.webp",
     coverFallback: "assets/nhan-chim-tang.svg",
@@ -156,6 +182,8 @@ window.DOCUMENTS = [
   {
     title: "Nến Sao Băng (Shooting Star)",
     description: "Tìm hiểu đặc điểm của mô hình nến sao băng trong phân tích kỹ thuật.",
+    lessonGroup: "Nến giảm",
+    lessonOrder: 3,
     category: "Tài liệu kiến thức",
     cover: "assets/covers/NgheTrader_SaoBang.webp",
     coverFallback: "assets/sao-bang.svg",
@@ -167,6 +195,8 @@ window.DOCUMENTS = [
   {
     title: "Video kiến thức giao dịch – Thuyết minh tiếng Việt",
     description: "Video chia sẻ kiến thức giao dịch bằng tiếng Việt.",
+    lessonGroup: "Kiến thức nền tảng",
+    lessonOrder: 2,
     category: "Tài liệu kiến thức",
     cover: "assets/covers/out_vi_giong_sub.webp",
     coverFallback: "assets/video-thuyet-minh.svg",
