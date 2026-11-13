@@ -78,7 +78,7 @@ section{padding:46px 0 6px}
 .chips{display:flex;gap:8px;flex-wrap:wrap}
 .chip{padding:8px 15px;border-radius:30px;border:1px solid var(--stroke);background:transparent;color:#c9d6e4;cursor:pointer;font-size:14px}
 .chip.on,.chip:hover{background:var(--gold);border-color:var(--gold);color:#1a1405;font-weight:700}
-.vids{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.vids{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .vid{background:var(--paper);border:1px solid var(--stroke);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:.2s}
 .vid:hover{border-color:var(--gold)}
 .vid .cv{aspect-ratio:16/10;background:#0b1828;position:relative;overflow:hidden}
@@ -121,6 +121,11 @@ footer b{color:var(--ink)}
  .nav{min-height:60px}
  .nav .btn{margin-left:auto}
 }
+.all-lessons{display:flex;justify-content:center;margin:25px 0 0}.all-lessons .btn{border-color:#af8d53;color:#f1d098}
+.vid .bd{min-height:100px}
+.vid:focus-within{border-color:var(--gold)}
+@media(max-width:980px){.vids{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.vids{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -193,10 +198,11 @@ footer b{color:var(--ink)}
  </section>
 
  <section id="video">
-  <div class="sec-h"><div><h2>Video bài học</h2><p>Mô hình nến và kiến thức giao dịch. Xem thử trước khi tham gia.</p></div>
-   <div class="chips" id="chips"></div></div>
+  <div class="sec-h"><div><h2>Video nổi bật</h2><p>Chọn chủ đề để xem thử. Thư viện đầy đủ được chia theo nhóm và có lộ trình học.</p></div>
+   <div class="chips" id="chips" aria-label="Lọc video theo chủ đề"></div></div>
   <div class="vids" id="vids"></div>
   <div class="empty" id="empty" hidden>Không tìm thấy bài học phù hợp.</div>
+  <div class="all-lessons"><a class="btn btn-line" id="allLessons" href="./?category=Tất%20cả#thu-vien">Xem thư viện đầy đủ · <span id="lessonTotal">15</span> video →</a></div>
  </section>
 
  <section id="thong-bao">
@@ -235,32 +241,45 @@ footer b{color:var(--ink)}
  <div class="shell"><b>NGHỀ TRADER</b> · giaiphapgiaodich.com · <a class="footer-zalo" href="https://zalo.me/g/pflrrz190" target="_blank" rel="noopener noreferrer">Cộng đồng Zalo ↗</a><br>Nội dung chỉ nhằm mục đích giáo dục, không phải khuyến nghị đầu tư. Giao dịch có rủi ro.</div>
 </footer>
 
-<script src="data.js?v=20261113-15-videos-new-covers"></script>
+<script src="data.js?v=20261113-learning-path-v2"></script>
 <script>
 (function(){
  var docs=(window.DOCUMENTS||[]).filter(function(d){return /\.mp4$/i.test(d.file)});
- var cat='Tất cả', q='';
+ var cat='Nổi bật', q='';
  var chipsEl=document.getElementById('chips'), vids=document.getElementById('vids'), empty=document.getElementById('empty');
  document.getElementById('vcount').textContent=docs.length+' video bài học';
- var cats=['Tất cả'].concat(docs.map(function(d){return d.category}).filter(function(c,i,a){return a.indexOf(c)===i}));
- function norm(s){return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase()}
+ document.getElementById('lessonTotal').textContent=docs.length;
+ var cats=['Nổi bật','Nến tăng','Nến giảm','Nến trung tính','Kiến thức nền tảng','So sánh và Hiểu về sản phẩm'];
+ var featured=['NgheTrader_NenBua.mp4','NgheTrader_Doji.mp4','NgheTrader_NhanChimGiam.mp4','NgheTrader_SaoMai.mp4','tradepro-bot-ai.mp4','anh-chup-vs-passview-nguoi-that.mp4'];
+ function norm(s){return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase()}
  function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
  function drawChips(){
   chipsEl.innerHTML='';
   cats.forEach(function(c){
-   var b=document.createElement('button');b.className='chip'+(c===cat?' on':'');b.textContent=c;
+   var b=document.createElement('button');b.type='button';b.className='chip'+(c===cat?' on':'');b.textContent=c;
+   b.setAttribute('aria-pressed',String(c===cat));
    b.onclick=function(){cat=c;drawChips();drawVids()};chipsEl.appendChild(b);
   });
  }
  function drawVids(){
-  var list=docs.filter(function(d){
-   return (cat==='Tất cả'||d.category===cat)&&(!q||norm(d.title+' '+d.description).indexOf(norm(q))>-1);
-  });
+  var list=docs.slice();
+  if(q){
+    list=list.filter(function(d){return norm(d.title+' '+d.description+' '+d.lessonGroup).indexOf(norm(q))>-1});
+  }else if(cat==='Nổi bật'){
+    list=featured.map(function(name){return docs.find(function(d){return d.file.split('/').pop()===name})}).filter(Boolean);
+  }else{
+    list=list.filter(function(d){return cat==='So sánh và Hiểu về sản phẩm'?d.category===cat:d.lessonGroup===cat})
+             .sort(function(a,b){return (a.lessonOrder||99)-(b.lessonOrder||99)});
+    // Only preview a few lessons here; the full curriculum is on the main library page.
+    list=list.slice(0,cat==='So sánh và Hiểu về sản phẩm'?4:3);
+  }
   vids.innerHTML=list.map(function(d){
    var href='watch.html?v='+encodeURIComponent(d.file.split('/').pop());
-   return '<a class="vid" href="'+href+'"><div class="cv"><img loading="lazy" src="'+esc(d.cover||d.coverFallback||'')+'" alt="" onerror="this.onerror=null;this.src=\''+esc(d.coverFallback||'assets/logo-nghe-trader.webp')+'\'"><i>Video</i></div><div class="bd"><h4>'+esc(d.title)+'</h4><small>'+esc(d.category)+'</small></div></a>';
+   return '<a class="vid" href="'+href+'"><div class="cv"><img loading="lazy" decoding="async" src="'+esc(d.cover||d.coverFallback||'')+'" alt="" onerror="this.onerror=null;this.src=\''+esc(d.coverFallback||'assets/logo-nghe-trader.webp')+'\'"><i>Video</i></div><div class="bd"><h4>'+esc(d.title)+'</h4><small>'+esc(d.lessonGroup||d.category)+'</small></div></a>';
   }).join('');
   empty.hidden=list.length>0;
+  var categoryLink=cat==='So sánh và Hiểu về sản phẩm'?cat:cat==='Nổi bật'?'Tất cả':'Tài liệu kiến thức';
+  document.getElementById('allLessons').href='./?category='+encodeURIComponent(categoryLink)+'#thu-vien';
  }
  document.getElementById('q').addEventListener('input',function(e){q=e.target.value;drawVids();
   if(q)document.getElementById('video').scrollIntoView({behavior:'smooth'})});
