@@ -271,6 +271,24 @@
     .contact-zalo{background:#204653;color:#f0fbff;border:1px solid #4a8d99;margin-top:12px}
     .contact-zalo:hover{background:#2b5c69}
     .contact-zalo:focus-visible{outline:3px solid #efc47a;outline-offset:3px}
+
+    /* Focused homepage: six highlights, then expand knowledge groups on demand */
+    .grid.grouped-results{display:block}
+    .curriculum-section{padding:24px 0 12px;border-bottom:1px solid #32465d}
+    .curriculum-section:first-child{padding-top:2px}
+    .curriculum-section:last-child{border-bottom:none}
+    .curriculum-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+    .curriculum-heading h3{font-size:clamp(20px,2.5vw,25px);margin:5px 0 4px;color:#f2f6fc}
+    .curriculum-heading p{margin:0;color:#9eb6cb;font-size:13px;line-height:1.6}
+    .curriculum-label{display:inline-flex;color:#e7bf7c;background:#cca05417;border:1px solid #b28a4b66;border-radius:50px;font-size:11px;padding:4px 10px;font-weight:800;letter-spacing:.03em}
+    .extra-lessons{margin-top:18px}
+    .extra-lessons[hidden]{display:none!important}
+    .show-more{display:block;margin:19px auto 4px;padding:12px 20px;background:#142e44;color:#e6bd78;font:inherit;font-weight:750;font-size:14px;border-radius:11px;border:1px solid #b78c48;cursor:pointer;transition:background .2s,border-color .2s}
+    .show-more:hover{background:#203f56;border-color:#eac276}
+    .show-more:focus-visible{outline:3px solid #e6b663;outline-offset:3px}
+    #resultsSection{scroll-margin-top:95px}
+    @media(max-width:620px){.curriculum-section{padding:18px 0 10px}.curriculum-heading h3{font-size:22px}.show-more{width:100%}.grid{gap:15px}}
+    @media(prefers-reduced-motion:reduce){.show-more{transition:none}}
   </style>
 </head>
 <body>
@@ -310,7 +328,7 @@
       </div>
     </section>
     <div class="toolbar"><div class="toolbar-top"><label class="search" for="searchInput"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg><input id="searchInput" placeholder="Tìm theo tên, mô tả hoặc từ khóa..." autocomplete="off" aria-label="Tìm kiếm tài liệu"></label><div class="stat"><strong id="totalCount">0</strong> nội dung<span class="stat-split" id="totalSplit"></span></div></div><div class="filters" id="filters" aria-label="Lọc theo danh mục"></div></div>
-    <section id="resultsSection" aria-label="Danh sách tài liệu"><div class="section-head"><div><h2>Kho kiến thức giao dịch</h2><p id="resultText">Tổng hợp tài liệu dành cho bạn</p></div><div class="sort">Sắp xếp: mới nhất trước</div></div><div class="grid" id="docGrid" aria-live="polite"></div></section>
+    <section id="resultsSection" aria-label="Danh sách tài liệu"><div class="section-head"><div><h2 id="resultHeading">Video dành cho bạn</h2><p id="resultText">Tổng hợp tài liệu dành cho bạn</p></div><div class="sort" id="sortLabel">Nội dung nổi bật</div></div><div class="grid" id="docGrid" aria-live="polite"></div></section>
   </main>
 
 
@@ -366,7 +384,7 @@
     const config = window.SITE_CONFIG || {};
     const source = Array.isArray(window.DOCUMENTS) ? window.DOCUMENTS : [];
     const docs = source.filter(d => d && typeof d.title === "string" && typeof d.file === "string" && /^(?!\/|[a-z]+:|\\|\.\.\/)[^?#]+$/i.test(d.file)).map(d => ({
-      title: d.title, file: d.file, description: String(d.description || ""), category: String(d.category || "Khác"), type: String(d.type || d.file.split(".").pop() || "Tệp").toUpperCase(), date: String(d.date || ""), size: String(d.size || ""), cover: String(d.cover || ""), coverFallback: String(d.coverFallback || "")
+      title: d.title, file: d.file, description: String(d.description || ""), category: String(d.category || "Khác"), lessonGroup: String(d.lessonGroup || ""), lessonOrder: Number(d.lessonOrder || 99), type: String(d.type || d.file.split(".").pop() || "Tệp").toUpperCase(), date: String(d.date || ""), size: String(d.size || ""), cover: String(d.cover || ""), coverFallback: String(d.coverFallback || "")
     })).sort((a,b)=>b.date.localeCompare(a.date));
     const $ = id => document.getElementById(id);
     const escapeHTML = str => String(str).replace(/[&<>"']/g, x => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
@@ -379,6 +397,8 @@
     let activeCategory = 'Tất cả';
     let lastFocus = null;
     const categories = ['Tất cả',...new Set(docs.map(d => d.category))];
+    const initialCategory=new URLSearchParams(location.search).get('category');
+    if(initialCategory && categories.includes(initialCategory))activeCategory=initialCategory;
     const name = String(config.name || 'THƯ VIỆN TÀI LIỆU');
     $('siteBrand').textContent=name.split('|')[0].trim(); $('footerBrand').textContent=name.split('|')[0].trim();
     if(config.description) $('siteDescription').textContent=config.description;
@@ -432,13 +452,8 @@
       const player=$('videoPlayer');player.pause();player.removeAttribute('src');player.load();
       document.body.classList.remove('modal-open');if(lastFocus)lastFocus.focus();
     }
-    function renderDocs(){
-      const keyword=normalize($('searchInput').value.trim());
-      const filtered=docs.filter(d=>(activeCategory==='Tất cả'||d.category===activeCategory) && normalize([d.title,d.description,d.category,d.type].join(' ')).includes(keyword));
-      $('resultText').textContent = `${filtered.length} kết quả${activeCategory==='Tất cả'?'':' trong danh mục '+activeCategory}`;
-      const grid=$('docGrid');grid.replaceChildren();
-      if(!filtered.length){const empty=document.createElement('div');empty.className='empty';empty.innerHTML='<div class="empty-icon">⌕</div><h3>Chưa có tài liệu phù hợp</h3><p>Hãy thử từ khóa khác hoặc chọn “Tất cả”.</p>';grid.appendChild(empty);return}
-      filtered.forEach((doc,i)=>{
+    // Build cards once and reuse them in featured, category and lesson-group views.
+    function makeDocCard(doc,i,container){
         const isPdf=doc.type==='PDF'||doc.file.toLowerCase().endsWith('.pdf');
         const isVideo=doc.type==='MP4'||doc.file.toLowerCase().endsWith('.mp4');
         const group=isVideo?'video':isPdf?'':/(DOC|WORD)/.test(doc.type)?'word':/(XLS|CSV|EXCEL)/.test(doc.type)?'excel':'other';
@@ -464,8 +479,80 @@
         const view=document.createElement(isPdf?'button':'a');view.className='action primary';view.innerHTML=icons.view+(isVideo?'Xem video':isPdf?'Đọc PDF':'Xem tệp');
         if(isPdf){view.type='button';view.addEventListener('click',()=>openViewer(doc))}else if(isVideo){view.href='watch.html?v='+encodeURIComponent(doc.file.split('/').pop())}else{view.href=fileUrl(doc.file);view.target='_blank';view.rel='noopener noreferrer'}
         const download=document.createElement('a');download.className='action';download.href=fileUrl(doc.file);download.download=doc.file.split('/').pop();download.innerHTML=icons.download+'Tải về';
-        actions.append(view,download);grid.appendChild(card);
-      });
+        actions.append(view,download);container.appendChild(card);
+    }
+    const featuredVideoFiles=[
+      'NgheTrader_NenBua.mp4',
+      'NgheTrader_Doji.mp4',
+      'NgheTrader_NhanChimGiam.mp4',
+      'NgheTrader_SaoMai.mp4',
+      'tradepro-bot-ai.mp4',
+      'anh-chup-vs-passview-nguoi-that.mp4'
+    ];
+    const curriculumGroups=[
+      ['Nến tăng','Bốn mẫu hình thường được tìm hiểu trong bối cảnh khả năng tăng giá hoặc đảo chiều tăng.'],
+      ['Nến giảm','Bốn mẫu hình để quan sát dấu hiệu suy yếu và khả năng đảo chiều giảm.'],
+      ['Nến trung tính','Các tín hiệu cần đặt trong bối cảnh thị trường, không diễn giải riêng lẻ.'],
+      ['Kiến thức nền tảng','Phương pháp tiếp cận thị trường và kiến thức giao dịch tổng quan.']
+    ];
+    function renderDocs(){
+      const keyword=normalize($('searchInput').value.trim());
+      const filtered=docs.filter(d=>(activeCategory==='Tất cả'||d.category===activeCategory)&&normalize([d.title,d.description,d.category,d.lessonGroup,d.type].join(' ')).includes(keyword));
+      const isFeatured=activeCategory==='Tất cả'&&!keyword;
+      const isCurriculum=activeCategory==='Tài liệu kiến thức'&&!keyword;
+      const isProducts=activeCategory==='So sánh và Hiểu về sản phẩm'&&!keyword;
+      const grid=$('docGrid');grid.replaceChildren();
+      grid.classList.toggle('grouped-results',isCurriculum);
+      $('resultHeading').textContent=isFeatured?'6 video nổi bật':isCurriculum?'Lộ trình kiến thức':isProducts?'So sánh và Hiểu về sản phẩm':'Kết quả tìm kiếm';
+      $('sortLabel').textContent=isFeatured?'Chọn lọc từ 15 video':isCurriculum?'Chọn từng nhóm để học':isProducts?'4 video giới thiệu':'Kết quả phù hợp';
+      if(isFeatured){
+        const selection=featuredVideoFiles.map(name=>filtered.find(d=>d.file.endsWith('/'+name))).filter(Boolean);
+        $('resultText').textContent='Xem thử 6 video tiêu biểu. Chọn một danh mục phía trên để xem các bài học còn lại.';
+        selection.forEach((doc,i)=>makeDocCard(doc,i,grid));
+        if(!selection.length)grid.innerHTML='<div class="empty">Chưa có video nổi bật.</div>';
+        return;
+      }
+      $('resultText').textContent=filtered.length+' video'+(activeCategory==='Tất cả'?'':' · '+activeCategory);
+      if(!filtered.length){
+        const empty=document.createElement('div');empty.className='empty';
+        empty.innerHTML='<div class="empty-icon">⌕</div><h3>Chưa có video phù hợp</h3><p>Thử từ khóa khác hoặc nhấn “Tất cả”.</p>';
+        grid.appendChild(empty);return;
+      }
+      if(isCurriculum){
+        for(const [groupName,summary] of curriculumGroups){
+          const groupDocs=filtered.filter(d=>d.lessonGroup===groupName).sort((a,b)=>a.lessonOrder-b.lessonOrder);
+          if(!groupDocs.length)continue;
+          const section=document.createElement('section');
+          section.className='curriculum-section';section.setAttribute('aria-label',groupName);
+          const header=document.createElement('div');header.className='curriculum-heading';
+          const intro=document.createElement('div');
+          const label=document.createElement('span');label.className='curriculum-label';label.textContent=groupDocs.length+' bài học';
+          const title=document.createElement('h3');title.textContent=groupName;
+          const detail=document.createElement('p');detail.textContent=summary;
+          intro.append(label,title,detail);header.appendChild(intro);section.appendChild(header);
+          const first=document.createElement('div');first.className='grid lesson-grid';
+          groupDocs.slice(0,3).forEach((doc,i)=>makeDocCard(doc,i,first));
+          section.appendChild(first);
+          if(groupDocs.length>3){
+            const extra=document.createElement('div');extra.className='grid lesson-grid extra-lessons';extra.hidden=true;
+            groupDocs.slice(3).forEach((doc,i)=>makeDocCard(doc,i+3,extra));
+            const more=document.createElement('button');more.type='button';more.className='show-more';
+            more.textContent='Xem tất cả '+groupDocs.length+' bài '+groupName+' ↓';
+            more.setAttribute('aria-expanded','false');
+            more.addEventListener('click',()=>{
+              extra.hidden=!extra.hidden;
+              more.setAttribute('aria-expanded',String(!extra.hidden));
+              more.textContent=extra.hidden?'Xem tất cả '+groupDocs.length+' bài '+groupName+' ↓':'Thu gọn '+groupName+' ↑';
+            });
+            section.append(extra,more);
+          }
+          grid.appendChild(section);
+        }
+      }else{
+        // All four product videos remain visible in their own selection.
+        const ordered=isProducts?filtered.slice().sort((a,b)=>a.lessonOrder-b.lessonOrder):filtered;
+        ordered.forEach((doc,i)=>makeDocCard(doc,i,grid));
+      }
     }
     $('searchInput').addEventListener('input',renderDocs);
     $('closeViewer').addEventListener('click',closeViewer);
