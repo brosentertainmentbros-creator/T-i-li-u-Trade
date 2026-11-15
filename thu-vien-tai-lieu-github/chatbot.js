@@ -552,10 +552,16 @@
       } else if (autoSpeak || byVoice) say(ans.id, ans.a, cb); else if (cb) cb();
     }
     if (CFG.aiEndpoint) {
+      var local = findIntent(text), done = false;
+      var guard = setTimeout(function () { if (!done) { done = true; finish(localAnswer(text)); } }, 10000); // GPT chậm quá thì dùng kịch bản
       fetch(CFG.aiEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text, history: history.slice(-10) }) })
         .then(function (r) { return r.json(); })
-        .then(function (j) { finish(j && j.reply ? { a: String(j.reply), follow: STARTERS } : localAnswer(text)); })
-        .catch(function () { finish(localAnswer(text)); });
+        .then(function (j) {
+          if (done) return; done = true; clearTimeout(guard);
+          if (j && j.reply) finish({ a: String(j.reply), video: local && local.video, follow: (local && local.follow) || STARTERS });
+          else finish(localAnswer(text));
+        })
+        .catch(function () { if (done) return; done = true; clearTimeout(guard); finish(localAnswer(text)); });
     } else setTimeout(function () { finish(localAnswer(text)); }, 350);
   }
 
