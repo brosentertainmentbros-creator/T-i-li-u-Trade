@@ -257,7 +257,7 @@
 '.ntc-call h4{margin:0;font-size:19px}.ntc-call p{margin:0;color:#b9cadb;font-size:14px;min-height:40px;max-width:290px}' +
 '.ntc-hang{background:#d9483b;color:#fff;border:0;border-radius:40px;padding:13px 26px;font-weight:800;font-size:15px;cursor:pointer;display:flex;gap:8px;align-items:center}' +
 '.ntc-hang svg{width:18px;height:18px}' +
-'.ntc-elbox{position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:2147483646}' +
+'.ntc-elbox{position:fixed;right:20px;bottom:96px;z-index:2147483646}@media(max-width:560px){.ntc-elbox{right:12px;bottom:88px}}' +
 '.ntc-elback{display:flex;align-items:center;gap:8px;background:#07111f;color:#fff;border:1px solid #daa94f;border-radius:30px;padding:10px 18px;font:700 14px system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;cursor:pointer;box-shadow:0 10px 30px #0008}.ntc-elback svg{width:16px;height:16px}' +
 '.ntc-talk{background:#2fa866;color:#fff;border:0;border-radius:40px;padding:14px 28px;font-weight:800;font-size:16px;cursor:pointer;display:flex;gap:8px;align-items:center}.ntc-talk svg{width:20px;height:20px}' +
 '.ntc-call[data-s="listen"] .ntc-talk{background:#d9483b}.ntc-call[data-s="speak"] .ntc-talk,.ntc-call[data-s="think"] .ntc-talk{opacity:.5}' +
