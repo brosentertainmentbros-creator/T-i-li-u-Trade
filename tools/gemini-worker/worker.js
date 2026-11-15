@@ -158,32 +158,47 @@ async function lead(env, data) {
   if (!sessionId || !/Khách: \S/.test(tr)) return { status: 400, body: { ok: false, error: 'empty' } };
   const models = env.CHAT_MODEL ? [env.CHAT_MODEL] : ['gemini-3.5-flash', 'gemini-3.8-flash'];
   let fields = null, lastErr = null;
+  const t0 = Date.now(); const steps = [];
   for (const model of models) {
-    const r = await fetch(`${API}/v1beta/models/${model}:generateContent`, {
-      method: 'POST',
-      headers: { 'x-goog-api-key': env.GEMINI_API_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: LEAD_PROMPT }] },
-        contents: [{ role: 'user', parts: [{ text: tr }] }],
-        generationConfig: { responseMimeType: 'application/json', temperature: 0, maxOutputTokens: 600 },
-      }),
-    });
+    let r = null;
+    for (const extra of [{ thinkingConfig: { thinkingLevel: 'low' } }, {}]) {
+      const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), 15000);
+      try {
+        r = await fetch(`${API}/v1beta/models/${model}:generateContent`, {
+          method: 'POST', signal: ctl.signal,
+          headers: { 'x-goog-api-key': env.GEMINI_API_KEY, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: LEAD_PROMPT }] },
+            contents: [{ role: 'user', parts: [{ text: tr }] }],
+            generationConfig: { responseMimeType: 'application/json', temperature: 0, maxOutputTokens: 800, ...extra },
+          }),
+        });
+      } catch (e) { r = null; steps.push(model + ' timeout'); }
+      clearTimeout(timer);
+      if (r && r.status === 400 && extra.thinkingConfig && /thinking/i.test(await r.clone().text())) { steps.push(model + ' no-thinking-level'); continue; }
+      break;
+    }
+    if (!r) { lastErr = 'timeout'; continue; }
+    steps.push(model + ' ' + r.status + ' ' + (Date.now() - t0) + 'ms');
     if (!r.ok) { lastErr = r.status; if (r.status === 429) break; continue; }
     const j = await r.json();
     const txt = ((j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts) || []).filter(p => p.text && !p.thought).map(p => p.text).join('');
     try { fields = JSON.parse(txt.replace(/^```json|```$/g, '').trim()); } catch { fields = null; }
     if (fields) break;
   }
-  if (!fields) return { status: 502, body: { ok: false, error: 'extract', upstream: lastErr } };
+  if (!fields) return { status: 502, body: { ok: false, error: 'extract', upstream: lastErr, steps } };
   if (fields.contact) fields.contact = String(fields.contact).replace(/[^\d+ ]/g, '').trim();
   const channel = data.channel === 'call' ? 'Gọi' : 'Chat';
+  const ctl2 = new AbortController(); const timer2 = setTimeout(() => ctl2.abort(), 20000);
   const r2 = await fetch(env.SHEET_URL, {
-    method: 'POST', redirect: 'follow',
+    method: 'POST', redirect: 'follow', signal: ctl2.signal,
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ sessionId, channel, fields }),
   });
+  clearTimeout(timer2);
   let res = null; try { res = await r2.json(); } catch { res = { status: r2.status }; }
-  return { status: 200, body: { ok: !!(res && res.ok), sheet: res, fields } };
+  steps.push('sheet ' + r2.status + ' ' + (Date.now() - t0) + 'ms');
+  return { status: 200, body: { ok: !!(res && res.ok), sheet: res, fields, steps } };
 }
 
 async function liveToken(env) {
