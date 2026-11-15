@@ -35,7 +35,7 @@
   /* ------------------------------------------------------------------ */
   var KB = [
     { id: 'bot_identity', keys: ['ban la ai', 'em la ai', 'nguoi that', 'may hay nguoi', 'chatbot', 'tro ly ao', 'robot tra loi'],
-      a: 'Em là **trợ lý tự động** của Nghề Trader, không phải người thật. Em giải thích nhanh về các khóa học, công cụ và kiến thức nến cơ bản.\nNếu anh/chị cần tư vấn trực tiếp, đội ngũ hỗ trợ trong ' + ZALO + ' hoặc anh/chị có thể ' + CALL + '.',
+      a: 'Dạ, em là **trợ lý ảo** của Nghề Trader, được đội ngũ huấn luyện để tư vấn nhanh cho anh/chị bất cứ lúc nào.\nCần trao đổi sâu hơn với chuyên viên thì anh/chị nhắn ' + ZALO + ' hoặc ' + CALL + ', bên em hỗ trợ ngay. Còn bây giờ, anh/chị đang quan tâm điều gì để em tư vấn ạ?',
       follow: ['Lớp học TradePro là gì?', 'Liên hệ tư vấn'] },
 
     { id: 'human', keys: ['gap nguoi', 'nhan vien', 'noi chuyen voi nguoi', 'admin', 'tu van vien', 'nguoi tu van', 'gap tu van'],
@@ -43,12 +43,16 @@
       follow: ['Xem thử miễn phí', 'Lớp học TradePro là gì?'] },
 
     { id: 'price', keys: ['gia', 'hoc phi', 'chi phi', 'bao nhieu tien', 'phi', 'bao nhieu', 'dang ky', 'cach dang ky', 'tham gia', 'mua', 'thanh toan', 'lich hoc', 'khai giang'],
-      a: 'Dạ, em chưa có thông tin chính xác về **học phí, lịch học hay cách đăng ký** để báo anh/chị, nên em không đoán.\nAnh/chị vui lòng hỏi trực tiếp đội ngũ qua ' + ZALO + ' hoặc ' + CALL + ' để được báo đúng và mới nhất nhé.\nTrong lúc chờ, anh/chị có thể **xem thử các video miễn phí** trong thư viện.',
+      a: 'Dạ, học phí và chi phí sẽ **tùy chương trình** anh/chị chọn: lớp học, Bot AI hay kết hợp. Để báo **đúng và có ưu đãi phù hợp nhất**, chuyên viên bên em sẽ tư vấn trực tiếp qua ' + ZALO + ' hoặc anh/chị ' + CALL + '.\nCho em hỏi nhanh: anh/chị đã từng giao dịch chưa, hay mới bắt đầu tìm hiểu ạ? Em gợi ý luôn chương trình hợp với anh/chị.',
       follow: ['Xem thử miễn phí', 'Lớp học TradePro là gì?'] },
 
     { id: 'profit', keys: ['loi nhuan', 'co loi', 'co lai', 'cam ket', 'bao loi', 'an toan khong', 'lua dao', 'co mat tien', 'mat tien', 'lai bao nhieu', 'thu nhap', 'kiem duoc', 'kiem tien', 'giau', 'uy tin', ['rui ro', 1]],
       a: 'Em nói thẳng để anh/chị yên tâm: **không ai có thể cam kết lợi nhuận** trong giao dịch, kể cả Nghề Trader. Giao dịch có rủi ro và anh/chị có thể mất tiền.\nĐiều anh/chị nên làm là **tự kiểm chứng**:\n- Xem thử các video miễn phí trước khi tham gia.\n- Hỏi về **PassView**: công cụ chỉ cho xem tài khoản thật, minh bạch hơn ảnh chụp kết quả.\n- Hỏi kỹ đội ngũ trong ' + ZALO + ' trước khi quyết định.\n' + NOTE,
       follow: ['PassView là gì?', 'Quản trị rủi ro', 'Xem thử miễn phí'] },
+
+    { id: 'trust', keys: [['co that khong', 4], ['that khong', 3], ['lua', 3], ['uy tin khong', 4], ['tin duoc khong', 4], ['kiem chung', 3], ['that hay gia', 4]],
+      a: 'Dạ anh/chị cẩn thận là rất đúng, thị trường này có nhiều nơi không minh bạch. Bên em không muốn anh/chị tin bằng lời, mà **tự kiểm chứng**: xem tài khoản thật qua **PassView**, xem thử video miễn phí, vào ' + ZALO + ' xem cộng đồng, hoặc gặp trực tiếp tại TMLabs Coffee.\nAnh/chị muốn kiểm chứng theo cách nào trước ạ?',
+      follow: ['PassView là gì?', 'Xem thử miễn phí', 'Liên hệ tư vấn'] },
 
     { id: 'class', keys: ['lop hoc', 'lop tradepro', 'lop hoc tradepro', 'khoa hoc', 'hoc trade', 'hoc giao dich', 'dao tao', 'muon hoc', 'hoc o dau', 'giao trinh', 'lo trinh'],
       a: '**Lớp học TradePro** là lớp học giao dịch của Nghề Trader. Anh/chị học kiến thức **có hệ thống**, có **người hướng dẫn**, và được hỗ trợ trong nhóm Zalo trong suốt quá trình học.\nĐiểm khác với tự học: có người chỉ ra lỗi sai sớm, đi theo lộ trình thay vì học lan man.\nHọc phí và lịch học: anh/chị hỏi trực tiếp qua ' + ZALO + ' nhé.',
@@ -88,7 +92,7 @@
       follow: ['PassView là gì?', 'Tin tức thị trường'] },
 
     { id: 'news', keys: ['tin tuc', 'cap nhat thi truong', 'nhan dinh', 'ban tin', 'thi truong hom nay', 'tin hom nay'],
-      a: 'Tin tức và cập nhật thị trường được gửi **hằng ngày** trong ' + ZALO + '.\nEm là trợ lý tự động nên không đưa ra nhận định thị trường hay khuyên mua/bán.',
+      a: 'Tin tức và cập nhật thị trường được gửi **hằng ngày** trong ' + ZALO + ', anh/chị vào là theo dõi được ngay.\nBên em không hô mua bán theo kiểu phím lệnh, mà giúp anh/chị **hiểu thị trường và tự ra quyết định có kỷ luật**. Anh/chị đang giao dịch vàng hay Forex ạ?',
       follow: ['Báo cáo kết quả', 'Liên hệ tư vấn'] },
 
     { id: 'contact', keys: ['lien he', 'so dien thoai', 'sdt', 'hotline', 'goi dien', 'email', 'dia chi', 'van phong', 'tu van', 'gap truc tiep', ['o dau', 1]],
@@ -174,9 +178,37 @@
       follow: ['Xem thử miễn phí', 'Liên hệ tư vấn'] }
   ];
 
-  var WELCOME = 'Chào anh/chị! Em là **trợ lý tự động** của Nghề Trader.\nAnh/chị có thể **gõ câu hỏi**, bấm **micro** để nói, hoặc bấm **📞** để trò chuyện bằng giọng nói. Đang nghe em nói mà muốn hỏi tiếp, anh/chị cứ bấm nút nói để ngắt lời em.';
+  var WELCOME = 'Chào anh/chị! Em là tư vấn viên của **Nghề Trader**.\nAnh/chị đang quan tâm **học giao dịch bài bản**, công cụ **Bot AI**, hay muốn **kiểm chứng kết quả qua PassView** ạ? Anh/chị cứ gõ câu hỏi, hoặc bấm **📞** để nói chuyện trực tiếp với em.';
   var STARTERS = ['Lớp học TradePro là gì?', 'Bot AI TradePro là gì?', 'PassView là gì?', 'Xem thử miễn phí', 'Mô hình nến cơ bản', 'Liên hệ tư vấn'];
-  var FALLBACK = 'Dạ, em chưa chắc hiểu đúng câu hỏi này. Em là trợ lý tự động nên chỉ trả lời được các chủ đề có sẵn: **Lớp học TradePro, Bot AI TradePro, PassView, xem thử, mô hình nến, quản trị rủi ro, liên hệ**.\nCâu hỏi khác, anh/chị nhắn đội ngũ qua ' + ZALO + ' hoặc ' + CALL + ' nhé.';
+  var FALLBACK = 'Dạ, câu này anh/chị hỏi rất đúng chỗ. Để em tư vấn **sát với trường hợp của anh/chị** nhất, cho em hỏi thêm một chút: anh/chị đã từng giao dịch chưa, và điều anh/chị đang muốn giải quyết nhất là gì ạ?\nNếu cần câu trả lời chi tiết ngay, chuyên viên bên em hỗ trợ trực tiếp qua ' + ZALO + ' hoặc anh/chị ' + CALL + '.';
+  var SALES_FALLBACK = [
+    { id: 'fb_capital', hint: ['von', 'tien', 'bao nhieu de', 'it tien', 'trieu', 'nap'],
+      a: 'Dạ, chuyện vốn thì mỗi người một hoàn cảnh nên em không muốn tư vấn chung chung. Quan trọng nhất là chỉ dùng **số tiền anh/chị chấp nhận được rủi ro**, rồi bắt đầu đúng phương pháp.\nAnh/chị đang dự định bắt đầu với số vốn khoảng bao nhiêu, và đã có kinh nghiệm giao dịch chưa ạ? Chuyên viên bên em sẽ gợi ý lộ trình hợp với anh/chị qua ' + ZALO + '.',
+      follow: ['Quản trị rủi ro', 'Lớp học TradePro là gì?', 'Liên hệ tư vấn'] },
+    { id: 'fb_busy', hint: ['ban qua', 'ban ron', 'ban viec', 'ban lam', 'khong co thoi gian', 'di lam', 'it thoi gian', 'canh lenh', 'ngoi canh'],
+      a: 'Dạ em hiểu, đa số anh chị bên em cũng đi làm bận rộn, không thể ngồi canh màn hình cả ngày. Vì vậy nhiều người chọn **Bot AI TradePro** để giao dịch theo phương pháp định sẵn, hoặc học qua video lúc rảnh.\nAnh/chị thường rảnh vào buổi nào trong ngày ạ? Em gợi ý cách phù hợp nhất.',
+      follow: ['Bot AI TradePro là gì?', 'Xem thử miễn phí', 'Học phí bao nhiêu?'] },
+    { id: 'fb_loss', hint: ['thua', 'lo', 'chay', 'mat tien', 'am von', 'cay'],
+      a: 'Dạ em rất hiểu cảm giác đó, phần lớn người mới thua lỗ không phải vì kém, mà vì **thiếu phương pháp và để cảm xúc quyết định**. Đây đúng là điều Lớp học TradePro tập trung khắc phục: lộ trình rõ ràng, có người kèm, và quản trị rủi ro chặt chẽ.\nAnh/chị chia sẻ thêm giúp em, anh/chị thường thua vì vào lệnh vội hay vì không cắt lỗ ạ?',
+      follow: ['Lớp học TradePro là gì?', 'Quản trị rủi ro', 'Liên hệ tư vấn'] },
+    { id: 'fb_trust', hint: ['that khong', 'tin', 'that su', 'that ko', 'kiem chung', 'review', 'danh gia', 'chung minh'],
+      a: 'Dạ anh/chị cẩn thận là rất đúng, thị trường này có nhiều nơi không minh bạch. Bên em không muốn anh/chị tin bằng lời, mà **tự kiểm chứng**: xem tài khoản thật qua **PassView**, xem thử video miễn phí, vào nhóm Zalo xem cộng đồng, hoặc gặp trực tiếp tại TMLabs Coffee.\nAnh/chị muốn kiểm chứng theo cách nào trước ạ?',
+      follow: ['PassView là gì?', 'Xem thử miễn phí', 'Liên hệ tư vấn'] },
+    { id: 'fb_generic2', hint: [],
+      a: 'Dạ, em ghi nhận câu hỏi của anh/chị. Phần này chuyên viên bên em sẽ trả lời **chính xác và chi tiết hơn** qua ' + ZALO + ' hoặc ' + CALL + '.\nTrong lúc đó, anh/chị đang quan tâm **học bài bản**, dùng **Bot AI**, hay **kiểm chứng kết quả** trước ạ?',
+      follow: ['Lớp học TradePro là gì?', 'Bot AI TradePro là gì?', 'PassView là gì?'] }
+  ];
+  var fbTurn = 0;
+  function salesFallback(text) {
+    var q = norm(text), best = null, bs = 0;
+    SALES_FALLBACK.forEach(function (f) {
+      var sc = 0; f.hint.forEach(function (h) { if (q.indexOf(' ' + h + ' ') > -1) sc += h.split(' ').length; });
+      if (sc > bs) { bs = sc; best = f; }
+    });
+    if (best) return best;
+    fbTurn++;
+    return fbTurn % 2 ? { id: 'fallback', a: FALLBACK, follow: STARTERS } : SALES_FALLBACK[SALES_FALLBACK.length - 1];
+  }
 
   /* ------------------------------------------------------------------ */
   /*  TÌM CÂU TRẢ LỜI                                                    */
@@ -281,7 +313,7 @@
   var panel = el('section', 'ntc-panel');
   panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-label', 'Trợ lý Nghề Trader');
   panel.innerHTML =
-    '<div class="ntc-head"><img src="' + LOGO + '" alt=""><div><b>Trợ lý Nghề Trader</b><span>● Trả lời tự động</span></div><div class="ntc-sp"></div>' +
+    '<div class="ntc-head"><img src="' + LOGO + '" alt=""><div><b>Trợ lý Nghề Trader</b><span>● Sẵn sàng tư vấn</span></div><div class="ntc-sp"></div>' +
     '<button class="ntc-ib ntc-callbtn" type="button" title="Trò chuyện bằng giọng nói" aria-label="Trò chuyện bằng giọng nói">' + IC.phone + '</button>' +
     '<button class="ntc-ib ntc-spkbtn" type="button" title="Tự đọc to câu trả lời" aria-label="Bật/tắt đọc to câu trả lời" aria-pressed="false">' + IC.mute + '</button>' +
     '<button class="ntc-ib ntc-close" type="button" title="Đóng" aria-label="Đóng">' + IC.x + '</button></div>' +
@@ -291,7 +323,7 @@
     '<form class="ntc-foot"><button class="ntc-ib ntc-mic" type="button" title="Nói để hỏi" aria-label="Nói để hỏi">' + IC.mic + '</button>' +
     '<input type="text" placeholder="Nhập câu hỏi..." aria-label="Nhập câu hỏi" maxlength="300" autocomplete="off">' +
     '<button class="ntc-ib ntc-send" type="submit" title="Gửi" aria-label="Gửi">' + IC.send + '</button></form>' +
-    '<div class="ntc-note">Trợ lý tự động · ' + NOTE + '</div>' +
+    '<div class="ntc-note">Trợ lý ảo Nghề Trader · ' + NOTE + '</div>' +
     '<div class="ntc-call" data-s="idle"><div class="ntc-orb"><img src="' + LOGO + '" alt=""></div><h4>Đang trò chuyện</h4><p class="ntc-cs">Bấm bắt đầu và nói câu hỏi của anh/chị.</p>' +
     '<button class="ntc-talk" type="button">' + IC.mic + ' Bấm để nói</button>' +
     '<button class="ntc-hang" type="button">' + IC.x + ' Kết thúc</button></div>';
@@ -493,7 +525,7 @@
   }
   function localAnswer(text) {
     var it = findIntent(text);
-    if (!it) return { id: 'fallback', a: FALLBACK, follow: STARTERS };
+    if (!it) return salesFallback(text);
     return it;
   }
   function ask(text, byVoice, cb) {

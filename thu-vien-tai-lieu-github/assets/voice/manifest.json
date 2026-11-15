@@ -1,8 +1,8 @@
 {
  "bot_identity": {
   "file": "bot_identity.mp3",
-  "hash": "6dd7b3bb182a",
-  "sec": 14.3
+  "hash": "9c2d59e23627",
+  "sec": 16.4
  },
  "human": {
   "file": "human.mp3",
@@ -11,8 +11,8 @@
  },
  "price": {
   "file": "price.mp3",
-  "hash": "2e156755e2dd",
-  "sec": 17.8
+  "hash": "66019cc507ab",
+  "sec": 20.0
  },
  "profit": {
   "file": "profit.mp3",
@@ -61,8 +61,8 @@
  },
  "news": {
   "file": "news.mp3",
-  "hash": "5924f2497796",
-  "sec": 7.4
+  "hash": "e3f72e0f3ff5",
+  "sec": 12.4
  },
  "contact": {
   "file": "contact.mp3",
@@ -166,17 +166,47 @@
  },
  "welcome": {
   "file": "welcome.mp3",
-  "hash": "59515e467fd9",
-  "sec": 11.8
+  "hash": "0ff58a3bdbd9",
+  "sec": 11.1
  },
  "fallback": {
   "file": "fallback.mp3",
-  "hash": "1658fca8eefa",
-  "sec": 17.5
+  "hash": "bb7a914c4a5a",
+  "sec": 18.5
  },
  "greet": {
   "file": "greet.mp3",
   "hash": "d54fe64f9100",
   "sec": 3.0
+ },
+ "trust": {
+  "file": "trust.mp3",
+  "hash": "2097b70543de",
+  "sec": 16.5
+ },
+ "fb_capital": {
+  "file": "fb_capital.mp3",
+  "hash": "7e9c1bd0fe9c",
+  "sec": 16.3
+ },
+ "fb_busy": {
+  "file": "fb_busy.mp3",
+  "hash": "a3fa08d4d985",
+  "sec": 14.0
+ },
+ "fb_loss": {
+  "file": "fb_loss.mp3",
+  "hash": "23f47f148303",
+  "sec": 16.5
+ },
+ "fb_trust": {
+  "file": "fb_trust.mp3",
+  "hash": "282870bb7a81",
+  "sec": 15.8
+ },
+ "fb_generic2": {
+  "file": "fb_generic2.mp3",
+  "hash": "7fb52803bb83",
+  "sec": 15.0
  }
 }
