@@ -94,7 +94,7 @@ async function chat(env, data) {
   if (contents[0].role !== 'user') contents.shift();
 
   const models = env.CHAT_MODEL ? [env.CHAT_MODEL] : CHAT_MODELS;
-  let last = null;
+  let last = null; const errors = [];
   for (const model of models) {
     const r = await fetch(`${API}/v1beta/models/${model}:generateContent`, {
       method: 'POST',
@@ -112,7 +112,8 @@ async function chat(env, data) {
       if (reply) return { status: 200, body: { reply, model } };
       last = { status: 502, body: { error: 'no reply', model } };
     } else {
-      last = { status: 502, body: { error: 'upstream', upstream: r.status, model, detail: (await r.text()).slice(0, 300) } };
+      const detail = (await r.text()).slice(0, 300); errors.push({ model, status: r.status, detail });
+      last = { status: 502, body: { error: 'upstream', upstream: r.status, model, errors } };
       if (r.status === 429) break; // hết lượt miễn phí: không thử tiếp
     }
   }
@@ -122,21 +123,21 @@ async function chat(env, data) {
 async function liveToken(env) {
   const now = Date.now();
   const models = env.LIVE_MODEL ? [env.LIVE_MODEL] : LIVE_MODELS;
-  let last = null;
+  let last = null; const errors = [];
   for (const model of models) {
     const body = {
       uses: 1,
       expireTime: new Date(now + 6 * 60 * 1000).toISOString(),            // cuộc gọi dài tối đa ~6 phút
       newSessionExpireTime: new Date(now + 60 * 1000).toISOString(),      // phải bắt đầu gọi trong 1 phút
-      liveConnectConstraints: {
+      bidiGenerateContentSetup: {
         model: `models/${model}`,
-        config: {
+        generationConfig: {
           responseModalities: ['AUDIO'],
-          systemInstruction: { parts: [{ text: VOICE_PROMPT }] },
           speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: env.LIVE_VOICE || 'Aoede' } } },
-          inputAudioTranscription: {},
-          outputAudioTranscription: {},
         },
+        systemInstruction: { parts: [{ text: VOICE_PROMPT }] },
+        inputAudioTranscription: {},
+        outputAudioTranscription: {},
       },
     };
     for (const ver of ['v1alpha', 'v1beta']) {
@@ -150,13 +151,14 @@ async function liveToken(env) {
         if (j.name) return {
           status: 200,
           body: {
-            token: j.name, model,
-            ws: 'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContentConstrained',
+            token: j.name, model, ver,
+            ws: `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.${ver}.GenerativeService.BidiGenerateContentConstrained`,
             prompt: VOICE_PROMPT,
           },
         };
       }
-      last = { status: 502, body: { error: 'token', upstream: r.status, model, ver, detail: (await r.text()).slice(0, 300) } };
+      errors.push({ model, ver, status: r.status, detail: (await r.text()).slice(0, 300) });
+      last = { status: 502, body: { error: 'token', upstream: r.status, errors } };
       if (r.status === 429) return last;
     }
   }
