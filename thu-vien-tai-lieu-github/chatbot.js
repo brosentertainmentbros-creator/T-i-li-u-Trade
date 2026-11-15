@@ -504,7 +504,10 @@
       typing.remove();
       addBot(ans.a, { video: ans.video, id: ans.id }); setChips(ans.follow || STARTERS);
       history.push({ role: 'bot', text: ans.a });
-      if (autoSpeak || byVoice) say(ans.id, ans.a, cb); else if (cb) cb();
+      if (byVoice && callOn) {
+        say(ans.id, ans.a, function () { stopBarge(); if (cb) cb(); });
+        startBarge(ans.a);                       // nghe trong lúc đang nói để khách nói chen
+      } else if (autoSpeak || byVoice) say(ans.id, ans.a, cb); else if (cb) cb();
     }
     if (CFG.aiEndpoint) {
       fetch(CFG.aiEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text, history: history.slice(-10) }) })
@@ -516,18 +519,64 @@
 
   /* ---------- chế độ gọi (nói chuyện liên tục) ---------- */
   var callOn = false, misses = 0;
+
+  /* ---------- nói chen (barge-in): khách nói là bot dừng ---------- */
+  var barge = null;
+  var BARGE_CMDS = ['dừng lại', 'dừng', 'thôi', 'khoan', 'không phải', 'sai rồi', 'khoan đã', 'cho hỏi', 'nhưng mà', 'thế còn', 'vậy còn', 'ý tôi là', 'ý em là', 'em ơi'];
+  function lowVi(t) { return ' ' + String(t || '').toLowerCase().normalize('NFC').replace(/[^\p{L}\p{N}]+/gu, ' ').trim() + ' '; }
+  function wordsOf(t) { return norm(t).trim().split(' ').filter(Boolean); }
+  function stopBarge() { if (barge) { var r = barge.rec; barge = null; try { r.abort(); } catch (e) {} } }
+  function startBarge(answerText) {
+    if (!SR || !callOn) return;
+    stopBarge();
+    var own = {};   // các từ bot đang đọc (kể cả phiên âm) để nhận ra tiếng vọng từ loa
+    wordsOf(plain(answerText) + ' pat viu tret pro tret do da lo bot ay ai pho rech vi de o oep sai i meo sup pot').forEach(function (w) { own[w] = 1; });
+    var ansLow = lowVi(plain(answerText));
+    var cmds = BARGE_CMDS.filter(function (c) { return ansLow.indexOf(' ' + c + ' ') < 0; }); // bỏ lệnh trùng chữ trong câu bot đang đọc
+    var r = new SR(); r.lang = 'vi-VN'; r.continuous = true; r.interimResults = true;
+    var st = { rec: r, hit: false, from: 0, text: '' }; barge = st;
+    r.onresult = function (ev) {
+      if (barge !== st) return;
+      var i, t = '';
+      if (!st.hit) {
+        for (i = ev.resultIndex; i < ev.results.length; i++) {
+          var seg = ev.results[i][0].transcript, ws = wordsOf(seg), q = lowVi(seg);
+          if (!ws.length) continue;
+          var mine = ws.filter(function (w) { return own[w]; }).length / ws.length;
+          var cmd = cmds.some(function (c) { return q.indexOf(' ' + c + ' ') > -1; });
+          if (cmd || (ws.length >= 2 && mine < 0.5)) { st.hit = true; st.from = i; break; }
+        }
+        if (!st.hit) return;
+        stopVoice();                               // bot im ngay
+        callState('listen', 'Dạ em nghe…');
+      }
+      for (i = st.from; i < ev.results.length; i++) t += ev.results[i][0].transcript + ' ';
+      st.text = t.trim(); input.value = st.text; callStatus.textContent = '“' + st.text + '”';
+      if (ev.results[ev.results.length - 1].isFinal) finishBarge(st);
+    };
+    r.onerror = function () {};
+    r.onend = function () { if (barge === st) { if (st.hit) finishBarge(st); else barge = null; } };
+    try { r.start(); } catch (e) { barge = null; }
+  }
+  function finishBarge(st) {
+    if (barge !== st) return;
+    barge = null; try { st.rec.abort(); } catch (e) {}
+    var t = st.text.trim();
+    if (t) { callState('think', '“' + t + '”'); ask(t, true, function () { if (callOn) setTimeout(callLoop, 300); }); callState('speak', 'Em đang trả lời… anh/chị cứ nói chen nếu cần.'); }
+    else callLoop();
+  }
   var talkBtn = panel.querySelector('.ntc-talk');
   function callState(s, msg) {
     callBox.setAttribute('data-s', s); if (msg != null) callStatus.textContent = msg;
     talkBtn.innerHTML = (s === 'listen' ? IC.x + ' Dừng nghe' : IC.mic + ' Bấm để nói');
   }
   function callLoop() {
-    if (!callOn || recActive) return;
+    if (!callOn || recActive || barge) return;
     callState('listen', 'Em đang nghe… anh/chị cứ nói.');
     var ok = listen(function (t) {
       misses = 0; callState('think', '“' + t + '”');
       ask(t, true, function () { if (callOn) setTimeout(callLoop, 300); });
-      callState('speak', 'Em đang trả lời…');
+      callState('speak', 'Em đang trả lời… anh/chị cứ nói chen nếu cần.');
     }, function () {
       if (!callOn) return;
       misses++;
@@ -543,7 +592,7 @@
     callOn = true; misses = 0; callBox.classList.add('ntc-open');
     callLoop(); // bật micro ngay trong lúc khách bấm (iPhone yêu cầu)
   }
-  function endCall() { callOn = false; stopListen(); stopVoice(); callBox.classList.remove('ntc-open'); callState('idle'); }
+  function endCall() { callOn = false; stopBarge(); stopListen(); stopVoice(); callBox.classList.remove('ntc-open'); callState('idle'); }
 
   /* ---------- sự kiện ---------- */
   var started = false;
@@ -561,7 +610,7 @@
   panel.querySelector('.ntc-hang').addEventListener('click', endCall);
   talkBtn.addEventListener('click', function () {
     if (recActive) { stopListen(); callState('idle', 'Đã dừng. Bấm “Bấm để nói” để hỏi tiếp.'); return; }
-    stopVoice(); TTS.unlock(); VOICE.unlock(); callLoop();
+    stopBarge(); stopVoice(); TTS.unlock(); VOICE.unlock(); callLoop();
   });
   micBtn.addEventListener('click', function () {
     if (!SR) { addBot('Trình duyệt này chưa hỗ trợ nói. Anh/chị dùng **Chrome** hoặc **Edge** nhé, hoặc gõ câu hỏi.'); return; }
