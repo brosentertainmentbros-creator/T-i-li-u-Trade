@@ -21,6 +21,7 @@ function sheet_() {
   var sh = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
   if (sh.getLastRow() === 0) {
     sh.appendRow(HEADERS);
+    sh.getRange('F:F').setNumberFormat('@'); // giữ số 0 đầu SĐT
     sh.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold').setBackground('#07111f').setFontColor('#f0c874');
     sh.setFrozenRows(1);
     sh.setColumnWidths(1, HEADERS.length, 150);
