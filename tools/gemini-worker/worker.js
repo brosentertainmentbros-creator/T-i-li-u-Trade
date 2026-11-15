@@ -40,7 +40,8 @@ TÌM HIỂU KHÁCH (để tư vấn đúng và để chuyên viên liên hệ)
 - Trong lúc trò chuyện, khéo léo hỏi dần từng ý, MỖI LƯỢT TỐI ĐA MỘT CÂU HỎI, lồng vào nội dung tư vấn, không hỏi dồn như điền phiếu:
   tên để tiện xưng hô; khu vực đang sống; đã giao dịch chưa và bao lâu; đang quan tâm thị trường nào (vàng, Forex, chứng khoán, tiền số…); khó khăn lớn nhất.
 - Khi khách đã quan tâm thật sự, mời để lại số điện thoại hoặc Zalo, và NÓI RÕ là để chuyên viên Nghề Trader liên hệ tư vấn chi tiết. Ví dụ: "Anh/chị để lại số Zalo, em nhờ chuyên viên gửi tài liệu và tư vấn kỹ hơn cho mình nhé?"
-- Khách đọc số thì nhắc lại để xác nhận. Khách không muốn cho thì vui vẻ bỏ qua, không hỏi lại.
+- Khách nói TÊN thì nhắc lại để xác nhận, ví dụ: "Dạ em gọi anh là Giang đúng không ạ?". Khách bảo sai thì xin lỗi, nhờ khách nói chậm lại hoặc đánh vần; vẫn chưa rõ thì nhờ khách gõ tên vào ô chat.
+- Khách đọc số thì nhắc lại từng cụm để xác nhận. Khách không muốn cho thì vui vẻ bỏ qua, không hỏi lại.
 - Gọi khách bằng tên khi đã biết tên.
 
 QUY TẮC BẮT BUỘC
@@ -148,12 +149,14 @@ async function chat(env, data) {
 const LEAD_PROMPT = `Đọc đoạn hội thoại tư vấn giữa khách và tư vấn viên Nghề Trader, rút ra thông tin KHÁCH TỰ NÓI. Không đoán, không suy diễn; chỉ ghi điều khách nói rõ. Thiếu thì để chuỗi rỗng.
 Trả về JSON với các khóa:
 name (tên khách), contact (số điện thoại hoặc Zalo, chỉ chữ số và dấu +), location (khu vực/tỉnh thành), experience (đã giao dịch chưa, bao lâu), markets (thị trường quan tâm), interest (sản phẩm quan tâm: Lớp học TradePro / Bot AI TradePro / PassView / khác), need (nhu cầu hoặc khó khăn chính), summary (tóm tắt 1-2 câu nội dung cuộc trò chuyện), consent ("Có" nếu khách tự đưa số điện thoại/Zalo để được liên hệ, ngược lại để rỗng).
-Không ghi số tài khoản, mật khẩu, mã OTP, số thẻ dù khách có nói.`;
+Không ghi số tài khoản, mật khẩu, mã OTP, số thẻ dù khách có nói.
+NẾU LÀ CUỘC GỌI: lời "Khách" là bản nhận dạng giọng nói tự động, tên riêng và số hay bị nghe sai. Với tên và số điện thoại, ưu tiên bản mà tư vấn viên nhắc lại và khách đã xác nhận (khách nói "đúng", "dạ phải"…); nếu khách sửa lại thì lấy bản sau cùng. Nếu khách chưa xác nhận, hoặc các lần nghe khác nhau, vẫn ghi bản hợp lý nhất nhưng thêm " (?)" ở cuối.`;
 
 async function lead(env, data) {
   if (!env.SHEET_URL) return { status: 200, body: { ok: false, skipped: 'no sheet' } };
   const sessionId = String(data.sessionId || '').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 40);
-  const tr = (Array.isArray(data.transcript) ? data.transcript : []).slice(-40)
+  const isCall = data.channel === 'call';
+  const tr = (isCall ? '[CUỘC GỌI]\n' : '[CHAT]\n') + (Array.isArray(data.transcript) ? data.transcript : []).slice(-40)
     .map(t => ((t && t.role) === 'user' ? 'Khách: ' : 'Tư vấn viên: ') + String((t && t.text) || '').slice(0, 600)).join('\n');
   if (!sessionId || !/Khách: \S/.test(tr)) return { status: 400, body: { ok: false, error: 'empty' } };
   const models = env.CHAT_MODEL ? [env.CHAT_MODEL] : ['gemini-3.5-flash', 'gemini-3.8-flash'];
