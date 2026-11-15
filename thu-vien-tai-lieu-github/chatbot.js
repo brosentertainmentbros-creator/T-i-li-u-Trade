@@ -54,7 +54,7 @@
       a: 'Dạ anh/chị cẩn thận là rất đúng, thị trường này có nhiều nơi không minh bạch. Bên em không muốn anh/chị tin bằng lời, mà **tự kiểm chứng**: xem tài khoản thật qua **PassView**, xem thử video miễn phí, vào ' + ZALO + ' xem cộng đồng, hoặc gặp trực tiếp tại TMLabs Coffee.\nAnh/chị muốn kiểm chứng theo cách nào trước ạ?',
       follow: ['PassView là gì?', 'Xem thử miễn phí', 'Liên hệ tư vấn'] },
 
-    { id: 'class', keys: ['lop hoc', 'lop tradepro', 'lop hoc tradepro', 'khoa hoc', 'hoc trade', 'hoc giao dich', 'dao tao', 'muon hoc', 'hoc o dau', 'giao trinh', 'lo trinh'],
+    { id: 'class', keys: [['tradepro', 1], 'lop hoc', 'lop tradepro', 'lop hoc tradepro', 'khoa hoc', 'hoc trade', 'hoc giao dich', 'dao tao', 'muon hoc', 'hoc o dau', 'giao trinh', 'lo trinh'],
       a: '**Lớp học TradePro** là lớp học giao dịch của Nghề Trader. Anh/chị học kiến thức **có hệ thống**, có **người hướng dẫn**, và được hỗ trợ trong nhóm Zalo trong suốt quá trình học.\nĐiểm khác với tự học: có người chỉ ra lỗi sai sớm, đi theo lộ trình thay vì học lan man.\nHọc phí và lịch học: anh/chị hỏi trực tiếp qua ' + ZALO + ' nhé.',
       video: 'tu-hoc-vs-co-thay-kem.mp4',
       follow: ['Tự học hay có thầy?', 'Xem thử miễn phí', 'Học phí bao nhiêu?'] },
@@ -200,7 +200,7 @@
   ];
   var fbTurn = 0;
   function salesFallback(text) {
-    var q = norm(text), best = null, bs = 0;
+    var q = fixHeard(norm(text)), best = null, bs = 0;
     SALES_FALLBACK.forEach(function (f) {
       var sc = 0; f.hint.forEach(function (h) { if (q.indexOf(' ' + h + ' ') > -1) sc += h.split(' ').length; });
       if (sc > bs) { bs = sc; best = f; }
@@ -223,8 +223,40 @@
       return { p: norm(p), w: w };
     });
   });
+  /* Sửa các từ hay bị micro nghe sai (PassView -> "passvie", "pát viu", "bát vi"...) */
+  var HEARD_FIX = [
+    [/ (pass|pas|pat|path|bat|bas|pac|bach|pa|ba) ?(view|vie|viu|vieu|viw|vew|vu|vi|viet|vui|bieu|beu|giu|viu)[a-z]* /g, ' passview '],
+    [/ (passv|passvi|pasvi|patvi|passw)[a-z]* /g, ' passview '],
+    [/ (trade|tret|trest|tred|tray|trai|chet|tre|tren|trac|che) ?(pro|bro|po|prô|rô|ro)[a-z]* /g, ' tradepro '],
+    [/ (bot|bop|bop|bo|boc|bon) ?(ai|ay ai|ei ai|a i|ay|ey ai|e ai|ai ai) /g, ' bot ai '],
+    [/ (da lo|za lo|gia lo|ra lo|zalô|dalo|zaloo) /g, ' zalo '],
+    [/ (do di|do gi|dozi|do ji|do zi|doi ji|dodi|dogi) /g, ' doji '],
+    [/ (pho rech|pho rec|pho re|fo rex|pho ret|pho rich|forec|forext|phorex) /g, ' forex '],
+    [/ (nen bu a|nen vua|nen bua|nen pua) /g, ' nen bua '],
+    [/ (sao bang|sao ban|sao bam) /g, ' sao bang '],
+    [/ (nghe trai do|nghe tret do|nghe trader|nghe tra do|nghe treo do) /g, ' nghe trader ']
+  ];
+  var VOCAB = ['passview', 'tradepro', 'forex', 'doji', 'zalo', 'hammer', 'engulfing', 'trader', 'robot'];
+  function lev(a, b) {
+    var m = a.length, n = b.length, d = [], i, j;
+    for (i = 0; i <= m; i++) d[i] = [i];
+    for (j = 0; j <= n; j++) d[0][j] = j;
+    for (i = 1; i <= m; i++) for (j = 1; j <= n; j++)
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[m][n];
+  }
+  function fixHeard(q) {
+    var prev;
+    do { prev = q; HEARD_FIX.forEach(function (f) { q = q.replace(f[0], f[1]); }); } while (q !== prev);
+    // từ dài gần giống từ khóa (sai 1-2 chữ) thì coi như từ khóa
+    return q.replace(/[a-z]{5,}/g, function (w) {
+      if (VOCAB.indexOf(w) > -1) return w;
+      for (var k = 0; k < VOCAB.length; k++) if (w !== VOCAB[k] && lev(w, VOCAB[k]) <= (VOCAB[k].length >= 8 ? 2 : 1)) return VOCAB[k];
+      return w;
+    });
+  }
   function findIntent(text) {
-    var q = norm(text);
+    var q = fixHeard(norm(text));
     if (/^ (xin )?chao( |$)|^ (hello|hi|alo|hey) /.test(q) && q.split(' ').length <= 6) {
       var rest = q.replace(/^ (xin )?chao (em|ban|anh|chi|ad|shop)? ?|^ (hello|hi|alo|hey) /, ' ');
       if (rest.trim().length < 3) return { id: 'greet', a: 'Dạ, em chào anh/chị! Anh/chị đang quan tâm điều gì ạ?', follow: STARTERS };
