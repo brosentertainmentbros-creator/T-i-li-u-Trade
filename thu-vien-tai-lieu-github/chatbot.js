@@ -1,5 +1,6 @@
 /*!
  * Trợ lý Nghề Trader — chatbot tự động + giọng nói (nghe & đọc tiếng Việt)
+ * Giọng đọc: file tạo sẵn bằng VieNeu-TTS (giọng Hải Đăng) trong assets/voice/, thiếu file thì dùng giọng trình duyệt.
  * Chạy hoàn toàn trên trình duyệt, không cần máy chủ.
  * Muốn nối với AI thật sau này: đặt window.NT_CHATBOT_CONFIG = { aiEndpoint: "https://..." }
  * trước khi nạp file này. Endpoint nhận POST {message, history} và trả về {reply}.
@@ -15,8 +16,7 @@
     email: 'support@giaiphapgiaodich.com',
     website: 'https://giaiphapgiaodich.com/',
     home: './',
-    aiEndpoint: '',
-    elevenAgentId: 'agent_8301m7egy8kreqzrex6ezh6jz69k'
+    aiEndpoint: ''
   }, window.NT_CHATBOT_CONFIG || {});
   if (window.SITE_CONFIG && window.SITE_CONFIG.zalo) CFG.zalo = window.SITE_CONFIG.zalo;
 
@@ -174,7 +174,7 @@
       follow: ['Xem thử miễn phí', 'Liên hệ tư vấn'] }
   ];
 
-  var WELCOME = 'Chào anh/chị! Em là **trợ lý tự động** của Nghề Trader.\nAnh/chị có thể **gõ câu hỏi** ở đây, hoặc bấm **📞** ở góc trên để **nói chuyện trực tiếp với trợ lý AI** bằng giọng nói, nói chen vào lúc nào cũng được.';
+  var WELCOME = 'Chào anh/chị! Em là **trợ lý tự động** của Nghề Trader.\nAnh/chị có thể **gõ câu hỏi**, bấm **micro** để nói, hoặc bấm **📞** để trò chuyện bằng giọng nói. Đang nghe em nói mà muốn hỏi tiếp, anh/chị cứ bấm nút nói để ngắt lời em.';
   var STARTERS = ['Lớp học TradePro là gì?', 'Bot AI TradePro là gì?', 'PassView là gì?', 'Xem thử miễn phí', 'Mô hình nến cơ bản', 'Liên hệ tư vấn'];
   var FALLBACK = 'Dạ, em chưa chắc hiểu đúng câu hỏi này. Em là trợ lý tự động nên chỉ trả lời được các chủ đề có sẵn: **Lớp học TradePro, Bot AI TradePro, PassView, xem thử, mô hình nến, quản trị rủi ro, liên hệ**.\nCâu hỏi khác, anh/chị nhắn đội ngũ qua ' + ZALO + ' hoặc ' + CALL + ' nhé.';
 
@@ -257,8 +257,6 @@
 '.ntc-call h4{margin:0;font-size:19px}.ntc-call p{margin:0;color:#b9cadb;font-size:14px;min-height:40px;max-width:290px}' +
 '.ntc-hang{background:#d9483b;color:#fff;border:0;border-radius:40px;padding:13px 26px;font-weight:800;font-size:15px;cursor:pointer;display:flex;gap:8px;align-items:center}' +
 '.ntc-hang svg{width:18px;height:18px}' +
-'.ntc-elbox{position:fixed;right:20px;bottom:96px;z-index:2147483646}@media(max-width:560px){.ntc-elbox{right:12px;bottom:88px}}' +
-'.ntc-elback{display:flex;align-items:center;gap:8px;background:#07111f;color:#fff;border:1px solid #daa94f;border-radius:30px;padding:10px 18px;font:700 14px system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;cursor:pointer;box-shadow:0 10px 30px #0008}.ntc-elback svg{width:16px;height:16px}' +
 '.ntc-talk{background:#2fa866;color:#fff;border:0;border-radius:40px;padding:14px 28px;font-weight:800;font-size:16px;cursor:pointer;display:flex;gap:8px;align-items:center}.ntc-talk svg{width:20px;height:20px}' +
 '.ntc-call[data-s="listen"] .ntc-talk{background:#d9483b}.ntc-call[data-s="speak"] .ntc-talk,.ntc-call[data-s="think"] .ntc-talk{opacity:.5}' +
 '@media(max-width:560px){.ntc-panel{right:0;left:0;bottom:0;width:100%;max-width:none;height:88vh;max-height:none;border-radius:20px 20px 0 0}.ntc-fab{right:14px;bottom:14px}.ntc-fab .ntc-lbl{display:none}.ntc-fab{padding:6px}.ntc-fab .ntc-dot{left:36px;top:5px}}';
@@ -284,7 +282,7 @@
   panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-label', 'Trợ lý Nghề Trader');
   panel.innerHTML =
     '<div class="ntc-head"><img src="' + LOGO + '" alt=""><div><b>Trợ lý Nghề Trader</b><span>● Trả lời tự động</span></div><div class="ntc-sp"></div>' +
-    '<button class="ntc-ib ntc-callbtn" type="button" title="Gọi nói chuyện với trợ lý AI" aria-label="Gọi nói chuyện với trợ lý AI">' + IC.phone + '</button>' +
+    '<button class="ntc-ib ntc-callbtn" type="button" title="Trò chuyện bằng giọng nói" aria-label="Trò chuyện bằng giọng nói">' + IC.phone + '</button>' +
     '<button class="ntc-ib ntc-spkbtn" type="button" title="Tự đọc to câu trả lời" aria-label="Bật/tắt đọc to câu trả lời" aria-pressed="false">' + IC.mute + '</button>' +
     '<button class="ntc-ib ntc-close" type="button" title="Đóng" aria-label="Đóng">' + IC.x + '</button></div>' +
     '<div class="ntc-quick"><a class="ntc-qcall" href="tel:' + CFG.phone + '">' + IC.phone + ' Gọi ngay ' + CFG.phoneLabel + '</a><a class="ntc-qzalo" href="' + CFG.zalo + '" target="_blank" rel="noopener noreferrer">💬 Zalo</a></div>' +
@@ -352,9 +350,9 @@
     if (opts.video) {
       var v = videoInfo(opts.video), a = el('a', 'ntc-tool ntc-vid'); a.href = v.href; a.textContent = '▶ ' + v.title; tools.appendChild(a);
     }
-    if (TTS.ok) {
+    if (TTS.ok || VOICE.map) {
       var s = el('button', 'ntc-tool'); s.type = 'button'; s.innerHTML = IC.spk.replace('<svg', '<svg width="14" height="14"') + ' Nghe';
-      s.addEventListener('click', function () { TTS.speak(plain(text)); });
+      s.addEventListener('click', function () { VOICE.unlock(); say(opts.id, text); });
       tools.appendChild(s);
     }
     if (tools.childNodes.length) m.appendChild(tools);
@@ -364,7 +362,7 @@
     chips.innerHTML = '';
     (list || []).slice(0, 4).forEach(function (t) {
       var c = el('button', 'ntc-chip'); c.type = 'button'; c.textContent = t;
-      c.addEventListener('click', function () { ask(t, false); });
+      c.addEventListener('click', function () { stopVoice(); VOICE.unlock(); ask(t, false); });
       chips.appendChild(c);
     });
   }
@@ -403,6 +401,51 @@
     }
   };
   if (TTS.ok) { TTS.pick(); window.speechSynthesis.onvoiceschanged = TTS.pick; }
+
+  /* ---------- giọng Hải Đăng tạo sẵn (VieNeu-TTS) ---------- */
+  var VOICE = {
+    dir: 'assets/voice/', map: null, el: null, done: null, unlocked: false,
+    load: function () {
+      try {
+        fetch(VOICE.dir + 'manifest.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (j) { VOICE.map = j || null; }).catch(function () {});
+      } catch (e) {}
+    },
+    has: function (id) { return !!(id && VOICE.map && VOICE.map[id]); },
+    audio: function () {
+      if (!VOICE.el) { VOICE.el = new Audio(); VOICE.el.preload = 'auto'; }
+      return VOICE.el;
+    },
+    unlock: function () { // iPhone: phải "mở khóa" âm thanh ngay lúc khách bấm
+      if (VOICE.unlocked) return; VOICE.unlocked = true;
+      try {
+        var a = VOICE.audio(), n = 800, b = new ArrayBuffer(44 + n * 2), v = new DataView(b);
+        function w(o, t) { for (var i = 0; i < t.length; i++) v.setUint8(o + i, t.charCodeAt(i)); }
+        w(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); w(8, 'WAVEfmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true);
+        v.setUint16(22, 1, true); v.setUint32(24, 16000, true); v.setUint32(28, 32000, true); v.setUint16(32, 2, true);
+        v.setUint16(34, 16, true); w(36, 'data'); v.setUint32(40, n * 2, true);
+        a.src = URL.createObjectURL(new Blob([b], { type: 'audio/wav' })); a.play().catch(function () {});
+      } catch (e) {}
+    },
+    stop: function () {
+      if (VOICE.el) { try { VOICE.el.pause(); } catch (e) {} }
+      var d = VOICE.done; VOICE.done = null; if (d) d();
+    },
+    play: function (id, text, done) {
+      stopVoice();
+      if (!VOICE.has(id)) { TTS.speak(text, done); return; }
+      var a = VOICE.audio(), finished = false;
+      function fin() { if (finished) return; finished = true; a.onended = a.onerror = null; VOICE.done = null; if (done) done(); }
+      VOICE.done = fin;
+      a.onended = fin;
+      a.onerror = function () { finished = true; VOICE.done = null; TTS.speak(text, done); };
+      a.src = VOICE.dir + VOICE.map[id].file; a.currentTime = 0;
+      var p = a.play(); if (p && p.catch) p.catch(function () { if (!finished) { finished = true; VOICE.done = null; TTS.speak(text, done); } });
+    }
+  };
+  function stopVoice() { var d = VOICE.done; VOICE.done = null; if (VOICE.el) { try { VOICE.el.pause(); } catch (e) {} } TTS.stop(); if (d) {} }
+  function say(id, text, done) { VOICE.play(id, plain(text), done); }
+  VOICE.load();
 
   /* ---------- nghe (Speech-to-Text) ---------- */
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -446,11 +489,11 @@
   var autoSpeak = false, history = [];
   function setAutoSpeak(on) {
     autoSpeak = on; spkBtn.classList.toggle('ntc-on', on); spkBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
-    spkBtn.innerHTML = on ? IC.spk : IC.mute; if (!on) TTS.stop();
+    spkBtn.innerHTML = on ? IC.spk : IC.mute; if (!on) stopVoice();
   }
   function localAnswer(text) {
     var it = findIntent(text);
-    if (!it) return { a: FALLBACK, follow: STARTERS };
+    if (!it) return { id: 'fallback', a: FALLBACK, follow: STARTERS };
     return it;
   }
   function ask(text, byVoice, cb) {
@@ -459,9 +502,9 @@
     var typing = el('div', 'ntc-typing', 'Trợ lý đang trả lời…'); body.appendChild(typing); scrollDown();
     function finish(ans) {
       typing.remove();
-      addBot(ans.a, { video: ans.video }); setChips(ans.follow || STARTERS);
+      addBot(ans.a, { video: ans.video, id: ans.id }); setChips(ans.follow || STARTERS);
       history.push({ role: 'bot', text: ans.a });
-      if ((autoSpeak || byVoice) && TTS.ok) TTS.speak(plain(ans.a), cb); else if (cb) cb();
+      if (autoSpeak || byVoice) say(ans.id, ans.a, cb); else if (cb) cb();
     }
     if (CFG.aiEndpoint) {
       fetch(CFG.aiEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text, history: history.slice(-10) }) })
@@ -469,54 +512,6 @@
         .then(function (j) { finish(j && j.reply ? { a: String(j.reply), follow: STARTERS } : localAnswer(text)); })
         .catch(function () { finish(localAnswer(text)); });
     } else setTimeout(function () { finish(localAnswer(text)); }, 350);
-  }
-
-  /* ---------- gọi AI giọng nói thật (ElevenLabs) ---------- */
-  var EL = { loaded: false, failed: false, box: null };
-  function loadEL(cb) {
-    if (EL.loaded) return cb(true);
-    if (EL.failed) return cb(false);
-    var sc = document.createElement('script');
-    sc.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed'; sc.async = true;
-    var t = setTimeout(function () { EL.failed = true; cb(false); cb = function () {}; }, 12000);
-    sc.onload = function () {
-      var w = 0;
-      (function chk() {
-        if (window.customElements && customElements.get('elevenlabs-convai')) { clearTimeout(t); EL.loaded = true; cb(true); cb = function () {}; }
-        else if (w++ < 40) setTimeout(chk, 150); else { clearTimeout(t); EL.failed = true; cb(false); cb = function () {}; }
-      })();
-    };
-    sc.onerror = function () { clearTimeout(t); EL.failed = true; cb(false); cb = function () {}; };
-    document.head.appendChild(sc);
-  }
-  function openAICall() {
-    if (INAPP) addBot(INAPP_MSG);
-    callBtn.disabled = true;
-    loadEL(function (ok) {
-      callBtn.disabled = false;
-      if (!ok) { addBot('Em chưa kết nối được trợ lý giọng nói AI, em chuyển sang chế độ nói chuyện cơ bản nhé.'); startCall(); return; }
-      panel.classList.remove('ntc-open'); fab.classList.add('ntc-hide'); TTS.stop(); stopListen();
-      var box = el('div', 'ntc-elbox');
-      var w = document.createElement('elevenlabs-convai');
-      var attrs = {
-        'agent-id': CFG.elevenAgentId, 'variant': 'expanded',
-        'avatar-image-url': new URL(LOGO, location.href).href,
-        'action-text': 'Nói chuyện với Nghề Trader', 'start-call-text': 'Bắt đầu gọi',
-        'end-call-text': 'Kết thúc', 'expand-text': 'Mở trợ lý', 'listening-text': 'Đang nghe…', 'speaking-text': 'Đang nói…',
-        'override-language': 'vi'
-      };
-      Object.keys(attrs).forEach(function (k) { w.setAttribute(k, attrs[k]); });
-      var back = el('button', 'ntc-elback'); back.type = 'button';
-      back.innerHTML = IC.x + ' Đóng gọi · quay lại chat';
-      back.addEventListener('click', closeAICall);
-      box.appendChild(back); document.body.appendChild(box); document.body.appendChild(w);
-      EL.box = box; EL.widget = w;
-    });
-  }
-  function closeAICall() {
-    if (EL.widget) { EL.widget.remove(); EL.widget = null; }
-    if (EL.box) { EL.box.remove(); EL.box = null; }
-    open();
   }
 
   /* ---------- chế độ gọi (nói chuyện liên tục) ---------- */
@@ -527,7 +522,7 @@
     talkBtn.innerHTML = (s === 'listen' ? IC.x + ' Dừng nghe' : IC.mic + ' Bấm để nói');
   }
   function callLoop() {
-    if (!callOn) return;
+    if (!callOn || recActive) return;
     callState('listen', 'Em đang nghe… anh/chị cứ nói.');
     var ok = listen(function (t) {
       misses = 0; callState('think', '“' + t + '”');
@@ -544,35 +539,35 @@
   function startCall() {
     if (!SR) { addBot('Trình duyệt này chưa hỗ trợ trò chuyện bằng giọng nói. Anh/chị dùng **Chrome** hoặc **Edge** (máy tính, Android) nhé. Anh/chị vẫn có thể gõ câu hỏi, em sẽ đọc to câu trả lời.'); setAutoSpeak(true); return; }
     if (INAPP) addBot(INAPP_MSG);
-    TTS.unlock();
+    TTS.unlock(); VOICE.unlock();
     callOn = true; misses = 0; callBox.classList.add('ntc-open');
     callLoop(); // bật micro ngay trong lúc khách bấm (iPhone yêu cầu)
   }
-  function endCall() { callOn = false; stopListen(); TTS.stop(); callBox.classList.remove('ntc-open'); callState('idle'); }
+  function endCall() { callOn = false; stopListen(); stopVoice(); callBox.classList.remove('ntc-open'); callState('idle'); }
 
   /* ---------- sự kiện ---------- */
   var started = false;
   function open() {
     panel.classList.add('ntc-open'); fab.classList.add('ntc-hide');
-    if (!started) { started = true; addBot(WELCOME); setChips(STARTERS); }
+    if (!started) { started = true; addBot(WELCOME, { id: 'welcome' }); setChips(STARTERS); }
     setTimeout(function () { if (window.matchMedia('(min-width:561px)').matches) input.focus(); }, 50);
   }
-  function close() { panel.classList.remove('ntc-open'); fab.classList.remove('ntc-hide'); endCall(); stopListen(); TTS.stop(); }
+  function close() { panel.classList.remove('ntc-open'); fab.classList.remove('ntc-hide'); endCall(); stopListen(); stopVoice(); }
   fab.addEventListener('click', open);
   panel.querySelector('.ntc-close').addEventListener('click', close);
-  form.addEventListener('submit', function (e) { e.preventDefault(); stopListen(); ask(input.value, false); });
-  spkBtn.addEventListener('click', function () { setAutoSpeak(!autoSpeak); });
-  callBtn.addEventListener('click', function () { if (CFG.elevenAgentId) openAICall(); else startCall(); });
+  form.addEventListener('submit', function (e) { e.preventDefault(); stopListen(); stopVoice(); VOICE.unlock(); ask(input.value, false); });
+  spkBtn.addEventListener('click', function () { VOICE.unlock(); setAutoSpeak(!autoSpeak); });
+  callBtn.addEventListener('click', startCall);
   panel.querySelector('.ntc-hang').addEventListener('click', endCall);
   talkBtn.addEventListener('click', function () {
     if (recActive) { stopListen(); callState('idle', 'Đã dừng. Bấm “Bấm để nói” để hỏi tiếp.'); return; }
-    TTS.stop(); TTS.unlock(); callLoop();
+    stopVoice(); TTS.unlock(); VOICE.unlock(); callLoop();
   });
   micBtn.addEventListener('click', function () {
     if (!SR) { addBot('Trình duyệt này chưa hỗ trợ nói. Anh/chị dùng **Chrome** hoặc **Edge** nhé, hoặc gõ câu hỏi.'); return; }
     if (recActive) { stopListen(); return; }
     if (INAPP) addBot(INAPP_MSG);
-    TTS.stop(); TTS.unlock(); input.value = ''; input.placeholder = 'Em đang nghe…';
+    stopVoice(); TTS.unlock(); VOICE.unlock(); input.value = ''; input.placeholder = 'Em đang nghe…';
     listen(function (t) { input.placeholder = 'Nhập câu hỏi...'; ask(t, true); }, function () { input.placeholder = 'Nhập câu hỏi...'; });
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && panel.classList.contains('ntc-open')) close(); });

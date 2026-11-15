@@ -1,0 +1,182 @@
+{
+ "bot_identity": {
+  "file": "bot_identity.mp3",
+  "hash": "6dd7b3bb182a",
+  "sec": 14.3
+ },
+ "human": {
+  "file": "human.mp3",
+  "hash": "57fc7113edfd",
+  "sec": 12.7
+ },
+ "price": {
+  "file": "price.mp3",
+  "hash": "2e156755e2dd",
+  "sec": 17.8
+ },
+ "profit": {
+  "file": "profit.mp3",
+  "hash": "989c5eb8c7d8",
+  "sec": 24.9
+ },
+ "class": {
+  "file": "class.mp3",
+  "hash": "b968f2734a8a",
+  "sec": 17.8
+ },
+ "self_vs_mentor": {
+  "file": "self_vs_mentor.mp3",
+  "hash": "b9c8bc5d052e",
+  "sec": 14.9
+ },
+ "bot_compare": {
+  "file": "bot_compare.mp3",
+  "hash": "93d29f4579f9",
+  "sec": 15.5
+ },
+ "bot_ai": {
+  "file": "bot_ai.mp3",
+  "hash": "43e587b7f3da",
+  "sec": 15.8
+ },
+ "passview": {
+  "file": "passview.mp3",
+  "hash": "7531ea2b2595",
+  "sec": 12.8
+ },
+ "trial": {
+  "file": "trial.mp3",
+  "hash": "b9eed225e110",
+  "sec": 9.4
+ },
+ "zalo": {
+  "file": "zalo.mp3",
+  "hash": "115e985c822b",
+  "sec": 7.8
+ },
+ "reports": {
+  "file": "reports.mp3",
+  "hash": "35dfe162c97a",
+  "sec": 10.5
+ },
+ "news": {
+  "file": "news.mp3",
+  "hash": "5924f2497796",
+  "sec": 7.4
+ },
+ "contact": {
+  "file": "contact.mp3",
+  "hash": "cddc88defbd7",
+  "sec": 18.1
+ },
+ "about": {
+  "file": "about.mp3",
+  "hash": "9664c2466147",
+  "sec": 17.4
+ },
+ "method": {
+  "file": "method.mp3",
+  "hash": "15ffecc1c0f8",
+  "sec": 13.8
+ },
+ "risk": {
+  "file": "risk.mp3",
+  "hash": "6d54bb116305",
+  "sec": 20.0
+ },
+ "forex": {
+  "file": "forex.mp3",
+  "hash": "105a738ff6df",
+  "sec": 16.6
+ },
+ "beginner": {
+  "file": "beginner.mp3",
+  "hash": "68deb17b029c",
+  "sec": 18.7
+ },
+ "videos": {
+  "file": "videos.mp3",
+  "hash": "f5ae3f7b20d8",
+  "sec": 10.9
+ },
+ "candle_basic": {
+  "file": "candle_basic.mp3",
+  "hash": "ef28252b75de",
+  "sec": 16.3
+ },
+ "candle_list": {
+  "file": "candle_list.mp3",
+  "hash": "763ae70c4348",
+  "sec": 18.2
+ },
+ "inv_hammer": {
+  "file": "inv_hammer.mp3",
+  "hash": "63417b4e6afb",
+  "sec": 12.0
+ },
+ "hammer": {
+  "file": "hammer.mp3",
+  "hash": "1b2c85176b3a",
+  "sec": 14.4
+ },
+ "hanging": {
+  "file": "hanging.mp3",
+  "hash": "46c5d628a4cf",
+  "sec": 10.0
+ },
+ "shooting": {
+  "file": "shooting.mp3",
+  "hash": "387795fd4d26",
+  "sec": 11.3
+ },
+ "doji": {
+  "file": "doji.mp3",
+  "hash": "0f0baca22aa3",
+  "sec": 11.8
+ },
+ "engulf_up": {
+  "file": "engulf_up.mp3",
+  "hash": "a77313549050",
+  "sec": 11.1
+ },
+ "engulf_down": {
+  "file": "engulf_down.mp3",
+  "hash": "ffa38f265b9d",
+  "sec": 10.6
+ },
+ "engulf": {
+  "file": "engulf.mp3",
+  "hash": "b3aa8445fcd8",
+  "sec": 12.6
+ },
+ "morning": {
+  "file": "morning.mp3",
+  "hash": "2d5249e47cd3",
+  "sec": 12.7
+ },
+ "evening": {
+  "file": "evening.mp3",
+  "hash": "a8f4461202c9",
+  "sec": 13.5
+ },
+ "thanks": {
+  "file": "thanks.mp3",
+  "hash": "b817f7b2971f",
+  "sec": 6.2
+ },
+ "welcome": {
+  "file": "welcome.mp3",
+  "hash": "59515e467fd9",
+  "sec": 11.8
+ },
+ "fallback": {
+  "file": "fallback.mp3",
+  "hash": "1658fca8eefa",
+  "sec": 17.5
+ },
+ "greet": {
+  "file": "greet.mp3",
+  "hash": "d54fe64f9100",
+  "sec": 3.0
+ }
+}
