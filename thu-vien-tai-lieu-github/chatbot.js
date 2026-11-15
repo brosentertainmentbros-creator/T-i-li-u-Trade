@@ -16,7 +16,8 @@
     email: 'support@giaiphapgiaodich.com',
     website: 'https://giaiphapgiaodich.com/',
     home: './',
-    aiEndpoint: ''
+    aiEndpoint: 'https://nghetrader-ai.tinhcaemloan1.workers.dev/chat',
+    liveEndpoint: 'https://nghetrader-ai.tinhcaemloan1.workers.dev/live-token'
   }, window.NT_CHATBOT_CONFIG || {});
   if (window.SITE_CONFIG && window.SITE_CONFIG.zalo) CFG.zalo = window.SITE_CONFIG.zalo;
 
@@ -585,7 +586,7 @@
     }
     if (CFG.aiEndpoint) {
       var local = findIntent(text), done = false;
-      var guard = setTimeout(function () { if (!done) { done = true; finish(localAnswer(text)); } }, 10000); // GPT chậm quá thì dùng kịch bản
+      var guard = setTimeout(function () { if (!done) { done = true; finish(localAnswer(text)); } }, 20000); // AI chậm quá thì dùng kịch bản
       fetch(CFG.aiEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text, history: history.slice(-10) }) })
         .then(function (r) { return r.json(); })
         .then(function (j) {
@@ -683,6 +684,144 @@
   }
   function endCall() { callOn = false; stopBarge(); stopListen(); stopVoice(); callBox.classList.remove('ntc-open'); callState('idle'); }
 
+  /* ---------- gọi AI trực tiếp (Gemini Live): giọng tự nhiên, nói chen được ---------- */
+  var GL = null;   // phiên gọi hiện tại
+  var WORKLET = "class P extends AudioWorkletProcessor{constructor(){super();this.b=[];this.r=sampleRate/16000;this.acc=0}" +
+    "process(i){var c=i[0]&&i[0][0];if(!c)return true;for(var k=0;k<c.length;k++){this.acc+=1;if(this.acc>=this.r){this.acc-=this.r;var v=Math.max(-1,Math.min(1,c[k]));this.b.push(v<0?v*32768:v*32767)}}" +
+    "if(this.b.length>=640){this.port.postMessage(new Int16Array(this.b).buffer,[]);this.b=[]}return true}}registerProcessor('nt-mic',P);";
+  function b64FromBuf(buf) { var s = '', a = new Uint8Array(buf); for (var i = 0; i < a.length; i += 0x8000) s += String.fromCharCode.apply(null, a.subarray(i, i + 0x8000)); return btoa(s); }
+  function bufFromB64(b) { var s = atob(b), a = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) a[i] = s.charCodeAt(i); return a.buffer; }
+  function glState(s, msg) { callBox.setAttribute('data-s', s); if (msg != null) callStatus.textContent = msg; }
+  function glStopAudio() {
+    if (!GL) return;
+    GL.sources.forEach(function (src) { try { src.stop(); } catch (e) {} }); GL.sources = []; GL.next = 0;
+  }
+  function glPlay(b64, rate) {
+    var ctx = GL.out, pcm = new Int16Array(bufFromB64(b64)), f = new Float32Array(pcm.length);
+    for (var i = 0; i < pcm.length; i++) f[i] = pcm[i] / 32768;
+    var buf = ctx.createBuffer(1, f.length, rate || 24000); buf.copyToChannel(f, 0);
+    var src = ctx.createBufferSource(); src.buffer = buf; src.connect(ctx.destination);
+    var t = Math.max(ctx.currentTime + 0.03, GL.next || 0); src.start(t); GL.next = t + buf.duration;
+    GL.sources.push(src); src.onended = function () { GL && (GL.sources = GL.sources.filter(function (x) { return x !== src; })); };
+  }
+  function glFlushText() {
+    if (!GL) return;
+    if (GL.userText.trim()) { addUser(GL.userText.trim()); history.push({ role: 'user', text: GL.userText.trim() }); }
+    if (GL.botText.trim()) { addBot(GL.botText.trim()); history.push({ role: 'bot', text: GL.botText.trim() }); }
+    GL.userText = ''; GL.botText = '';
+  }
+  function glEnd(reason) {
+    var g = GL; if (!g) return; GL = null;
+    try { glFlushTextFor(g); } catch (e) {}
+    clearTimeout(g.maxT);
+    try { g.ws && g.ws.close(); } catch (e) {}
+    try { g.node && g.node.disconnect(); g.srcNode && g.srcNode.disconnect(); } catch (e) {}
+    try { g.stream && g.stream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) {}
+    try { g.sources.forEach(function (x) { x.stop(); }); } catch (e) {}
+    try { g.inCtx && g.inCtx.close(); g.out && g.out.close(); } catch (e) {}
+    callOn = false; callBox.classList.remove('ntc-open'); glState('idle');
+    talkBtn.style.display = '';
+    if (reason) addBot(reason);
+  }
+  function glFlushTextFor(g) {
+    if (g.userText.trim()) addUser(g.userText.trim());
+    if (g.botText.trim()) addBot(g.botText.trim());
+  }
+  function startGeminiCall() {
+    if (INAPP) addBot(INAPP_MSG);
+    if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) || !window.AudioContext || !window.WebSocket) { startCall(); return; }
+    stopVoice(); stopListen(); stopBarge();
+    callOn = true; callBox.classList.add('ntc-open'); talkBtn.style.display = 'none';
+    glState('think', 'Đang kết nối với tư vấn viên AI…');
+    var g = GL = { sources: [], next: 0, userText: '', botText: '', ready: false, muted: false };
+    // tạo bộ phát âm thanh ngay lúc khách bấm (iPhone yêu cầu)
+    try { g.out = new AudioContext({ sampleRate: 24000 }); } catch (e) { g.out = new AudioContext(); }
+    g.out.resume && g.out.resume();
+    var fallback = function (why) {
+      if (GL !== g) return;
+      glEnd(null);
+      addBot('Đường truyền AI đang bận' + (why ? ' (' + why + ')' : '') + ', em chuyển sang chế độ nói chuyện cơ bản nhé.');
+      startCall();
+    };
+    var micP = navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 } });
+    var tokP = fetch(CFG.liveEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' }).then(function (r) { return r.json(); });
+    micP.catch(function () {
+      if (GL !== g) return; glEnd(null);
+      addBot(INAPP ? INAPP_MSG : 'Em chưa được phép dùng **micro**. Anh/chị cho phép micro cho trang này rồi bấm 📞 lại nhé.');
+    });
+    Promise.all([micP, tokP]).then(function (res) {
+      if (GL !== g) { res[0].getTracks().forEach(function (t) { t.stop(); }); return; }
+      g.stream = res[0]; var tk = res[1];
+      if (!tk || !tk.token) { fallback(tk && tk.error === 'token' && tk.upstream === 429 ? 'hết lượt miễn phí' : ''); return; }
+      var ws = g.ws = new WebSocket(tk.ws + '?access_token=' + encodeURIComponent(tk.token));
+      var setupT = setTimeout(function () { if (GL === g && !g.ready) fallback('kết nối chậm'); }, 10000);
+      ws.onopen = function () {
+        ws.send(JSON.stringify({ setup: {
+          model: 'models/' + tk.model,
+          generationConfig: { responseModalities: ['AUDIO'] },
+          systemInstruction: { parts: [{ text: tk.prompt || '' }] },
+          inputAudioTranscription: {}, outputAudioTranscription: {}
+        } }));
+      };
+      ws.onmessage = function (ev) {
+        var handle = function (txt) {
+          if (GL !== g) return;
+          var m; try { m = JSON.parse(txt); } catch (e) { return; }
+          if (m.setupComplete) {
+            g.ready = true; clearTimeout(setupT);
+            glState('speak', 'Đã kết nối. Anh/chị cứ nói tự nhiên, nói chen lúc nào cũng được.');
+            glStartMic(g);
+            ws.send(JSON.stringify({ clientContent: { turns: [{ role: 'user', parts: [{ text: 'Khách vừa gọi tới. Hãy chào khách thật ngắn và hỏi khách đang quan tâm điều gì.' }] }], turnComplete: true } }));
+            g.maxT = setTimeout(function () { glEnd('Cuộc gọi đã hết thời gian 5 phút. Anh/chị cần hỗ trợ thêm vui lòng gọi **0905 890 399** hoặc nhắn ' + ZALO + ' nhé.'); }, 5 * 60 * 1000);
+            return;
+          }
+          var sc = m.serverContent;
+          if (sc) {
+            if (sc.interrupted) { glStopAudio(); glState('listen', 'Dạ em nghe…'); }
+            if (sc.inputTranscription && sc.inputTranscription.text) {
+              if (g.botText.trim()) { addBot(g.botText.trim()); history.push({ role: 'bot', text: g.botText.trim() }); g.botText = ''; }
+              g.userText += sc.inputTranscription.text; glState('listen', '“' + g.userText.trim() + '”');
+            }
+            if (sc.outputTranscription && sc.outputTranscription.text) {
+              if (g.userText.trim()) { addUser(g.userText.trim()); history.push({ role: 'user', text: g.userText.trim() }); g.userText = ''; }
+              g.botText += sc.outputTranscription.text;
+            }
+            var parts = (sc.modelTurn && sc.modelTurn.parts) || [];
+            parts.forEach(function (pt) {
+              if (pt.inlineData && /audio/.test(pt.inlineData.mimeType || '') && pt.inlineData.data) {
+                var rate = +(String(pt.inlineData.mimeType).match(/rate=(\d+)/) || [0, 24000])[1];
+                glPlay(pt.inlineData.data, rate); glState('speak', 'Em đang nói… anh/chị cứ nói chen nếu cần.');
+              }
+            });
+            if (sc.turnComplete) { glFlushText(); setTimeout(function () { if (GL === g && !g.sources.length) glState('listen', 'Em đang nghe…'); }, 400); }
+          }
+          if (m.goAway) glEnd('Cuộc gọi đã kết thúc. Anh/chị cần hỗ trợ thêm cứ bấm 📞 gọi lại nhé.');
+        };
+        if (typeof ev.data === 'string') handle(ev.data); else if (ev.data && ev.data.text) ev.data.text().then(handle);
+      };
+      ws.onerror = function () { if (!g.ready) fallback(''); };
+      ws.onclose = function (ev) {
+        if (GL !== g) return;
+        if (!g.ready) fallback(ev.code === 1008 ? 'không có quyền' : '');
+        else glEnd('Cuộc gọi đã kết thúc. Anh/chị cần hỗ trợ thêm cứ bấm 📞 gọi lại nhé.');
+      };
+    }).catch(function () { if (GL === g) fallback(''); });
+  }
+  function glStartMic(g) {
+    try { g.inCtx = new AudioContext(); } catch (e) { return; }
+    var url = URL.createObjectURL(new Blob([WORKLET], { type: 'application/javascript' }));
+    g.inCtx.audioWorklet.addModule(url).then(function () {
+      if (GL !== g) return;
+      g.srcNode = g.inCtx.createMediaStreamSource(g.stream);
+      g.node = new AudioWorkletNode(g.inCtx, 'nt-mic');
+      g.node.port.onmessage = function (e) {
+        if (GL !== g || g.muted || !g.ws || g.ws.readyState !== 1) return;
+        g.ws.send(JSON.stringify({ realtimeInput: { audio: { data: b64FromBuf(e.data), mimeType: 'audio/pcm;rate=16000' } } }));
+      };
+      g.srcNode.connect(g.node);   // không nối ra loa để tránh tiếng vọng
+    }).catch(function () { glEnd('Thiết bị này chưa hỗ trợ thu âm cho cuộc gọi AI. Anh/chị dùng Chrome bản mới nhé.'); });
+  }
+
   /* ---------- sự kiện ---------- */
   var started = false;
   function open() {
@@ -690,13 +829,13 @@
     if (!started) { started = true; addBot(WELCOME, { id: 'welcome' }); setChips(STARTERS); }
     setTimeout(function () { if (window.matchMedia('(min-width:561px)').matches) input.focus(); }, 50);
   }
-  function close() { panel.classList.remove('ntc-open'); fab.classList.remove('ntc-hide'); endCall(); stopListen(); stopVoice(); }
+  function close() { panel.classList.remove('ntc-open'); fab.classList.remove('ntc-hide'); if (GL) glEnd(null); endCall(); stopListen(); stopVoice(); }
   fab.addEventListener('click', open);
   panel.querySelector('.ntc-close').addEventListener('click', close);
   form.addEventListener('submit', function (e) { e.preventDefault(); stopListen(); stopVoice(); VOICE.unlock(); ask(input.value, false); });
   spkBtn.addEventListener('click', function () { VOICE.unlock(); setAutoSpeak(!autoSpeak); });
-  callBtn.addEventListener('click', startCall);
-  panel.querySelector('.ntc-hang').addEventListener('click', endCall);
+  callBtn.addEventListener('click', function () { if (CFG.liveEndpoint) startGeminiCall(); else startCall(); });
+  panel.querySelector('.ntc-hang').addEventListener('click', function () { if (GL) glEnd(null); else endCall(); });
   talkBtn.addEventListener('click', function () {
     if (recActive) { stopListen(); callState('idle', 'Đã dừng. Bấm “Bấm để nói” để hỏi tiếp.'); return; }
     stopBarge(); stopVoice(); TTS.unlock(); VOICE.unlock(); callLoop();
