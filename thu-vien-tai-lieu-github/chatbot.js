@@ -20,6 +20,10 @@
   if (window.SITE_CONFIG && window.SITE_CONFIG.zalo) CFG.zalo = window.SITE_CONFIG.zalo;
 
   var LOGO = 'assets/logo-nghe-trader.webp';
+  var UA = navigator.userAgent || '';
+  var INAPP = /Zalo|FBAN|FBAV|FB_IAB|FBIOS|Instagram|musical_ly|TikTok|Bytedance|BytedanceWebview|Line\//i.test(UA);
+  var IOS = /iPhone|iPad|iPod/i.test(UA);
+  var INAPP_MSG = 'Anh/chị đang mở trang **bên trong ứng dụng** (Zalo, Facebook hoặc TikTok). Các ứng dụng này thường **chặn micro**, nên em không nghe được.\nAnh/chị bấm dấu **⋯** ở góc trên, chọn **Mở bằng trình duyệt** (Chrome hoặc Safari), rồi thử lại nhé. Anh/chị vẫn có thể gõ câu hỏi ở đây.';
   var NOTE = 'Nội dung mang tính giáo dục, không phải khuyến nghị đầu tư. Giao dịch có rủi ro.';
   var ZALO = '[Nhóm Zalo hỗ trợ](' + CFG.zalo + ')';
   var CALL = '[gọi ' + CFG.phoneLabel + '](tel:' + CFG.phone + ')';
@@ -252,6 +256,8 @@
 '.ntc-call h4{margin:0;font-size:19px}.ntc-call p{margin:0;color:#b9cadb;font-size:14px;min-height:40px;max-width:290px}' +
 '.ntc-hang{background:#d9483b;color:#fff;border:0;border-radius:40px;padding:13px 26px;font-weight:800;font-size:15px;cursor:pointer;display:flex;gap:8px;align-items:center}' +
 '.ntc-hang svg{width:18px;height:18px}' +
+'.ntc-talk{background:#2fa866;color:#fff;border:0;border-radius:40px;padding:14px 28px;font-weight:800;font-size:16px;cursor:pointer;display:flex;gap:8px;align-items:center}.ntc-talk svg{width:20px;height:20px}' +
+'.ntc-call[data-s="listen"] .ntc-talk{background:#d9483b}.ntc-call[data-s="speak"] .ntc-talk,.ntc-call[data-s="think"] .ntc-talk{opacity:.5}' +
 '@media(max-width:560px){.ntc-panel{right:0;left:0;bottom:0;width:100%;max-width:none;height:88vh;max-height:none;border-radius:20px 20px 0 0}.ntc-fab{right:14px;bottom:14px}.ntc-fab .ntc-lbl{display:none}.ntc-fab{padding:6px}.ntc-fab .ntc-dot{left:36px;top:5px}}';
 
   var IC = {
@@ -286,6 +292,7 @@
     '<button class="ntc-ib ntc-send" type="submit" title="Gửi" aria-label="Gửi">' + IC.send + '</button></form>' +
     '<div class="ntc-note">Trợ lý tự động · ' + NOTE + '</div>' +
     '<div class="ntc-call" data-s="idle"><div class="ntc-orb"><img src="' + LOGO + '" alt=""></div><h4>Đang trò chuyện</h4><p class="ntc-cs">Bấm bắt đầu và nói câu hỏi của anh/chị.</p>' +
+    '<button class="ntc-talk" type="button">' + IC.mic + ' Bấm để nói</button>' +
     '<button class="ntc-hang" type="button">' + IC.x + ' Kết thúc</button></div>';
 
   document.body.appendChild(fab); document.body.appendChild(panel);
@@ -370,9 +377,13 @@
       TTS.voice = vi.filter(function (v) { return /google|online|natural/i.test(v.name); })[0] || vi[0] || null;
     },
     stop: function () { if (TTS.ok) window.speechSynthesis.cancel(); },
-    speak: function (text, done) {
-      if (!TTS.ok) { if (done) done(); return; }
+    unlock: function () { if (!TTS.ok || TTS.unlocked) return; TTS.unlocked = true; try { var u = new SpeechSynthesisUtterance(' '); u.volume = 0; window.speechSynthesis.speak(u); } catch (e) {} },
+    speak: function (text, done0) {
+      var fired = false, safety = null;
+      function done() { if (fired) return; fired = true; clearTimeout(safety); if (done0) done0(); }
+      if (!TTS.ok) { done(); return; }
       TTS.stop(); TTS.pick();
+      safety = setTimeout(done, Math.min(60000, 2500 + text.length * 95));
       if (!TTS.voice && !TTS.warned) { TTS.warned = true; addBot('Thiết bị của anh/chị có thể **chưa có giọng đọc tiếng Việt**, nên giọng đọc có thể không chuẩn. Trên điện thoại Android hoặc trình duyệt Chrome/Edge thường có sẵn giọng tiếng Việt.'); }
       var parts = text.replace(/\n+/g, '. ').match(/[^.!?:;]+[.!?:;]*/g) || [text];
       var chunks = [], cur = '';
@@ -380,10 +391,10 @@
       if (cur.trim()) chunks.push(cur);
       var i = 0;
       (function next() {
-        if (i >= chunks.length) { if (done) done(); return; }
+        if (i >= chunks.length) { done(); return; }
         var u = new SpeechSynthesisUtterance(chunks[i++].trim());
         u.lang = 'vi-VN'; if (TTS.voice) u.voice = TTS.voice; u.rate = 1; u.pitch = 1;
-        u.onend = next; u.onerror = function () { if (done) done(); };
+        u.onend = next; u.onerror = function () { done(); };
         window.speechSynthesis.speak(u);
       })();
     }
@@ -407,9 +418,14 @@
       if (callOn) callStatus.textContent = '“' + input.value + '”';
     };
     rec.onerror = function (ev) {
-      if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed') {
-        addBot('Anh/chị chưa cho phép dùng **micro**. Hãy bấm biểu tượng ổ khóa trên thanh địa chỉ và cho phép micro, rồi thử lại nhé.');
+      var e = ev.error;
+      if (e === 'not-allowed' || e === 'service-not-allowed') {
+        addBot(INAPP ? INAPP_MSG : 'Em chưa được phép dùng **micro**.\n- Máy tính: bấm biểu tượng ổ khóa cạnh thanh địa chỉ, cho phép micro.\n- Điện thoại: vào Cài đặt của trình duyệt (Chrome/Safari), cho phép micro cho trang này.\nRồi anh/chị thử lại nhé.');
         endCall();
+      } else if (e === 'audio-capture') {
+        addBot('Em không tìm thấy **micro** trên thiết bị. Anh/chị kiểm tra micro hoặc tai nghe rồi thử lại nhé.'); endCall();
+      } else if (e === 'network') {
+        addBot('Nhận giọng nói cần **kết nối mạng** và trình duyệt Chrome/Edge/Safari. Anh/chị kiểm tra mạng hoặc đổi trình duyệt rồi thử lại nhé.'); endCall();
       }
     };
     rec.onend = function () {
@@ -454,7 +470,11 @@
 
   /* ---------- chế độ gọi (nói chuyện liên tục) ---------- */
   var callOn = false, misses = 0;
-  function callState(s, msg) { callBox.setAttribute('data-s', s); if (msg != null) callStatus.textContent = msg; }
+  var talkBtn = panel.querySelector('.ntc-talk');
+  function callState(s, msg) {
+    callBox.setAttribute('data-s', s); if (msg != null) callStatus.textContent = msg;
+    talkBtn.innerHTML = (s === 'listen' ? IC.x + ' Dừng nghe' : IC.mic + ' Bấm để nói');
+  }
   function callLoop() {
     if (!callOn) return;
     callState('listen', 'Em đang nghe… anh/chị cứ nói.');
@@ -465,17 +485,17 @@
     }, function () {
       if (!callOn) return;
       misses++;
-      if (misses >= 2) { callState('idle', 'Em không nghe thấy gì. Bấm Kết thúc hoặc nói lại nhé.'); setTimeout(function () { if (callOn) { misses = 0; callLoop(); } }, 2500); }
+      if (misses >= 2 || IOS) { misses = 0; callState('idle', 'Em chưa nghe thấy gì. Anh/chị bấm “Bấm để nói” rồi nói nhé.'); }
       else callLoop();
     });
-    if (!ok) { endCall(); addBot('Trình duyệt này chưa hỗ trợ trò chuyện bằng giọng nói. Anh/chị dùng **Chrome** hoặc **Edge** (máy tính, Android) để nói chuyện với em nhé. Anh/chị vẫn có thể gõ câu hỏi.'); }
+    if (!ok) callState('idle', 'Anh/chị bấm nút “Bấm để nói” rồi nói câu hỏi nhé.');
   }
   function startCall() {
     if (!SR) { addBot('Trình duyệt này chưa hỗ trợ trò chuyện bằng giọng nói. Anh/chị dùng **Chrome** hoặc **Edge** (máy tính, Android) nhé. Anh/chị vẫn có thể gõ câu hỏi, em sẽ đọc to câu trả lời.'); setAutoSpeak(true); return; }
+    if (INAPP) addBot(INAPP_MSG);
+    TTS.unlock();
     callOn = true; misses = 0; callBox.classList.add('ntc-open');
-    callState('speak', 'Xin chào, em là trợ lý Nghề Trader…');
-    TTS.speak('Dạ em chào anh chị. Anh chị cứ hỏi, em nghe đây.', function () { if (callOn) callLoop(); });
-    if (!TTS.ok) callLoop();
+    callLoop(); // bật micro ngay trong lúc khách bấm (iPhone yêu cầu)
   }
   function endCall() { callOn = false; stopListen(); TTS.stop(); callBox.classList.remove('ntc-open'); callState('idle'); }
 
@@ -493,10 +513,15 @@
   spkBtn.addEventListener('click', function () { setAutoSpeak(!autoSpeak); });
   callBtn.addEventListener('click', startCall);
   panel.querySelector('.ntc-hang').addEventListener('click', endCall);
+  talkBtn.addEventListener('click', function () {
+    if (recActive) { stopListen(); callState('idle', 'Đã dừng. Bấm “Bấm để nói” để hỏi tiếp.'); return; }
+    TTS.stop(); TTS.unlock(); callLoop();
+  });
   micBtn.addEventListener('click', function () {
     if (!SR) { addBot('Trình duyệt này chưa hỗ trợ nói. Anh/chị dùng **Chrome** hoặc **Edge** nhé, hoặc gõ câu hỏi.'); return; }
     if (recActive) { stopListen(); return; }
-    TTS.stop(); input.value = ''; input.placeholder = 'Em đang nghe…';
+    if (INAPP) addBot(INAPP_MSG);
+    TTS.stop(); TTS.unlock(); input.value = ''; input.placeholder = 'Em đang nghe…';
     listen(function (t) { input.placeholder = 'Nhập câu hỏi...'; ask(t, true); }, function () { input.placeholder = 'Nhập câu hỏi...'; });
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && panel.classList.contains('ntc-open')) close(); });
