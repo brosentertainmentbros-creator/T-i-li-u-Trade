@@ -15,7 +15,8 @@
     email: 'support@giaiphapgiaodich.com',
     website: 'https://giaiphapgiaodich.com/',
     home: './',
-    aiEndpoint: ''
+    aiEndpoint: '',
+    elevenAgentId: 'agent_8301m7egy8kreqzrex6ezh6jz69k'
   }, window.NT_CHATBOT_CONFIG || {});
   if (window.SITE_CONFIG && window.SITE_CONFIG.zalo) CFG.zalo = window.SITE_CONFIG.zalo;
 
@@ -173,7 +174,7 @@
       follow: ['Xem thử miễn phí', 'Liên hệ tư vấn'] }
   ];
 
-  var WELCOME = 'Chào anh/chị! Em là **trợ lý tự động** của Nghề Trader.\nAnh/chị có thể **gõ câu hỏi**, bấm **micro** để nói, hoặc bấm **📞** để trò chuyện bằng giọng nói. Em sẽ đọc to câu trả lời.';
+  var WELCOME = 'Chào anh/chị! Em là **trợ lý tự động** của Nghề Trader.\nAnh/chị có thể **gõ câu hỏi** ở đây, hoặc bấm **📞** ở góc trên để **nói chuyện trực tiếp với trợ lý AI** bằng giọng nói, nói chen vào lúc nào cũng được.';
   var STARTERS = ['Lớp học TradePro là gì?', 'Bot AI TradePro là gì?', 'PassView là gì?', 'Xem thử miễn phí', 'Mô hình nến cơ bản', 'Liên hệ tư vấn'];
   var FALLBACK = 'Dạ, em chưa chắc hiểu đúng câu hỏi này. Em là trợ lý tự động nên chỉ trả lời được các chủ đề có sẵn: **Lớp học TradePro, Bot AI TradePro, PassView, xem thử, mô hình nến, quản trị rủi ro, liên hệ**.\nCâu hỏi khác, anh/chị nhắn đội ngũ qua ' + ZALO + ' hoặc ' + CALL + ' nhé.';
 
@@ -256,6 +257,8 @@
 '.ntc-call h4{margin:0;font-size:19px}.ntc-call p{margin:0;color:#b9cadb;font-size:14px;min-height:40px;max-width:290px}' +
 '.ntc-hang{background:#d9483b;color:#fff;border:0;border-radius:40px;padding:13px 26px;font-weight:800;font-size:15px;cursor:pointer;display:flex;gap:8px;align-items:center}' +
 '.ntc-hang svg{width:18px;height:18px}' +
+'.ntc-elbox{position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:2147483646}' +
+'.ntc-elback{display:flex;align-items:center;gap:8px;background:#07111f;color:#fff;border:1px solid #daa94f;border-radius:30px;padding:10px 18px;font:700 14px system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;cursor:pointer;box-shadow:0 10px 30px #0008}.ntc-elback svg{width:16px;height:16px}' +
 '.ntc-talk{background:#2fa866;color:#fff;border:0;border-radius:40px;padding:14px 28px;font-weight:800;font-size:16px;cursor:pointer;display:flex;gap:8px;align-items:center}.ntc-talk svg{width:20px;height:20px}' +
 '.ntc-call[data-s="listen"] .ntc-talk{background:#d9483b}.ntc-call[data-s="speak"] .ntc-talk,.ntc-call[data-s="think"] .ntc-talk{opacity:.5}' +
 '@media(max-width:560px){.ntc-panel{right:0;left:0;bottom:0;width:100%;max-width:none;height:88vh;max-height:none;border-radius:20px 20px 0 0}.ntc-fab{right:14px;bottom:14px}.ntc-fab .ntc-lbl{display:none}.ntc-fab{padding:6px}.ntc-fab .ntc-dot{left:36px;top:5px}}';
@@ -281,7 +284,7 @@
   panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-label', 'Trợ lý Nghề Trader');
   panel.innerHTML =
     '<div class="ntc-head"><img src="' + LOGO + '" alt=""><div><b>Trợ lý Nghề Trader</b><span>● Trả lời tự động</span></div><div class="ntc-sp"></div>' +
-    '<button class="ntc-ib ntc-callbtn" type="button" title="Trò chuyện bằng giọng nói" aria-label="Trò chuyện bằng giọng nói">' + IC.phone + '</button>' +
+    '<button class="ntc-ib ntc-callbtn" type="button" title="Gọi nói chuyện với trợ lý AI" aria-label="Gọi nói chuyện với trợ lý AI">' + IC.phone + '</button>' +
     '<button class="ntc-ib ntc-spkbtn" type="button" title="Tự đọc to câu trả lời" aria-label="Bật/tắt đọc to câu trả lời" aria-pressed="false">' + IC.mute + '</button>' +
     '<button class="ntc-ib ntc-close" type="button" title="Đóng" aria-label="Đóng">' + IC.x + '</button></div>' +
     '<div class="ntc-quick"><a class="ntc-qcall" href="tel:' + CFG.phone + '">' + IC.phone + ' Gọi ngay ' + CFG.phoneLabel + '</a><a class="ntc-qzalo" href="' + CFG.zalo + '" target="_blank" rel="noopener noreferrer">💬 Zalo</a></div>' +
@@ -468,6 +471,54 @@
     } else setTimeout(function () { finish(localAnswer(text)); }, 350);
   }
 
+  /* ---------- gọi AI giọng nói thật (ElevenLabs) ---------- */
+  var EL = { loaded: false, failed: false, box: null };
+  function loadEL(cb) {
+    if (EL.loaded) return cb(true);
+    if (EL.failed) return cb(false);
+    var sc = document.createElement('script');
+    sc.src = 'https://unpkg.com/@elevenlabs/convai-widget-embed'; sc.async = true;
+    var t = setTimeout(function () { EL.failed = true; cb(false); cb = function () {}; }, 12000);
+    sc.onload = function () {
+      var w = 0;
+      (function chk() {
+        if (window.customElements && customElements.get('elevenlabs-convai')) { clearTimeout(t); EL.loaded = true; cb(true); cb = function () {}; }
+        else if (w++ < 40) setTimeout(chk, 150); else { clearTimeout(t); EL.failed = true; cb(false); cb = function () {}; }
+      })();
+    };
+    sc.onerror = function () { clearTimeout(t); EL.failed = true; cb(false); cb = function () {}; };
+    document.head.appendChild(sc);
+  }
+  function openAICall() {
+    if (INAPP) addBot(INAPP_MSG);
+    callBtn.disabled = true;
+    loadEL(function (ok) {
+      callBtn.disabled = false;
+      if (!ok) { addBot('Em chưa kết nối được trợ lý giọng nói AI, em chuyển sang chế độ nói chuyện cơ bản nhé.'); startCall(); return; }
+      panel.classList.remove('ntc-open'); fab.classList.add('ntc-hide'); TTS.stop(); stopListen();
+      var box = el('div', 'ntc-elbox');
+      var w = document.createElement('elevenlabs-convai');
+      var attrs = {
+        'agent-id': CFG.elevenAgentId, 'variant': 'expanded',
+        'avatar-image-url': new URL(LOGO, location.href).href,
+        'action-text': 'Nói chuyện với Nghề Trader', 'start-call-text': 'Bắt đầu gọi',
+        'end-call-text': 'Kết thúc', 'expand-text': 'Mở trợ lý', 'listening-text': 'Đang nghe…', 'speaking-text': 'Đang nói…',
+        'override-language': 'vi'
+      };
+      Object.keys(attrs).forEach(function (k) { w.setAttribute(k, attrs[k]); });
+      var back = el('button', 'ntc-elback'); back.type = 'button';
+      back.innerHTML = IC.x + ' Đóng gọi · quay lại chat';
+      back.addEventListener('click', closeAICall);
+      box.appendChild(back); document.body.appendChild(box); document.body.appendChild(w);
+      EL.box = box; EL.widget = w;
+    });
+  }
+  function closeAICall() {
+    if (EL.widget) { EL.widget.remove(); EL.widget = null; }
+    if (EL.box) { EL.box.remove(); EL.box = null; }
+    open();
+  }
+
   /* ---------- chế độ gọi (nói chuyện liên tục) ---------- */
   var callOn = false, misses = 0;
   var talkBtn = panel.querySelector('.ntc-talk');
@@ -511,7 +562,7 @@
   panel.querySelector('.ntc-close').addEventListener('click', close);
   form.addEventListener('submit', function (e) { e.preventDefault(); stopListen(); ask(input.value, false); });
   spkBtn.addEventListener('click', function () { setAutoSpeak(!autoSpeak); });
-  callBtn.addEventListener('click', startCall);
+  callBtn.addEventListener('click', function () { if (CFG.elevenAgentId) openAICall(); else startCall(); });
   panel.querySelector('.ntc-hang').addEventListener('click', endCall);
   talkBtn.addEventListener('click', function () {
     if (recActive) { stopListen(); callState('idle', 'Đã dừng. Bấm “Bấm để nói” để hỏi tiếp.'); return; }
