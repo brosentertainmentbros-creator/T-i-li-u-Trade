@@ -6,14 +6,18 @@
  * Triển khai: Deploy → New deployment → Web app → Execute as: Me, Who has access: Anyone.
  * Chỉ máy chủ Cloudflare biết địa chỉ web app này; không dán địa chỉ vào trang web.
  */
+var SPREADSHEET_ID = '1YenuLznJUZZtbeBqJNvIC2RBz74QNKDzo5KWua-g754'; // Sheet "Nghề Trader - Khách hàng từ web"
 var SHEET_NAME = 'Khách hàng';
 var HEADERS = ['Mã phiên', 'Bắt đầu', 'Cập nhật', 'Kênh', 'Tên', 'SĐT / Zalo', 'Khu vực',
   'Kinh nghiệm', 'Thị trường quan tâm', 'Sản phẩm quan tâm', 'Nhu cầu / khó khăn', 'Tóm tắt',
   'Đồng ý liên hệ', 'Trạng thái', 'Ghi chú'];
+/** Chạy hàm này 1 lần trong trình soạn thảo để cấp quyền và tạo dòng tiêu đề. */
+function setup() { sheet_(); }
+
 var FIELD_COL = { name: 5, contact: 6, location: 7, experience: 8, markets: 9, interest: 10, need: 11, summary: 12, consent: 13 };
 
 function sheet_() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   var sh = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
   if (sh.getLastRow() === 0) {
     sh.appendRow(HEADERS);
