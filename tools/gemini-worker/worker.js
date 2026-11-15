@@ -96,20 +96,36 @@ async function chat(env, data) {
   const models = env.CHAT_MODEL ? [env.CHAT_MODEL] : CHAT_MODELS;
   let last = null; const errors = [];
   for (const model of models) {
-    const r = await fetch(`${API}/v1beta/models/${model}:generateContent`, {
-      method: 'POST',
-      headers: { 'x-goog-api-key': env.GEMINI_API_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        systemInstruction: { parts: [{ text: CHAT_PROMPT }] },
-        contents,
-        generationConfig: { maxOutputTokens: 600, temperature: 0.7 },
-      }),
-    });
+    // tư vấn chat không cần "suy nghĩ" lâu: hạ mức suy nghĩ để trả lời nhanh
+    const variants = [{ thinkingConfig: { thinkingLevel: 'low' } }, {}];
+    let r = null, t0 = Date.now();
+    for (const extra of variants) {
+      const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), 15000);
+      try {
+        r = await fetch(`${API}/v1beta/models/${model}:generateContent`, {
+          method: 'POST', signal: ctl.signal,
+          headers: { 'x-goog-api-key': env.GEMINI_API_KEY, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: CHAT_PROMPT }] },
+            contents,
+            generationConfig: { maxOutputTokens: 800, temperature: 0.7, ...extra },
+          }),
+        });
+      } catch (e) { r = null; errors.push({ model, status: 'timeout', ms: Date.now() - t0, detail: String(e).slice(0, 80) }); }
+      clearTimeout(timer);
+      if (!r) break;                                   // quá 15 giây: chuyển model khác
+      if (r.status === 400 && extra.thinkingConfig) {   // model không hỗ trợ mức suy nghĩ: thử lại không có
+        const d = (await r.clone().text());
+        if (/thinking/i.test(d)) { errors.push({ model, status: 400, detail: 'no thinkingLevel' }); continue; }
+      }
+      break;
+    }
+    if (!r) { last = { status: 504, body: { error: 'timeout', errors } }; continue; }
     if (r.ok) {
       const j = await r.json();
       const parts = (j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts) || [];
       const reply = parts.filter(p => p.text && !p.thought).map(p => p.text).join('').trim();
-      if (reply) return { status: 200, body: { reply, model } };
+      if (reply) return { status: 200, body: { reply, model, ms: Date.now() - t0 } };
       last = { status: 502, body: { error: 'no reply', model } };
     } else {
       const detail = (await r.text()).slice(0, 300); errors.push({ model, status: r.status, detail });
