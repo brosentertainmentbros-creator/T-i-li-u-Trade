@@ -156,6 +156,10 @@
   "a": "Dạ, em ghi nhận câu hỏi của anh/chị. Phần này chuyên viên bên em sẽ trả lời **chính xác và chi tiết hơn** qua [Nhóm Zalo hỗ trợ](https://zalo.me/g/pflrrz190) hoặc [gọi 0905 890 399](tel:0905890399).\nTrong lúc đó, anh/chị đang quan tâm **học bài bản**, dùng **Bot AI**, hay **kiểm chứng kết quả** trước ạ?"
  },
  {
+  "id": "barge_ack",
+  "a": "Dạ, em nghe đây, anh/chị cứ nói ạ."
+ },
+ {
   "id": "welcome",
   "a": "Chào anh/chị! Em là tư vấn viên của **Nghề Trader**.\nAnh/chị đang quan tâm **học giao dịch bài bản**, công cụ **Bot AI**, hay muốn **kiểm chứng kết quả qua PassView** ạ? Anh/chị cứ gõ câu hỏi, hoặc bấm **📞** để nói chuyện trực tiếp với em."
  },

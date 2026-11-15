@@ -1,4 +1,4 @@
-# Giọng đọc chatbot (VieNeu-TTS, giọng Hải Đăng)
+# Giọng đọc chatbot (VieNeu-TTS, giọng Kim Thanh, nữ miền Nam)
 
 Chatbot phát file giọng tạo sẵn trong `thu-vien-tai-lieu-github/assets/voice/`.
 Thiếu file nào thì chatbot tự dùng giọng của trình duyệt. Không gọi dịch vụ trả phí nào.
@@ -9,7 +9,7 @@ Thiếu file nào thì chatbot tự dùng giọng của trình duyệt. Không g
 pip install vieneu
 pip install onnxruntime==1.22.1     # nếu báo lỗi đường dẫn/symlink của onnxruntime
 node tools/vieneu/export_answers.js > tools/vieneu/answers.json
-python3 tools/vieneu/make_voice.py tools/vieneu/answers.json thu-vien-tai-lieu-github/assets/voice --voice "Hải Đăng"
+python3 tools/vieneu/make_voice.py tools/vieneu/answers.json thu-vien-tai-lieu-github/assets/voice --voice "Kim Thanh"
 ```
 
 - Chỉ câu nào đổi nội dung mới được tạo lại (so mã hash trong `manifest.json`).

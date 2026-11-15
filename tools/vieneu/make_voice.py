@@ -11,7 +11,7 @@ from vi_normalize import sentences
 
 ap = argparse.ArgumentParser()
 ap.add_argument('answers'); ap.add_argument('out')
-ap.add_argument('--voice', default='Hải Đăng'); ap.add_argument('--only', default='')
+ap.add_argument('--voice', default='Kim Thanh'); ap.add_argument('--only', default='')
 args = ap.parse_args()
 
 os.makedirs(args.out, exist_ok=True)

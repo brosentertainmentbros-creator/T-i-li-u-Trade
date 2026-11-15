@@ -1,212 +1,217 @@
 {
  "bot_identity": {
   "file": "bot_identity.mp3",
-  "hash": "9c2d59e23627",
-  "sec": 16.4
+  "hash": "ca99c41fd7c7",
+  "sec": 24.8
  },
  "human": {
   "file": "human.mp3",
-  "hash": "57fc7113edfd",
-  "sec": 12.7
+  "hash": "f0b6242120de",
+  "sec": 17.5
  },
  "price": {
   "file": "price.mp3",
-  "hash": "66019cc507ab",
-  "sec": 20.0
+  "hash": "476e5b0aff3b",
+  "sec": 29.4
  },
  "profit": {
   "file": "profit.mp3",
-  "hash": "989c5eb8c7d8",
-  "sec": 24.9
+  "hash": "3673db01a366",
+  "sec": 36.4
  },
  "class": {
   "file": "class.mp3",
-  "hash": "b968f2734a8a",
-  "sec": 17.8
+  "hash": "7003760d472c",
+  "sec": 24.1
  },
  "self_vs_mentor": {
   "file": "self_vs_mentor.mp3",
-  "hash": "b9c8bc5d052e",
-  "sec": 14.9
+  "hash": "697863e21814",
+  "sec": 23.5
  },
  "bot_compare": {
   "file": "bot_compare.mp3",
-  "hash": "93d29f4579f9",
-  "sec": 15.5
+  "hash": "19a9ef111e36",
+  "sec": 24.1
  },
  "bot_ai": {
   "file": "bot_ai.mp3",
-  "hash": "43e587b7f3da",
-  "sec": 15.8
+  "hash": "85ba9d00fad6",
+  "sec": 24.8
  },
  "passview": {
   "file": "passview.mp3",
-  "hash": "7531ea2b2595",
-  "sec": 12.8
+  "hash": "2c99a742969f",
+  "sec": 19.1
  },
  "trial": {
   "file": "trial.mp3",
-  "hash": "b9eed225e110",
-  "sec": 9.4
+  "hash": "2b8cd84219c7",
+  "sec": 13.0
  },
  "zalo": {
   "file": "zalo.mp3",
-  "hash": "115e985c822b",
-  "sec": 7.8
+  "hash": "acb3c25ea6ce",
+  "sec": 11.3
  },
  "reports": {
   "file": "reports.mp3",
-  "hash": "35dfe162c97a",
-  "sec": 10.5
+  "hash": "366dfa1967d9",
+  "sec": 15.5
  },
  "news": {
   "file": "news.mp3",
-  "hash": "e3f72e0f3ff5",
-  "sec": 12.4
+  "hash": "35e6cd681f64",
+  "sec": 19.4
  },
  "contact": {
   "file": "contact.mp3",
-  "hash": "cddc88defbd7",
-  "sec": 18.1
+  "hash": "20759211633e",
+  "sec": 25.7
  },
  "about": {
   "file": "about.mp3",
-  "hash": "9664c2466147",
-  "sec": 17.4
+  "hash": "53a6e4e7949f",
+  "sec": 24.9
  },
  "method": {
   "file": "method.mp3",
-  "hash": "15ffecc1c0f8",
-  "sec": 13.8
+  "hash": "f53cf509ae4c",
+  "sec": 19.5
  },
  "risk": {
   "file": "risk.mp3",
-  "hash": "6d54bb116305",
-  "sec": 20.0
+  "hash": "373062ec4956",
+  "sec": 27.2
  },
  "forex": {
   "file": "forex.mp3",
-  "hash": "105a738ff6df",
-  "sec": 16.6
+  "hash": "4b53f07ed9b7",
+  "sec": 23.1
  },
  "beginner": {
   "file": "beginner.mp3",
-  "hash": "68deb17b029c",
-  "sec": 18.7
+  "hash": "081209eff1fe",
+  "sec": 27.3
  },
  "videos": {
   "file": "videos.mp3",
-  "hash": "f5ae3f7b20d8",
-  "sec": 10.9
+  "hash": "b5d6cf9adf6c",
+  "sec": 15.2
  },
  "candle_basic": {
   "file": "candle_basic.mp3",
-  "hash": "ef28252b75de",
-  "sec": 16.3
+  "hash": "9269c1b63d7d",
+  "sec": 23.1
  },
  "candle_list": {
   "file": "candle_list.mp3",
-  "hash": "763ae70c4348",
-  "sec": 18.2
+  "hash": "6785235c0aec",
+  "sec": 26.7
  },
  "inv_hammer": {
   "file": "inv_hammer.mp3",
-  "hash": "63417b4e6afb",
-  "sec": 12.0
+  "hash": "63110b0b4873",
+  "sec": 18.0
  },
  "hammer": {
   "file": "hammer.mp3",
-  "hash": "1b2c85176b3a",
-  "sec": 14.4
+  "hash": "26c2d76fe2a9",
+  "sec": 21.4
  },
  "hanging": {
   "file": "hanging.mp3",
-  "hash": "46c5d628a4cf",
-  "sec": 10.0
+  "hash": "15419d9d438b",
+  "sec": 14.2
  },
  "shooting": {
   "file": "shooting.mp3",
-  "hash": "387795fd4d26",
-  "sec": 11.3
+  "hash": "6d6cf90bb16f",
+  "sec": 17.4
  },
  "doji": {
   "file": "doji.mp3",
-  "hash": "0f0baca22aa3",
-  "sec": 11.8
+  "hash": "75d90ccc778d",
+  "sec": 18.1
  },
  "engulf_up": {
   "file": "engulf_up.mp3",
-  "hash": "a77313549050",
-  "sec": 11.1
+  "hash": "ce1874ca9f4a",
+  "sec": 16.1
  },
  "engulf_down": {
   "file": "engulf_down.mp3",
-  "hash": "ffa38f265b9d",
-  "sec": 10.6
+  "hash": "84b1a61b65c8",
+  "sec": 15.4
  },
  "engulf": {
   "file": "engulf.mp3",
-  "hash": "b3aa8445fcd8",
-  "sec": 12.6
+  "hash": "e9e447e237e8",
+  "sec": 18.8
  },
  "morning": {
   "file": "morning.mp3",
-  "hash": "2d5249e47cd3",
-  "sec": 12.7
+  "hash": "d9bc462195a5",
+  "sec": 19.5
  },
  "evening": {
   "file": "evening.mp3",
-  "hash": "a8f4461202c9",
-  "sec": 13.5
+  "hash": "d98071e43ed6",
+  "sec": 20.0
  },
  "thanks": {
   "file": "thanks.mp3",
-  "hash": "b817f7b2971f",
-  "sec": 6.2
+  "hash": "9228e98bae2b",
+  "sec": 9.3
  },
  "welcome": {
   "file": "welcome.mp3",
-  "hash": "0ff58a3bdbd9",
-  "sec": 11.1
+  "hash": "1337e24610a8",
+  "sec": 17.1
  },
  "fallback": {
   "file": "fallback.mp3",
-  "hash": "bb7a914c4a5a",
-  "sec": 18.5
+  "hash": "72356b13de5a",
+  "sec": 26.5
  },
  "greet": {
   "file": "greet.mp3",
-  "hash": "d54fe64f9100",
-  "sec": 3.0
+  "hash": "2a1006c69e44",
+  "sec": 4.7
  },
  "trust": {
   "file": "trust.mp3",
-  "hash": "2097b70543de",
-  "sec": 16.5
+  "hash": "630a36494b66",
+  "sec": 24.1
  },
  "fb_capital": {
   "file": "fb_capital.mp3",
-  "hash": "7e9c1bd0fe9c",
-  "sec": 16.3
+  "hash": "61ca51d070bb",
+  "sec": 26.1
  },
  "fb_busy": {
   "file": "fb_busy.mp3",
-  "hash": "a3fa08d4d985",
-  "sec": 14.0
+  "hash": "29b133df0800",
+  "sec": 21.2
  },
  "fb_loss": {
   "file": "fb_loss.mp3",
-  "hash": "23f47f148303",
-  "sec": 16.5
+  "hash": "248d9772c426",
+  "sec": 25.5
  },
  "fb_trust": {
   "file": "fb_trust.mp3",
-  "hash": "282870bb7a81",
-  "sec": 15.8
+  "hash": "ece32a6d6f18",
+  "sec": 23.6
  },
  "fb_generic2": {
   "file": "fb_generic2.mp3",
-  "hash": "7fb52803bb83",
-  "sec": 15.0
+  "hash": "1c05e41badb3",
+  "sec": 21.5
+ },
+ "barge_ack": {
+  "file": "barge_ack.mp3",
+  "hash": "5447d3606756",
+  "sec": 3.2
  }
 }

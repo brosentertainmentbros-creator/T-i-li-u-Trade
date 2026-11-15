@@ -1,6 +1,6 @@
 /*!
  * Trợ lý Nghề Trader — chatbot tự động + giọng nói (nghe & đọc tiếng Việt)
- * Giọng đọc: file tạo sẵn bằng VieNeu-TTS (giọng Hải Đăng) trong assets/voice/, thiếu file thì dùng giọng trình duyệt.
+ * Giọng đọc: file tạo sẵn bằng VieNeu-TTS (giọng Kim Thanh, nữ miền Nam) trong assets/voice/, thiếu file thì dùng giọng trình duyệt.
  * Chạy hoàn toàn trên trình duyệt, không cần máy chủ.
  * Muốn nối với AI thật sau này: đặt window.NT_CHATBOT_CONFIG = { aiEndpoint: "https://..." }
  * trước khi nạp file này. Endpoint nhận POST {message, history} và trả về {reply}.
@@ -484,18 +484,26 @@
   var rec = null, recActive = false;
   function listen(onFinal, onEnd) {
     if (!SR) return false;
-    try { if (rec) rec.abort(); } catch (e) {}
-    rec = new SR(); rec.lang = 'vi-VN'; rec.interimResults = true; rec.maxAlternatives = 1; rec.continuous = false;
-    var finalText = '';
-    rec.onresult = function (ev) {
-      var interim = '';
-      for (var i = ev.resultIndex; i < ev.results.length; i++) {
-        if (ev.results[i].isFinal) finalText += ev.results[i][0].transcript; else interim += ev.results[i][0].transcript;
+    try { if (rec) { if (rec._cancel) rec._cancel(); rec.abort(); } } catch (e) {}
+    var me = new SR(); rec = me; me.lang = 'vi-VN'; me.interimResults = true; me.maxAlternatives = 1; me.continuous = true;
+    var finalText = '', heard = false, silenceT = null, startT = null, cancelled = false;
+    me._cancel = function () { cancelled = true; };
+    function endSoon(ms) { clearTimeout(silenceT); silenceT = setTimeout(function () { try { me.stop(); } catch (e) {} }, ms); }
+    // chưa nói gì thì chờ tối đa 12 giây; đã nói thì im 1,1 giây là chốt câu
+    startT = setTimeout(function () { if (!heard) { try { me.stop(); } catch (e) {} } }, 12000);
+    me.onresult = function (ev) {
+      var interim = ''; finalText = '';
+      for (var i = 0; i < ev.results.length; i++) {
+        if (ev.results[i].isFinal) finalText += ev.results[i][0].transcript + ' '; else interim += ev.results[i][0].transcript;
       }
-      input.value = (finalText + interim).trim();
-      if (callOn) callStatus.textContent = '“' + input.value + '”';
+      var t = (finalText + interim).replace(/\s+/g, ' ').trim();
+      if (!t) return;
+      heard = true; clearTimeout(startT);
+      input.value = t;
+      if (callOn) { callState('listen', '“' + t + '”'); }
+      endSoon(interim ? 1400 : 1100);
     };
-    rec.onerror = function (ev) {
+    me.onerror = function (ev) {
       var e = ev.error;
       if (e === 'not-allowed' || e === 'service-not-allowed') {
         addBot(INAPP ? INAPP_MSG : 'Em chưa được phép dùng **micro**.\n- Máy tính: bấm biểu tượng ổ khóa cạnh thanh địa chỉ, cho phép micro.\n- Điện thoại: vào Cài đặt của trình duyệt (Chrome/Safari), cho phép micro cho trang này.\nRồi anh/chị thử lại nhé.');
@@ -506,15 +514,17 @@
         addBot('Nhận giọng nói cần **kết nối mạng** và trình duyệt Chrome/Edge/Safari. Anh/chị kiểm tra mạng hoặc đổi trình duyệt rồi thử lại nhé.'); endCall();
       }
     };
-    rec.onend = function () {
-      recActive = false; micBtn.classList.remove('ntc-rec');
-      var t = finalText.trim() || input.value.trim();
+    me.onend = function () {
+      clearTimeout(silenceT); clearTimeout(startT);
+      if (rec === me) { recActive = false; micBtn.classList.remove('ntc-rec'); }
+      if (cancelled) return;                       // bị dừng chủ động: không gửi câu dở
+      var t = heard ? input.value.trim() : '';
       if (t) onFinal(t); else if (onEnd) onEnd();
     };
-    try { rec.start(); recActive = true; micBtn.classList.add('ntc-rec'); } catch (e) { return false; }
+    try { me.start(); recActive = true; micBtn.classList.add('ntc-rec'); } catch (e) { return false; }
     return true;
   }
-  function stopListen() { try { if (rec) rec.abort(); } catch (e) {} recActive = false; micBtn.classList.remove('ntc-rec'); }
+  function stopListen() { try { if (rec) { if (rec._cancel) rec._cancel(); rec.abort(); } } catch (e) {} recActive = false; micBtn.classList.remove('ntc-rec'); }
   if (!SR) { micBtn.title = 'Trình duyệt này chưa hỗ trợ nói. Hãy dùng Chrome hoặc Edge.'; micBtn.style.opacity = .45; }
 
   /* ---------- trả lời ---------- */
@@ -554,10 +564,11 @@
 
   /* ---------- nói chen (barge-in): khách nói là bot dừng ---------- */
   var barge = null;
+  var BARGE_ACK = 'Dạ, em nghe đây, anh/chị cứ nói ạ.';
   var BARGE_CMDS = ['dừng lại', 'dừng', 'thôi', 'khoan', 'không phải', 'sai rồi', 'khoan đã', 'cho hỏi', 'nhưng mà', 'thế còn', 'vậy còn', 'ý tôi là', 'ý em là', 'em ơi'];
   function lowVi(t) { return ' ' + String(t || '').toLowerCase().normalize('NFC').replace(/[^\p{L}\p{N}]+/gu, ' ').trim() + ' '; }
   function wordsOf(t) { return norm(t).trim().split(' ').filter(Boolean); }
-  function stopBarge() { if (barge) { var r = barge.rec; barge = null; try { r.abort(); } catch (e) {} } }
+  function stopBarge() { if (barge) { var r = barge.rec; clearTimeout(barge.timer); barge = null; try { r.abort(); } catch (e) {} } }
   function startBarge(answerText) {
     if (!SR || !callOn) return;
     stopBarge();
@@ -574,9 +585,9 @@
         for (i = ev.resultIndex; i < ev.results.length; i++) {
           var seg = ev.results[i][0].transcript, ws = wordsOf(seg), q = lowVi(seg);
           if (!ws.length) continue;
-          var mine = ws.filter(function (w) { return own[w]; }).length / ws.length;
+          var fresh = ws.filter(function (w) { return !own[w]; }).length;   // từ không có trong câu bot đang đọc
           var cmd = cmds.some(function (c) { return q.indexOf(' ' + c + ' ') > -1; });
-          if (cmd || (ws.length >= 2 && mine < 0.5)) { st.hit = true; st.from = i; break; }
+          if (cmd || (fresh >= 2 && fresh / ws.length >= 0.25) || (fresh >= 1 && ws.length <= 3)) { st.hit = true; st.from = i; break; }
         }
         if (!st.hit) return;
         stopVoice();                               // bot im ngay
@@ -584,7 +595,8 @@
       }
       for (i = st.from; i < ev.results.length; i++) t += ev.results[i][0].transcript + ' ';
       st.text = t.trim(); input.value = st.text; callStatus.textContent = '“' + st.text + '”';
-      if (ev.results[ev.results.length - 1].isFinal) finishBarge(st);
+      clearTimeout(st.timer);                       // khách im 1,1 giây là chốt câu
+      st.timer = setTimeout(function () { finishBarge(st); }, ev.results[ev.results.length - 1].isFinal ? 700 : 1100);
     };
     r.onerror = function () {};
     r.onend = function () { if (barge === st) { if (st.hit) finishBarge(st); else barge = null; } };
@@ -592,8 +604,15 @@
   }
   function finishBarge(st) {
     if (barge !== st) return;
-    barge = null; try { st.rec.abort(); } catch (e) {}
+    barge = null; clearTimeout(st.timer); try { st.rec.abort(); } catch (e) {}
     var t = st.text.trim();
+    var onlyCmd = lowVi(t).trim().split(' ').length <= 3 && BARGE_CMDS.some(function (c) { return lowVi(t).trim() === c || lowVi(t).trim().indexOf(c) === 0 && lowVi(t).trim().length <= c.length + 4; });
+    if (t && onlyCmd) {                           // khách chỉ nói "khoan", "thôi"... -> dạ rồi nghe tiếp
+      addUser(t); input.value = '';
+      addBot(BARGE_ACK, { id: 'barge_ack' }); callState('speak', 'Dạ, em nghe…');
+      say('barge_ack', BARGE_ACK, function () { if (callOn) setTimeout(callLoop, 200); });
+      return;
+    }
     if (t) { callState('think', '“' + t + '”'); ask(t, true, function () { if (callOn) setTimeout(callLoop, 300); }); callState('speak', 'Em đang trả lời… anh/chị cứ nói chen nếu cần.'); }
     else callLoop();
   }
