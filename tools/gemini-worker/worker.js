@@ -3,12 +3,14 @@
  *
  *  POST /chat        { message, history:[{role:"user"|"bot", text}] }  ->  { reply }
  *  POST /live-token  {}  ->  { token, model, ws }   (vé dùng 1 lần để nói chuyện trực tiếp, hết hạn sau ít phút)
+ *  POST /lead       { sessionId, channel, transcript:[{role,text}] } -> rút thông tin khách, ghi Google Sheet
  *  GET  /            kiểm tra máy chủ còn sống
  *
  * Biến môi trường trên Cloudflare (Settings → Variables and Secrets):
  *   GEMINI_API_KEY  (Secret, bắt buộc)  — khóa từ aistudio.google.com. KHÔNG dán khóa vào web.
  *   CHAT_MODEL      (tùy chọn) — mặc định thử lần lượt: gemini-3.8-flash, gemini-3.5-flash, gemini-2.5-flash
  *   LIVE_MODEL      (tùy chọn) — mặc định: gemini-3.8-live
+ *   SHEET_URL       (Text)     — địa chỉ web app Google Apps Script để lưu khách vào Google Sheet
  */
 
 const ALLOWED_ORIGINS = ['https://brosentertainmentbros-creator.github.io'];
@@ -33,6 +35,13 @@ KIẾN THỨC
 
 NGHE NHẦM
 Khách hay nói hoặc bị nghe thành "pát viu", "pass vi", "bát viu" = PassView; "trết pro" = TradePro; "bót ây ai" = Bot AI; "da lô" = Zalo. Tự hiểu đúng, không bắt khách nói lại.
+
+TÌM HIỂU KHÁCH (để tư vấn đúng và để chuyên viên liên hệ)
+- Trong lúc trò chuyện, khéo léo hỏi dần từng ý, MỖI LƯỢT TỐI ĐA MỘT CÂU HỎI, lồng vào nội dung tư vấn, không hỏi dồn như điền phiếu:
+  tên để tiện xưng hô; khu vực đang sống; đã giao dịch chưa và bao lâu; đang quan tâm thị trường nào (vàng, Forex, chứng khoán, tiền số…); khó khăn lớn nhất.
+- Khi khách đã quan tâm thật sự, mời để lại số điện thoại hoặc Zalo, và NÓI RÕ là để chuyên viên Nghề Trader liên hệ tư vấn chi tiết. Ví dụ: "Anh/chị để lại số Zalo, em nhờ chuyên viên gửi tài liệu và tư vấn kỹ hơn cho mình nhé?"
+- Khách đọc số thì nhắc lại để xác nhận. Khách không muốn cho thì vui vẻ bỏ qua, không hỏi lại.
+- Gọi khách bằng tên khi đã biết tên.
 
 QUY TẮC BẮT BUỘC
 - KHÔNG hứa hay cam kết lợi nhuận, không nói con số lãi, không nói "chắc chắn", "không rủi ro", "thu nhập đảm bảo". Khách hỏi có lời không: nói thật giao dịch có rủi ro, có thể mất tiền; Nghề Trader giúp có phương pháp, kỷ luật, quản trị rủi ro; mời khách tự kiểm chứng qua PassView và xem thử.
@@ -136,6 +145,47 @@ async function chat(env, data) {
   return last;
 }
 
+const LEAD_PROMPT = `Đọc đoạn hội thoại tư vấn giữa khách và tư vấn viên Nghề Trader, rút ra thông tin KHÁCH TỰ NÓI. Không đoán, không suy diễn; chỉ ghi điều khách nói rõ. Thiếu thì để chuỗi rỗng.
+Trả về JSON với các khóa:
+name (tên khách), contact (số điện thoại hoặc Zalo, chỉ chữ số và dấu +), location (khu vực/tỉnh thành), experience (đã giao dịch chưa, bao lâu), markets (thị trường quan tâm), interest (sản phẩm quan tâm: Lớp học TradePro / Bot AI TradePro / PassView / khác), need (nhu cầu hoặc khó khăn chính), summary (tóm tắt 1-2 câu nội dung cuộc trò chuyện), consent ("Có" nếu khách tự đưa số điện thoại/Zalo để được liên hệ, ngược lại để rỗng).
+Không ghi số tài khoản, mật khẩu, mã OTP, số thẻ dù khách có nói.`;
+
+async function lead(env, data) {
+  if (!env.SHEET_URL) return { status: 200, body: { ok: false, skipped: 'no sheet' } };
+  const sessionId = String(data.sessionId || '').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 40);
+  const tr = (Array.isArray(data.transcript) ? data.transcript : []).slice(-40)
+    .map(t => ((t && t.role) === 'user' ? 'Khách: ' : 'Tư vấn viên: ') + String((t && t.text) || '').slice(0, 600)).join('\n');
+  if (!sessionId || !/Khách: \S/.test(tr)) return { status: 400, body: { ok: false, error: 'empty' } };
+  const models = env.CHAT_MODEL ? [env.CHAT_MODEL] : ['gemini-3.5-flash', 'gemini-3.8-flash'];
+  let fields = null, lastErr = null;
+  for (const model of models) {
+    const r = await fetch(`${API}/v1beta/models/${model}:generateContent`, {
+      method: 'POST',
+      headers: { 'x-goog-api-key': env.GEMINI_API_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: LEAD_PROMPT }] },
+        contents: [{ role: 'user', parts: [{ text: tr }] }],
+        generationConfig: { responseMimeType: 'application/json', temperature: 0, maxOutputTokens: 600 },
+      }),
+    });
+    if (!r.ok) { lastErr = r.status; if (r.status === 429) break; continue; }
+    const j = await r.json();
+    const txt = ((j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts) || []).filter(p => p.text && !p.thought).map(p => p.text).join('');
+    try { fields = JSON.parse(txt.replace(/^```json|```$/g, '').trim()); } catch { fields = null; }
+    if (fields) break;
+  }
+  if (!fields) return { status: 502, body: { ok: false, error: 'extract', upstream: lastErr } };
+  if (fields.contact) fields.contact = String(fields.contact).replace(/[^\d+ ]/g, '').trim();
+  const channel = data.channel === 'call' ? 'Gọi' : 'Chat';
+  const r2 = await fetch(env.SHEET_URL, {
+    method: 'POST', redirect: 'follow',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ sessionId, channel, fields }),
+  });
+  let res = null; try { res = await r2.json(); } catch { res = { status: r2.status }; }
+  return { status: 200, body: { ok: !!(res && res.ok), sheet: res, fields } };
+}
+
 async function liveToken(env) {
   const now = Date.now();
   const models = env.LIVE_MODEL ? [env.LIVE_MODEL] : LIVE_MODELS;
@@ -186,14 +236,14 @@ export default {
     const origin = request.headers.get('Origin') || '';
     const path = new URL(request.url).pathname.replace(/\/+$/, '') || '/';
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors(origin) });
-    if (request.method === 'GET' && path === '/') return json({ ok: true, service: 'nghe-trader-gemini', key: !!env.GEMINI_API_KEY }, 200, origin);
+    if (request.method === 'GET' && path === '/') return json({ ok: true, service: 'nghe-trader-gemini', key: !!env.GEMINI_API_KEY, sheet: !!env.SHEET_URL }, 200, origin);
     if (request.method !== 'POST') return json({ error: 'POST only' }, 405, origin);
     if (!ALLOWED_ORIGINS.includes(origin)) return json({ error: 'forbidden' }, 403, origin); // chặn web khác xài ké
     if (!env.GEMINI_API_KEY) return json({ error: 'missing key' }, 500, origin);
     let data = {};
     try { data = await request.json(); } catch { /* body rỗng cũng được với /live-token */ }
     try {
-      const out = path === '/live-token' ? await liveToken(env) : await chat(env, data);
+      const out = path === '/live-token' ? await liveToken(env) : path === '/lead' ? await lead(env, data) : await chat(env, data);
       return json(out.body, out.status, origin);
     } catch (e) {
       return json({ error: 'network', detail: String(e).slice(0, 200) }, 502, origin);

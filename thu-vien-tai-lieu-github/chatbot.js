@@ -17,7 +17,8 @@
     website: 'https://giaiphapgiaodich.com/',
     home: './',
     aiEndpoint: 'https://nghetrader-ai.tinhcaemloan1.workers.dev/chat',
-    liveEndpoint: 'https://nghetrader-ai.tinhcaemloan1.workers.dev/live-token'
+    liveEndpoint: 'https://nghetrader-ai.tinhcaemloan1.workers.dev/live-token',
+    leadEndpoint: 'https://nghetrader-ai.tinhcaemloan1.workers.dev/lead'
   }, window.NT_CHATBOT_CONFIG || {});
   if (window.SITE_CONFIG && window.SITE_CONFIG.zalo) CFG.zalo = window.SITE_CONFIG.zalo;
 
@@ -356,7 +357,7 @@
     '<form class="ntc-foot"><button class="ntc-ib ntc-mic" type="button" title="Nói để hỏi" aria-label="Nói để hỏi">' + IC.mic + '</button>' +
     '<input type="text" placeholder="Nhập câu hỏi..." aria-label="Nhập câu hỏi" maxlength="300" autocomplete="off">' +
     '<button class="ntc-ib ntc-send" type="submit" title="Gửi" aria-label="Gửi">' + IC.send + '</button></form>' +
-    '<div class="ntc-note">Trợ lý ảo Nghề Trader · ' + NOTE + '</div>' +
+    '<div class="ntc-note">Trợ lý ảo Nghề Trader · ' + NOTE + '<br>Thông tin anh/chị chia sẻ (tên, số điện thoại…) được Nghề Trader lưu để liên hệ tư vấn.</div>' +
     '<div class="ntc-call" data-s="idle"><div class="ntc-orb"><img src="' + LOGO + '" alt=""></div><h4>Đang trò chuyện</h4><p class="ntc-cs">Bấm bắt đầu và nói câu hỏi của anh/chị.</p>' +
     '<button class="ntc-talk" type="button">' + IC.mic + ' Bấm để nói</button>' +
     '<button class="ntc-hang" type="button">' + IC.x + ' Kết thúc</button></div>';
@@ -578,7 +579,7 @@
     function finish(ans) {
       typing.remove();
       addBot(ans.a, { video: ans.video, id: ans.id }); setChips(ans.follow || STARTERS);
-      history.push({ role: 'bot', text: ans.a });
+      history.push({ role: 'bot', text: ans.a }); leadChannel = callOn && !GL ? 'call' : (GL ? 'call' : 'chat'); sendLead(false);
       if (byVoice && callOn) {
         say(ans.id, ans.a, function () { stopBarge(); if (cb) cb(); });
         startBarge(ans.a);                       // nghe trong lúc đang nói để khách nói chen
@@ -684,6 +685,28 @@
   }
   function endCall() { callOn = false; stopBarge(); stopListen(); stopVoice(); callBox.classList.remove('ntc-open'); callState('idle'); }
 
+  /* ---------- lưu thông tin khách (Google Sheet qua máy chủ) ---------- */
+  var SID = (function () {
+    try { var v = sessionStorage.getItem('nt_sid'); if (v) return v; v = Date.now().toString(36) + Math.random().toString(36).slice(2, 8); sessionStorage.setItem('nt_sid', v); return v; }
+    catch (e) { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+  })();
+  var leadT = null, leadSentCount = 0, leadChannel = 'chat';
+  function leadPayload() { return JSON.stringify({ sessionId: SID, channel: leadChannel, transcript: history.slice(-40) }); }
+  function userTurns() { return history.filter(function (h) { return h.role === 'user'; }).length; }
+  function sendLead(now) {
+    if (!CFG.leadEndpoint || userTurns() === 0 || userTurns() === leadSentCount) return;
+    clearTimeout(leadT);
+    leadT = setTimeout(function () {
+      if (userTurns() === leadSentCount) return;
+      leadSentCount = userTurns();
+      try { fetch(CFG.leadEndpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: leadPayload(), keepalive: true }).catch(function () {}); } catch (e) {}
+    }, now ? 0 : 2500);
+  }
+  window.addEventListener('pagehide', function () {
+    if (!CFG.leadEndpoint || userTurns() === 0 || userTurns() === leadSentCount || !navigator.sendBeacon) return;
+    leadSentCount = userTurns(); navigator.sendBeacon(CFG.leadEndpoint, new Blob([leadPayload()], { type: 'text/plain' }));
+  });
+
   /* ---------- gọi AI trực tiếp (Gemini Live): giọng tự nhiên, nói chen được ---------- */
   var GL = null;   // phiên gọi hiện tại
   var WORKLET = "class P extends AudioWorkletProcessor{constructor(){super();this.b=[];this.r=sampleRate/16000;this.acc=0}" +
@@ -721,6 +744,9 @@
     try { g.inCtx && g.inCtx.close(); g.out && g.out.close(); } catch (e) {}
     callOn = false; callBox.classList.remove('ntc-open'); glState('idle');
     talkBtn.style.display = '';
+    if (g.userText.trim()) history.push({ role: 'user', text: g.userText.trim() });
+    if (g.botText.trim()) history.push({ role: 'bot', text: g.botText.trim() });
+    leadChannel = 'call'; sendLead(true);
     if (reason) addBot(reason);
   }
   function glFlushTextFor(g) {
@@ -793,7 +819,7 @@
                 glPlay(pt.inlineData.data, rate); glState('speak', 'Em đang nói… anh/chị cứ nói chen nếu cần.');
               }
             });
-            if (sc.turnComplete) { glFlushText(); setTimeout(function () { if (GL === g && !g.sources.length) glState('listen', 'Em đang nghe…'); }, 400); }
+            if (sc.turnComplete) { glFlushText(); leadChannel = 'call'; sendLead(false); setTimeout(function () { if (GL === g && !g.sources.length) glState('listen', 'Em đang nghe…'); }, 400); }
           }
           if (m.goAway) glEnd('Cuộc gọi đã kết thúc. Anh/chị cần hỗ trợ thêm cứ bấm 📞 gọi lại nhé.');
         };
