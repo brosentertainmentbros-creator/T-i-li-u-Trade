@@ -218,6 +218,10 @@
 '.ntc-head .ntc-sp{flex:1}' +
 '.ntc-ib{width:36px;height:36px;border-radius:10px;border:1px solid #3c5670;background:#14293d;color:#eaf2fb;display:grid;place-items:center;cursor:pointer;padding:0}' +
 '.ntc-ib:hover{border-color:#daa94f}.ntc-ib.ntc-on{background:#daa94f;color:#161208;border-color:#daa94f}.ntc-ib svg{width:18px;height:18px}' +
+'.ntc-quick{display:flex;gap:8px;padding:9px 12px;background:#0a1624;border-bottom:1px solid #2a4056}' +
+'.ntc-quick a{display:flex;align-items:center;justify-content:center;gap:7px;border-radius:11px;padding:9px 12px;font-weight:800;font-size:14px;text-decoration:none}' +
+'.ntc-qcall{flex:1;background:#2fa866;color:#fff}.ntc-qcall:hover{background:#38bf75}.ntc-qcall svg{width:17px;height:17px}' +
+'.ntc-qzalo{background:#16304a;color:#eaf2fb;border:1px solid #3c5670}.ntc-qzalo:hover{border-color:#daa94f}' +
 '.ntc-body{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}' +
 '.ntc-msg{max-width:88%;padding:10px 13px;border-radius:15px;font-size:14.5px;line-height:1.5;word-wrap:break-word}' +
 '.ntc-msg p{margin:0 0 6px}.ntc-msg p:last-child{margin:0}.ntc-msg ul{margin:4px 0 6px;padding-left:18px}.ntc-msg li{margin:2px 0}' +
@@ -274,6 +278,7 @@
     '<button class="ntc-ib ntc-callbtn" type="button" title="Trò chuyện bằng giọng nói" aria-label="Trò chuyện bằng giọng nói">' + IC.phone + '</button>' +
     '<button class="ntc-ib ntc-spkbtn" type="button" title="Tự đọc to câu trả lời" aria-label="Bật/tắt đọc to câu trả lời" aria-pressed="false">' + IC.mute + '</button>' +
     '<button class="ntc-ib ntc-close" type="button" title="Đóng" aria-label="Đóng">' + IC.x + '</button></div>' +
+    '<div class="ntc-quick"><a class="ntc-qcall" href="tel:' + CFG.phone + '">' + IC.phone + ' Gọi ngay ' + CFG.phoneLabel + '</a><a class="ntc-qzalo" href="' + CFG.zalo + '" target="_blank" rel="noopener noreferrer">💬 Zalo</a></div>' +
     '<div class="ntc-body" aria-live="polite"></div>' +
     '<div class="ntc-chips"></div>' +
     '<form class="ntc-foot"><button class="ntc-ib ntc-mic" type="button" title="Nói để hỏi" aria-label="Nói để hỏi">' + IC.mic + '</button>' +
