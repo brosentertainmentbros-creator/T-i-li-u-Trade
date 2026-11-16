@@ -53,7 +53,7 @@
       follow: ['PassView là gì?', 'Quản trị rủi ro', 'Xem thử miễn phí'] },
 
     { id: 'trust', keys: [['co that khong', 4], ['that khong', 3], ['lua', 3], ['uy tin khong', 4], ['tin duoc khong', 4], ['kiem chung', 3], ['that hay gia', 4]],
-      a: 'Dạ anh/chị cẩn thận là rất đúng, thị trường này có nhiều nơi không minh bạch. Bên em không muốn anh/chị tin bằng lời, mà **tự kiểm chứng**: xem tài khoản thật qua **PassView**, xem thử video miễn phí, vào ' + ZALO + ' xem cộng đồng, hoặc gặp trực tiếp tại TMLabs Coffee.\nAnh/chị muốn kiểm chứng theo cách nào trước ạ?',
+      a: 'Dạ anh/chị cẩn thận là rất đúng, thị trường này có nhiều nơi không minh bạch. Bên em không muốn anh/chị tin bằng lời, mà **tự kiểm chứng**: xem tài khoản thật qua **PassView**, xem thử video miễn phí, vào ' + ZALO + ' xem cộng đồng, hoặc ghé văn phòng.\nAnh/chị muốn kiểm chứng theo cách nào trước ạ?',
       follow: ['PassView là gì?', 'Xem thử miễn phí', 'Liên hệ tư vấn'] },
 
     { id: 'class', keys: [['tradepro', 1], 'lop hoc', 'lop tradepro', 'lop hoc tradepro', 'khoa hoc', 'hoc trade', 'hoc giao dich', 'dao tao', 'muon hoc', 'hoc o dau', 'giao trinh', 'lo trinh'],
@@ -98,7 +98,7 @@
       follow: ['Báo cáo kết quả', 'Liên hệ tư vấn'] },
 
     { id: 'contact', keys: ['lien he', 'so dien thoai', 'sdt', 'hotline', 'goi dien', 'email', 'dia chi', 'van phong', 'tu van', 'gap truc tiep', ['o dau', 1]],
-      a: 'Anh/chị liên hệ Nghề Trader qua:\n- Điện thoại: ' + CALL + '\n- Email: [' + CFG.email + '](mailto:' + CFG.email + ')\n- ' + ZALO + '\n- Website: [giaiphapgiaodich.com](' + CFG.website + ')\n- Địa điểm: TMLabs Coffee, 84A Nguyễn Cửu Vân, Phường Gia Định, TP. Hồ Chí Minh.',
+      a: 'Anh/chị liên hệ Nghề Trader qua:\n- Điện thoại: ' + CALL + '\n- Email: [' + CFG.email + '](mailto:' + CFG.email + ')\n- ' + ZALO + '\n- Website: [giaiphapgiaodich.com](' + CFG.website + ')\n- Địa điểm: Văn phòng 84A Nguyễn Cửu Vân, Phường Gia Định, TP. Hồ Chí Minh.',
       follow: ['Học phí bao nhiêu?', 'Xem thử miễn phí'] },
 
     { id: 'about', keys: [['nghe trader', 3], 've nghe trader', 'gioi thieu', 'ben em', 'ben ban', 'cong ty', 'thuong hieu'],
@@ -194,7 +194,7 @@
       a: 'Dạ em rất hiểu cảm giác đó, phần lớn người mới thua lỗ không phải vì kém, mà vì **thiếu phương pháp và để cảm xúc quyết định**. Đây đúng là điều Lớp học TradePro tập trung khắc phục: lộ trình rõ ràng, có người kèm, và quản trị rủi ro chặt chẽ.\nAnh/chị chia sẻ thêm giúp em, anh/chị thường thua vì vào lệnh vội hay vì không cắt lỗ ạ?',
       follow: ['Lớp học TradePro là gì?', 'Quản trị rủi ro', 'Liên hệ tư vấn'] },
     { id: 'fb_trust', hint: ['that khong', 'tin', 'that su', 'that ko', 'kiem chung', 'review', 'danh gia', 'chung minh'],
-      a: 'Dạ anh/chị cẩn thận là rất đúng, thị trường này có nhiều nơi không minh bạch. Bên em không muốn anh/chị tin bằng lời, mà **tự kiểm chứng**: xem tài khoản thật qua **PassView**, xem thử video miễn phí, vào nhóm Zalo xem cộng đồng, hoặc gặp trực tiếp tại TMLabs Coffee.\nAnh/chị muốn kiểm chứng theo cách nào trước ạ?',
+      a: 'Dạ anh/chị cẩn thận là rất đúng, thị trường này có nhiều nơi không minh bạch. Bên em không muốn anh/chị tin bằng lời, mà **tự kiểm chứng**: xem tài khoản thật qua **PassView**, xem thử video miễn phí, vào nhóm Zalo xem cộng đồng, hoặc ghé văn phòng.\nAnh/chị muốn kiểm chứng theo cách nào trước ạ?',
       follow: ['PassView là gì?', 'Xem thử miễn phí', 'Liên hệ tư vấn'] },
     { id: 'fb_generic2', hint: [],
       a: 'Dạ, em ghi nhận câu hỏi của anh/chị. Phần này chuyên viên bên em sẽ trả lời **chính xác và chi tiết hơn** qua ' + ZALO + ' hoặc ' + CALL + '.\nTrong lúc đó, anh/chị đang quan tâm **học bài bản**, dùng **Bot AI**, hay **kiểm chứng kết quả** trước ạ?',
