@@ -17,7 +17,7 @@ const ALLOWED_ORIGINS = ['https://brosentertainmentbros-creator.github.io'];
 const API = 'https://generativelanguage.googleapis.com';
 // Gói miễn phí: Flash chỉ 20 lượt/ngày; Flash Lite 500 lượt/ngày; Gemma 14.400 lượt/ngày. Hết lượt model này thì tự sang model kế.
 const CHAT_MODELS = ['gemini-3.5-flash-lite', 'gemini-3.1-flash-lite', 'gemma-4-31b-it', 'gemini-3.8-flash', 'gemini-3.5-flash'];
-const LEAD_MODELS = ['gemma-4-31b-it', 'gemini-3.1-flash-lite', 'gemini-3.5-flash-lite', 'gemma-4-26b-it'];
+const LEAD_MODELS = ['gemini-3.1-flash-lite', 'gemini-3.5-flash-lite', 'gemma-4-31b-it'];
 
 // Gọi 1 model. Gemma không nhận systemInstruction / thinkingConfig / JSON mode nên ghép lời dặn vào tin nhắn đầu.
 async function gen(env, model, sys, contents, cfg, ms) {
