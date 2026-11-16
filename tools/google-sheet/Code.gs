@@ -8,13 +8,13 @@
  */
 var SPREADSHEET_ID = '1YenuLznJUZZtbeBqJNvIC2RBz74QNKDzo5KWua-g754'; // Sheet "Nghề Trader - Khách hàng từ web"
 var SHEET_NAME = 'Khách hàng';
-var HEADERS = ['Mã phiên', 'Bắt đầu', 'Cập nhật', 'Kênh', 'Tên', 'SĐT / Zalo', 'Khu vực',
+var HEADERS = ['Mã phiên', 'Bắt đầu', 'Cập nhật', 'Kênh', 'Tên', 'SĐT / Zalo', 'Tỉnh thành',
   'Kinh nghiệm', 'Thị trường quan tâm', 'Sản phẩm quan tâm', 'Nhu cầu / khó khăn', 'Tóm tắt',
-  'Đồng ý liên hệ', 'Trạng thái', 'Ghi chú'];
+  'Đồng ý liên hệ', 'Trạng thái', 'Ghi chú', 'Vốn dự kiến', 'Đánh giá / kỳ vọng'];
 /** Chạy hàm này 1 lần trong trình soạn thảo để cấp quyền và tạo dòng tiêu đề. */
 function setup() { sheet_(); }
 
-var FIELD_COL = { name: 5, contact: 6, location: 7, experience: 8, markets: 9, interest: 10, need: 11, summary: 12, consent: 13 };
+var FIELD_COL = { name: 5, contact: 6, location: 7, experience: 8, markets: 9, interest: 10, need: 11, summary: 12, consent: 13, capital: 16, expectation: 17 };
 
 function sheet_() {
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
@@ -26,6 +26,13 @@ function sheet_() {
     sh.setFrozenRows(1);
     sh.setColumnWidths(1, HEADERS.length, 150);
     sh.setColumnWidth(12, 320);
+  }
+  // Sheet cũ thiếu cột mới thì bổ sung tiêu đề (không đụng dữ liệu)
+  var head = sh.getRange(1, 1, 1, HEADERS.length);
+  var cur = head.getValues()[0];
+  if (cur.join('|') !== HEADERS.join('|')) {
+    head.setValues([HEADERS]).setFontWeight('bold').setBackground('#07111f').setFontColor('#f0c874');
+    sh.setColumnWidth(17, 320);
   }
   return sh;
 }

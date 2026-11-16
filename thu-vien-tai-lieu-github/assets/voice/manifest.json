@@ -14,11 +14,6 @@
   "hash": "476e5b0aff3b",
   "sec": 29.4
  },
- "profit": {
-  "file": "profit.mp3",
-  "hash": "3673db01a366",
-  "sec": 36.4
- },
  "class": {
   "file": "class.mp3",
   "hash": "7003760d472c",
@@ -28,21 +23,6 @@
   "file": "self_vs_mentor.mp3",
   "hash": "697863e21814",
   "sec": 23.5
- },
- "bot_compare": {
-  "file": "bot_compare.mp3",
-  "hash": "19a9ef111e36",
-  "sec": 24.1
- },
- "bot_ai": {
-  "file": "bot_ai.mp3",
-  "hash": "85ba9d00fad6",
-  "sec": 24.8
- },
- "passview": {
-  "file": "passview.mp3",
-  "hash": "2c99a742969f",
-  "sec": 19.1
  },
  "trial": {
   "file": "trial.mp3",
@@ -163,11 +143,6 @@
   "file": "thanks.mp3",
   "hash": "9228e98bae2b",
   "sec": 9.3
- },
- "welcome": {
-  "file": "welcome.mp3",
-  "hash": "1337e24610a8",
-  "sec": 17.1
  },
  "fallback": {
   "file": "fallback.mp3",

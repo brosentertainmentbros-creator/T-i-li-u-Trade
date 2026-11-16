@@ -27,7 +27,7 @@
   var INAPP = /Zalo|FBAN|FBAV|FB_IAB|FBIOS|Instagram|musical_ly|TikTok|Bytedance|BytedanceWebview|Line\//i.test(UA);
   var IOS = /iPhone|iPad|iPod/i.test(UA);
   var INAPP_MSG = 'Anh/chị đang mở trang **bên trong ứng dụng** (Zalo, Facebook hoặc TikTok). Các ứng dụng này thường **chặn micro**, nên em không nghe được.\nAnh/chị bấm dấu **⋯** ở góc trên, chọn **Mở bằng trình duyệt** (Chrome hoặc Safari), rồi thử lại nhé. Anh/chị vẫn có thể gõ câu hỏi ở đây.';
-  var NOTE = 'Nội dung mang tính giáo dục, không phải khuyến nghị đầu tư. Giao dịch có rủi ro.';
+  var NOTE = 'Thông tin tham khảo, không phải khuyến nghị đầu tư.';
   var ZALO = '[Nhóm Zalo hỗ trợ](' + CFG.zalo + ')';
   var CALL = '[gọi ' + CFG.phoneLabel + '](tel:' + CFG.phone + ')';
 
@@ -49,7 +49,7 @@
       follow: ['Xem thử miễn phí', 'Lớp học TradePro là gì?'] },
 
     { id: 'profit', keys: ['loi nhuan', 'co loi', 'co lai', 'cam ket', 'bao loi', 'an toan khong', 'lua dao', 'co mat tien', 'mat tien', 'lai bao nhieu', 'thu nhap', 'kiem duoc', 'kiem tien', 'giau', 'uy tin', ['rui ro', 1]],
-      a: 'Em nói thẳng để anh/chị yên tâm: **không ai có thể cam kết lợi nhuận** trong giao dịch, kể cả Nghề Trader. Giao dịch có rủi ro và anh/chị có thể mất tiền.\nĐiều anh/chị nên làm là **tự kiểm chứng**:\n- Xem thử các video miễn phí trước khi tham gia.\n- Hỏi về **PassView**: công cụ chỉ cho xem tài khoản thật, minh bạch hơn ảnh chụp kết quả.\n- Hỏi kỹ đội ngũ trong ' + ZALO + ' trước khi quyết định.\n' + NOTE,
+      a: 'Kết quả bên em **minh bạch qua PassView**: tài khoản thật, anh/chị tự xem trực tiếp, không cần tin ảnh chụp.\n**Xem ngay trên MT5:**\n- Máy chủ: VantageMarkets-Live 11\n- ID: 35215654\n- Mật khẩu xem: ViewT102026@\nKết quả cũng cập nhật liên tục tại giaiphapgiaodich.com.\nMỗi gói đều có mục tiêu lợi nhuận và **ngưỡng Drawdown tối đa** rõ ràng. Anh/chị muốn xem PassView khoảng bao lâu thì đủ tin tưởng ạ?',
       follow: ['PassView là gì?', 'Quản trị rủi ro', 'Xem thử miễn phí'] },
 
     { id: 'trust', keys: [['co that khong', 4], ['that khong', 3], ['lua', 3], ['uy tin khong', 4], ['tin duoc khong', 4], ['kiem chung', 3], ['that hay gia', 4]],
@@ -67,17 +67,17 @@
       follow: ['Lớp học TradePro là gì?', 'Người mới bắt đầu học gì?'] },
 
     { id: 'bot_compare', keys: [['bot cu', 4], ['bot truyen thong', 4], ['so sanh bot', 4], ['khac bot', 3]],
-      a: 'Bot giao dịch truyền thống thường chạy theo **luật cố định** (ví dụ: đường trung bình cắt nhau thì vào lệnh), nên dễ “đứng hình” khi thị trường đổi trạng thái.\n**Bot AI** hướng tới việc phân tích nhiều yếu tố hơn để thích nghi với thị trường.\nDù là bot nào, vẫn **có rủi ro** và cần quản trị vốn. Video dưới đây so sánh chi tiết.',
+      a: 'Bot giao dịch truyền thống thường chạy theo **luật cố định** (ví dụ: đường trung bình cắt nhau thì vào lệnh), nên dễ “đứng hình” khi thị trường đổi trạng thái.\n**Bot AI** hướng tới việc phân tích nhiều yếu tố hơn để thích nghi với thị trường.\nVideo dưới đây so sánh chi tiết.',
       video: 'tradepro-bot-cu-vs-bot-ai.mp4',
       follow: ['Bot AI TradePro là gì?', 'Bot có cam kết lợi nhuận không?'] },
 
     { id: 'bot_ai', keys: ['bot ai', 'bot', 'robot', 'giao dich tu dong', 'tu dong', 'ea', 'auto trade', 'bot tradepro', 'bot ai tradepro'],
-      a: '**Bot AI TradePro** là công cụ **giao dịch tự động** ứng dụng AI. Thay vì ngồi canh màn hình và vào lệnh bằng cảm xúc, hệ thống thực hiện theo phương pháp đã định sẵn, giúp giữ kỷ luật.\nLưu ý: bot **không loại bỏ rủi ro** và không ai cam kết lợi nhuận. Muốn biết điều kiện sử dụng, anh/chị hỏi qua ' + ZALO + '.',
+      a: '**Bot AI TradePro** là công cụ **giao dịch tự động** ứng dụng AI. Thay vì ngồi canh màn hình và vào lệnh bằng cảm xúc, hệ thống thực hiện theo phương pháp đã định sẵn, giúp giữ kỷ luật.\nVốn từ **2.000$ đến 5.000$** bên em cho bot chạy tài khoản, dưới 2.000$ thì **copytrade**. Anh/chị dự tính vốn khoảng bao nhiêu ạ?',
       video: 'tradepro-bot-ai.mp4',
       follow: ['Bot cũ khác Bot AI thế nào?', 'PassView là gì?', 'Bot có cam kết lợi nhuận không?'] },
 
     { id: 'passview', keys: ['passview', 'pass view', 'path view', 'pathview', 'xem tai khoan', 'minh bach', 'tai khoan that', 'anh chup ket qua', 'anh chup', 'theo doi tai khoan'],
-      a: '**PassView** là công cụ **chỉ cho xem** (view-only) thông tin tài khoản giao dịch. Người xem thấy lệnh và kết quả thật, nhưng **không thể đặt hay sửa lệnh**.\nVì sao quan trọng? Ảnh chụp kết quả thì dễ cắt ghép, còn PassView cho anh/chị **tự xem tài khoản thật**, minh bạch hơn.',
+      a: '**PassView** là công cụ **chỉ cho xem** (view-only) thông tin tài khoản giao dịch. Người xem thấy lệnh và kết quả thật, nhưng **không thể đặt hay sửa lệnh**.\nVì sao quan trọng? Ảnh chụp kết quả thì dễ cắt ghép, còn PassView cho anh/chị **tự xem tài khoản thật**, minh bạch hơn.\n**Xem ngay trên MT5:**\n- Máy chủ: VantageMarkets-Live 11\n- ID: 35215654\n- Mật khẩu xem: ViewT102026@\nKết quả cũng cập nhật liên tục tại giaiphapgiaodich.com.',
       video: 'anh-chup-vs-passview-nguoi-that.mp4',
       follow: ['Bot AI TradePro là gì?', 'Xem thử miễn phí'] },
 
@@ -180,8 +180,8 @@
       follow: ['Xem thử miễn phí', 'Liên hệ tư vấn'] }
   ];
 
-  var WELCOME = 'Chào anh/chị! Em là tư vấn viên của **Nghề Trader**.\nAnh/chị đang quan tâm **học giao dịch bài bản**, công cụ **Bot AI**, hay muốn **kiểm chứng kết quả qua PassView** ạ? Anh/chị cứ gõ câu hỏi, hoặc bấm **📞** để nói chuyện trực tiếp với em.';
-  var STARTERS = ['Lớp học TradePro là gì?', 'Bot AI TradePro là gì?', 'PassView là gì?', 'Xem thử miễn phí', 'Mô hình nến cơ bản', 'Liên hệ tư vấn'];
+  var WELCOME = 'Chào anh/chị! Em là tư vấn viên của **Nghề Trader** 👋\nBên em đang có **chương trình trải nghiệm 50$ đầu tư vàng** cùng hệ thống giao dịch tự động, kết quả xem minh bạch qua **PassView**.\nCho em xin **tên anh/chị** để tiện xưng hô ạ? (Muốn nói chuyện trực tiếp thì bấm **📞**.)';
+  var STARTERS = ['Chương trình trải nghiệm 50$', 'Các gói đầu tư', 'Xem PassView', 'Bot AI TradePro là gì?', 'Liên hệ tư vấn'];
   var FALLBACK = 'Dạ, câu này anh/chị hỏi rất đúng chỗ. Để em tư vấn **sát với trường hợp của anh/chị** nhất, cho em hỏi thêm một chút: anh/chị đã từng giao dịch chưa, và điều anh/chị đang muốn giải quyết nhất là gì ạ?\nNếu cần câu trả lời chi tiết ngay, chuyên viên bên em hỗ trợ trực tiếp qua ' + ZALO + ' hoặc anh/chị ' + CALL + '.';
   var SALES_FALLBACK = [
     { id: 'fb_capital', hint: ['von', 'tien', 'bao nhieu de', 'it tien', 'trieu', 'nap'],
@@ -281,6 +281,12 @@
 '.ntc-fab:hover{transform:translateY(-2px)}.ntc-fab img{width:42px;height:42px;border-radius:50%;background:#fff;border:2px solid #fff;object-fit:contain}' +
 '.ntc-fab small{display:block;font-weight:600;font-size:11.5px;opacity:.75;margin-top:2px}.ntc-fab .ntc-dot{position:absolute;left:38px;top:8px;width:11px;height:11px;border-radius:50%;background:#2fd17a;border:2px solid #daa94f}' +
 '.ntc-fab.ntc-hide{display:none}' +
+'.ntc-callfab{position:fixed;right:24px;bottom:96px;z-index:45;display:flex;align-items:center;gap:8px;border:0;cursor:pointer;background:#1fb655;color:#fff;border-radius:40px;padding:12px 18px 12px 14px;font:800 15px/1 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;box-shadow:0 10px 26px #0008;animation:ntcRing 1.8s infinite}' +
+'.ntc-callfab svg{width:22px;height:22px;animation:ntcShake 1.8s infinite}.ntc-callfab.ntc-hide{display:none}' +
+'@keyframes ntcRing{0%{box-shadow:0 10px 26px #0008,0 0 0 0 #1fb655aa}70%{box-shadow:0 10px 26px #0008,0 0 0 16px #1fb65500}100%{box-shadow:0 10px 26px #0008,0 0 0 0 #1fb65500}}' +
+'@keyframes ntcShake{0%,50%,100%{transform:rotate(0)}10%,30%{transform:rotate(-14deg)}20%,40%{transform:rotate(14deg)}}' +
+'@media(max-width:560px){.ntc-callfab{right:14px;bottom:80px;padding:12px}.ntc-callfab span{display:none}}' +
+'@media(prefers-reduced-motion:reduce){.ntc-callfab,.ntc-callfab svg{animation:none}}' +
 '.ntc-panel{position:fixed;right:20px;bottom:20px;z-index:46;width:380px;max-width:calc(100vw - 24px);height:600px;max-height:calc(100vh - 40px);display:none;flex-direction:column;background:#0d1b2b;border:1px solid #33506b;border-radius:20px;overflow:hidden;box-shadow:0 26px 70px #000b;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#eaf2fb}' +
 '.ntc-panel.ntc-open{display:flex}' +
 '.ntc-head{display:flex;align-items:center;gap:11px;padding:12px 12px 12px 14px;background:linear-gradient(135deg,#07111f,#16304a);border-bottom:1px solid #2a4056}' +
@@ -362,7 +368,10 @@
     '<button class="ntc-talk" type="button">' + IC.mic + ' Bấm để nói</button>' +
     '<button class="ntc-hang" type="button">' + IC.x + ' Kết thúc</button></div>';
 
-  document.body.appendChild(fab); document.body.appendChild(panel);
+  var callFab = el('button', 'ntc-callfab');
+  callFab.type = 'button'; callFab.setAttribute('aria-label', 'Gọi tư vấn ngay');
+  callFab.innerHTML = IC.phone + '<span>Gọi tư vấn ngay</span>';
+  document.body.appendChild(callFab); document.body.appendChild(fab); document.body.appendChild(panel);
 
   var body = panel.querySelector('.ntc-body'), chips = panel.querySelector('.ntc-chips'),
       form = panel.querySelector('form'), input = panel.querySelector('input'),
@@ -823,7 +832,7 @@
             g.ready = true; clearTimeout(setupT);
             glState('speak', 'Đã kết nối. Anh/chị cứ nói tự nhiên, nói chen lúc nào cũng được.');
             glStartMic(g);
-            ws.send(JSON.stringify({ clientContent: { turns: [{ role: 'user', parts: [{ text: 'Khách vừa gọi tới. Hãy chào khách thật ngắn và hỏi khách đang quan tâm điều gì.' }] }], turnComplete: true } }));
+            ws.send(JSON.stringify({ clientContent: { turns: [{ role: 'user', parts: [{ text: 'Khách vừa gọi tới. Chào thật ngắn, giới thiệu là tư vấn viên Nghề Trader, rồi xin tên khách.' }] }], turnComplete: true } }));
             g.maxT = setTimeout(function () { glEnd('Cuộc gọi đã hết thời gian 5 phút. Anh/chị cần hỗ trợ thêm vui lòng gọi **0905 890 399** hoặc nhắn ' + ZALO + ' nhé.'); }, 5 * 60 * 1000);
             return;
           }
@@ -877,16 +886,20 @@
   /* ---------- sự kiện ---------- */
   var started = false;
   function open() {
-    panel.classList.add('ntc-open'); fab.classList.add('ntc-hide');
+    panel.classList.add('ntc-open'); fab.classList.add('ntc-hide'); callFab.classList.add('ntc-hide');
     if (!started) { started = true; addBot(WELCOME, { id: 'welcome' }); setChips(STARTERS); }
     setTimeout(function () { if (window.matchMedia('(min-width:561px)').matches) input.focus(); }, 50);
   }
-  function close() { panel.classList.remove('ntc-open'); fab.classList.remove('ntc-hide'); if (GL) glEnd(null); endCall(); stopListen(); stopVoice(); }
+  function close() { panel.classList.remove('ntc-open'); fab.classList.remove('ntc-hide'); callFab.classList.remove('ntc-hide'); if (GL) glEnd(null); endCall(); stopListen(); stopVoice(); }
   fab.addEventListener('click', open);
   panel.querySelector('.ntc-close').addEventListener('click', close);
   form.addEventListener('submit', function (e) { e.preventDefault(); stopListen(); stopVoice(); VOICE.unlock(); ask(input.value, false); });
   spkBtn.addEventListener('click', function () { VOICE.unlock(); setAutoSpeak(!autoSpeak); });
+  function callNow() { if (callOn || GL) { open(); return; } open(); if (CFG.liveEndpoint) startGeminiCall(); else startCall(); }
   callBtn.addEventListener('click', function () { if (CFG.liveEndpoint) startGeminiCall(); else startCall(); });
+  callFab.addEventListener('click', callNow);
+  document.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('[data-nt-call]'); if (t) { e.preventDefault(); callNow(); } });
+  window.NTChat = { open: open, call: callNow };
   panel.querySelector('.ntc-hang').addEventListener('click', function () { if (GL) glEnd(null); else endCall(); });
   talkBtn.addEventListener('click', function () {
     if (recActive) { stopListen(); callState('idle', 'Đã dừng. Bấm “Bấm để nói” để hỏi tiếp.'); return; }

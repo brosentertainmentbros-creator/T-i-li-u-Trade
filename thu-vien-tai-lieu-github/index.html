@@ -182,6 +182,12 @@
     .hero-chart{position:absolute;z-index:3}
     .hero-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:28px}
     .hero-actions .hero-cta{margin-top:0}
+    .hero-call{display:inline-flex;align-items:center;gap:10px;border:0;cursor:pointer;background:#1fb655;color:#fff;border-radius:14px;padding:13px 20px;font:800 17px/1.15 inherit;box-shadow:0 10px 26px #0007;animation:heroRing 1.8s infinite;text-align:left}
+    .hero-call small{display:block;font-size:12px;font-weight:600;opacity:.85}.hero-call svg{width:26px;height:26px;flex:none}
+    .hero-call:hover{background:#18a04a}
+    @keyframes heroRing{0%{box-shadow:0 10px 26px #0007,0 0 0 0 #1fb655aa}70%{box-shadow:0 10px 26px #0007,0 0 0 14px #1fb65500}100%{box-shadow:0 10px 26px #0007,0 0 0 0 #1fb65500}}
+    @media(max-width:620px){.hero-call{width:100%;justify-content:center;font-size:16px}}
+    @media(prefers-reduced-motion:reduce){.hero-call{animation:none}}
     .hero-watch-btn{background:#0c2039d9;color:#fff;border:1px solid #a38b62;border-radius:11px;font-weight:750;padding:12px 19px;transition:background .2s,border-color .2s}
     .hero-watch-btn:hover:not(:disabled){background:#1a3651;border-color:#e5bb6b}
     .hero-watch-btn:disabled{opacity:.55;cursor:not-allowed}
@@ -304,6 +310,7 @@
       <h1>Hiểu thị trường.<br><em>Giao dịch có kỷ luật.</em></h1>
       <p id="siteDescription">Khám phá kiến thức giao dịch qua video, tài liệu và các mô hình nến quan trọng. Học có phương pháp, giao dịch có kỷ luật.</p>
       <div class="hero-actions">
+        <button class="hero-call" type="button" data-nt-call><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Gọi tư vấn ngay<small>Miễn phí · nói chuyện trực tiếp</small></button>
         <a class="hero-cta" href="#thu-vien">Khám phá video & tài liệu →</a>
         <button class="hero-watch-btn" id="watchRecapHero" type="button" disabled title="Video recap đầy đủ chưa được tải lên GitHub">▶ Xem recap</button>
       </div>
@@ -618,6 +625,6 @@ dds.forEach(function(d){d.addEventListener('toggle',function(){if(d.open)dds.for
 document.addEventListener('click',function(e){dds.forEach(function(d){if(!d.contains(e.target))d.open=false})});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')dds.forEach(function(d){d.open=false})});})();
 </script>
-<script src="chatbot.js?v=14"></script>
+<script src="chatbot.js?v=15"></script>
 </body>
 </html>
