@@ -29,7 +29,7 @@
   var INAPP_MSG = 'Anh/chị đang mở trang **bên trong ứng dụng** (Zalo, Facebook hoặc TikTok). Các ứng dụng này thường **chặn micro**, nên em không nghe được.\nAnh/chị bấm dấu **⋯** ở góc trên, chọn **Mở bằng trình duyệt** (Chrome hoặc Safari), rồi thử lại nhé. Anh/chị vẫn có thể gõ câu hỏi ở đây.';
   var NOTE = 'Thông tin tham khảo, không phải khuyến nghị đầu tư.';
   var ZALO = '[Nhóm Zalo hỗ trợ](' + CFG.zalo + ')';
-  var CALL = '[gọi ' + CFG.phoneLabel + '](tel:' + CFG.phone + ')';
+  var CALL = 'bấm **📞 Gọi tư vấn** để nói chuyện ngay';
 
   /* ------------------------------------------------------------------ */
   /*  KIẾN THỨC                                                          */
@@ -281,6 +281,7 @@
 '.ntc-fab:hover{transform:translateY(-2px)}.ntc-fab img{width:42px;height:42px;border-radius:50%;background:#fff;border:2px solid #fff;object-fit:contain}' +
 '.ntc-fab small{display:block;font-weight:600;font-size:11.5px;opacity:.75;margin-top:2px}.ntc-fab .ntc-dot{position:absolute;left:38px;top:8px;width:11px;height:11px;border-radius:50%;background:#2fd17a;border:2px solid #daa94f}' +
 '.ntc-fab.ntc-hide{display:none}' +
+'.ntc-reset{display:block;margin:4px auto 8px;border:1px solid #3c5670;background:none;color:#9fb6cc;border-radius:20px;padding:5px 12px;font:600 12px system-ui,sans-serif;cursor:pointer}' +
 '.ntc-callfab{position:fixed;right:24px;bottom:96px;z-index:45;display:flex;align-items:center;gap:8px;border:0;cursor:pointer;background:#1fb655;color:#fff;border-radius:40px;padding:12px 18px 12px 14px;font:800 15px/1 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;box-shadow:0 10px 26px #0008;animation:ntcRing 1.8s infinite}' +
 '.ntc-callfab svg{width:22px;height:22px;animation:ntcShake 1.8s infinite}.ntc-callfab.ntc-hide{display:none}' +
 '@keyframes ntcRing{0%{box-shadow:0 10px 26px #0008,0 0 0 0 #1fb655aa}70%{box-shadow:0 10px 26px #0008,0 0 0 16px #1fb65500}100%{box-shadow:0 10px 26px #0008,0 0 0 0 #1fb65500}}' +
@@ -297,7 +298,7 @@
 '.ntc-ib:hover{border-color:#daa94f}.ntc-ib.ntc-on{background:#daa94f;color:#161208;border-color:#daa94f}.ntc-ib svg{width:18px;height:18px}' +
 '.ntc-quick{display:flex;gap:8px;padding:9px 12px;background:#0a1624;border-bottom:1px solid #2a4056}' +
 '.ntc-quick a{display:flex;align-items:center;justify-content:center;gap:7px;border-radius:11px;padding:9px 12px;font-weight:800;font-size:14px;text-decoration:none}' +
-'.ntc-qcall{flex:1;background:#2fa866;color:#fff}.ntc-qcall:hover{background:#38bf75}.ntc-qcall svg{width:17px;height:17px}' +
+'.ntc-qcall{flex:1;border:0;cursor:pointer;font:inherit;font-weight:700;background:#2fa866;color:#fff}.ntc-qcall:hover{background:#38bf75}.ntc-qcall svg{width:17px;height:17px}' +
 '.ntc-qzalo{background:#16304a;color:#eaf2fb;border:1px solid #3c5670}.ntc-qzalo:hover{border-color:#daa94f}' +
 '.ntc-body{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}' +
 '.ntc-msg{max-width:88%;padding:10px 13px;border-radius:15px;font-size:14.5px;line-height:1.5;word-wrap:break-word}' +
@@ -357,13 +358,13 @@
     '<button class="ntc-ib ntc-callbtn" type="button" title="Trò chuyện bằng giọng nói" aria-label="Trò chuyện bằng giọng nói">' + IC.phone + '</button>' +
     '<button class="ntc-ib ntc-spkbtn" type="button" title="Tự đọc to câu trả lời" aria-label="Bật/tắt đọc to câu trả lời" aria-pressed="false">' + IC.mute + '</button>' +
     '<button class="ntc-ib ntc-close" type="button" title="Đóng" aria-label="Đóng">' + IC.x + '</button></div>' +
-    '<div class="ntc-quick"><a class="ntc-qcall" href="tel:' + CFG.phone + '">' + IC.phone + ' Gọi ngay ' + CFG.phoneLabel + '</a><a class="ntc-qzalo" href="' + CFG.zalo + '" target="_blank" rel="noopener noreferrer">💬 Zalo</a></div>' +
+    '<div class="ntc-quick"><button class="ntc-qcall" type="button">' + IC.phone + ' Gọi tư vấn ngay</button><a class="ntc-qzalo" href="' + CFG.zalo + '" target="_blank" rel="noopener noreferrer">💬 Zalo</a></div>' +
     '<div class="ntc-body" aria-live="polite"></div>' +
     '<div class="ntc-chips"></div>' +
     '<form class="ntc-foot"><button class="ntc-ib ntc-mic" type="button" title="Nói để hỏi" aria-label="Nói để hỏi">' + IC.mic + '</button>' +
     '<input type="text" placeholder="Nhập câu hỏi..." aria-label="Nhập câu hỏi" maxlength="300" autocomplete="off">' +
     '<button class="ntc-ib ntc-send" type="submit" title="Gửi" aria-label="Gửi">' + IC.send + '</button></form>' +
-    '<div class="ntc-note">Trợ lý ảo Nghề Trader · ' + NOTE + '<br>Thông tin anh/chị chia sẻ (tên, số điện thoại…) được Nghề Trader lưu để liên hệ tư vấn.</div>' +
+    '<div class="ntc-note">Trợ lý ảo Nghề Trader · ' + NOTE + '<br>Thông tin anh/chị chia sẻ (tên, số điện thoại…) được Nghề Trader lưu để liên hệ tư vấn; cuộc trò chuyện được nhớ trên máy này 30 ngày.</div>' +
     '<div class="ntc-call" data-s="idle"><div class="ntc-orb"><img src="' + LOGO + '" alt=""></div><h4>Đang trò chuyện</h4><p class="ntc-cs">Bấm bắt đầu và nói câu hỏi của anh/chị.</p>' +
     '<button class="ntc-talk" type="button">' + IC.mic + ' Bấm để nói</button>' +
     '<button class="ntc-hang" type="button">' + IC.x + ' Kết thúc</button></div>';
@@ -696,10 +697,18 @@
 
   /* ---------- lưu thông tin khách (Google Sheet qua máy chủ) ---------- */
   var SID = (function () {
-    try { var v = sessionStorage.getItem('nt_sid'); if (v) return v; v = Date.now().toString(36) + Math.random().toString(36).slice(2, 8); sessionStorage.setItem('nt_sid', v); return v; }
+    try { var v = localStorage.getItem('nt_sid'); if (v) return v; v = Date.now().toString(36) + Math.random().toString(36).slice(2, 8); localStorage.setItem('nt_sid', v); return v; }
     catch (e) { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
   })();
   var leadT = null, leadSentCount = 0, leadChannel = 'chat';
+  // nhớ cuộc trò chuyện trên trình duyệt của khách (30 ngày) để lỡ tắt trang vẫn nói tiếp được
+  var STORE = 'nt_chat_v1', KEEP_MS = 30 * 24 * 3600 * 1000;
+  function saveChat() { try { localStorage.setItem(STORE, JSON.stringify({ t: Date.now(), sent: leadSentCount, h: history.slice(-60) })); } catch (e) {} }
+  function loadChat() {
+    try { var d = JSON.parse(localStorage.getItem(STORE) || 'null'); if (!d || !d.h || !d.h.length || Date.now() - d.t > KEEP_MS) return null; return d; }
+    catch (e) { return null; }
+  }
+  function forgetChat() { try { localStorage.removeItem(STORE); localStorage.removeItem('nt_sid'); } catch (e) {} }
   // tìm số điện thoại khách đọc/gõ (kể cả đọc bằng chữ: "không chín ba lăm…") để máy chủ không bỏ sót
   var DIGW = { 'không': '0', 'linh': '0', 'lẻ': '0', 'một': '1', 'mốt': '1', 'hai': '2', 'ba': '3', 'bốn': '4', 'tư': '4', 'năm': '5', 'lăm': '5', 'sáu': '6', 'bảy': '7', 'bẩy': '7', 'tám': '8', 'chín': '9' };
   function findPhone() {
@@ -724,6 +733,7 @@
   }
   function userTurns() { return history.filter(function (h) { return h.role === 'user'; }).length; }
   function sendLead(now) {
+    saveChat();
     if (!CFG.leadEndpoint || userTurns() === 0 || userTurns() === leadSentCount) return;
     clearTimeout(leadT);
     leadT = setTimeout(function () {
@@ -738,6 +748,7 @@
   }
   document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') flushLead(); }); // điện thoại: chuyển app / khóa màn hình
   window.addEventListener('pagehide', function () {
+    saveChat();
     if (!CFG.leadEndpoint || userTurns() === 0 || userTurns() === leadSentCount || !navigator.sendBeacon) return;
     leadSentCount = userTurns(); navigator.sendBeacon(CFG.leadEndpoint, new Blob([leadPayload()], { type: 'text/plain' }));
   });
@@ -832,8 +843,11 @@
             g.ready = true; clearTimeout(setupT);
             glState('speak', 'Đã kết nối. Anh/chị cứ nói tự nhiên, nói chen lúc nào cũng được.');
             glStartMic(g);
-            ws.send(JSON.stringify({ clientContent: { turns: [{ role: 'user', parts: [{ text: 'Khách vừa gọi tới. Chào thật ngắn, giới thiệu là tư vấn viên Nghề Trader, rồi xin tên khách.' }] }], turnComplete: true } }));
-            g.maxT = setTimeout(function () { glEnd('Cuộc gọi đã hết thời gian 5 phút. Anh/chị cần hỗ trợ thêm vui lòng gọi **0905 890 399** hoặc nhắn ' + ZALO + ' nhé.'); }, 5 * 60 * 1000);
+            var prev = history.slice(-16).map(function (m) { return (m.role === 'user' ? 'Khách: ' : 'Em: ') + String(m.text).slice(0, 300); }).join('\n');
+            var kick = prev ? 'Khách này đã trò chuyện với em trước đó:\n' + prev + '\n---\nKhách vừa gọi tới. Chào lại thật ngắn (gọi tên nếu đã biết), KHÔNG hỏi lại điều khách đã nói, rồi tiếp tục tư vấn từ chỗ đang dở.'
+                            : 'Khách vừa gọi tới. Chào thật ngắn, giới thiệu là tư vấn viên Nghề Trader, rồi xin tên khách.';
+            ws.send(JSON.stringify({ clientContent: { turns: [{ role: 'user', parts: [{ text: kick }] }], turnComplete: true } }));
+            g.maxT = setTimeout(function () { glEnd('Cuộc gọi đã hết thời gian 5 phút. Anh/chị cần hỗ trợ thêm thì bấm **📞** để gọi lại, hoặc nhắn ' + ZALO + ' nhé.'); }, 5 * 60 * 1000);
             return;
           }
           var sc = m.serverContent;
@@ -887,7 +901,19 @@
   var started = false;
   function open() {
     panel.classList.add('ntc-open'); fab.classList.add('ntc-hide'); callFab.classList.add('ntc-hide');
-    if (!started) { started = true; addBot(WELCOME, { id: 'welcome' }); setChips(STARTERS); }
+    if (!started) {
+      started = true;
+      var old = loadChat();
+      if (old) {
+        old.h.forEach(function (m) { if (m.role === 'user') addUser(m.text); else addBot(m.text); history.push({ role: m.role, text: m.text }); });
+        leadSentCount = old.sent || userTurns();
+        addBot('Chào mừng anh/chị quay lại 👋 Mình nói tiếp nhé, anh/chị còn băn khoăn gì cứ hỏi em.');
+        var re = el('button', 'ntc-reset'); re.type = 'button'; re.textContent = 'Bắt đầu cuộc trò chuyện mới';
+        re.addEventListener('click', function () { forgetChat(); location.reload(); });
+        body.appendChild(re); scrollDown();
+      } else addBot(WELCOME, { id: 'welcome' });
+      setChips(STARTERS);
+    }
     setTimeout(function () { if (window.matchMedia('(min-width:561px)').matches) input.focus(); }, 50);
   }
   function close() { panel.classList.remove('ntc-open'); fab.classList.remove('ntc-hide'); callFab.classList.remove('ntc-hide'); if (GL) glEnd(null); endCall(); stopListen(); stopVoice(); }
@@ -898,6 +924,7 @@
   function callNow() { if (callOn || GL) { open(); return; } open(); if (CFG.liveEndpoint) startGeminiCall(); else startCall(); }
   callBtn.addEventListener('click', function () { if (CFG.liveEndpoint) startGeminiCall(); else startCall(); });
   callFab.addEventListener('click', callNow);
+  panel.querySelector('.ntc-qcall').addEventListener('click', function () { if (CFG.liveEndpoint) startGeminiCall(); else startCall(); });
   document.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('[data-nt-call]'); if (t) { e.preventDefault(); callNow(); } });
   window.NTChat = { open: open, call: callNow };
   panel.querySelector('.ntc-hang').addEventListener('click', function () { if (GL) glEnd(null); else endCall(); });

@@ -239,6 +239,7 @@
     a.contact-value:hover{color:#f1ca82;text-decoration:underline}
     .contact-address{font-weight:650;line-height:1.5}
     .contact-help{font-size:12px;color:#8ea8c1}
+    .contact-callai{border:0;background:none;color:#5fd38d;font:inherit;font-weight:700;cursor:pointer;padding:0;text-decoration:underline}
     .contact-directions{display:inline-flex;align-items:center;justify-content:center;margin-top:auto;border-radius:11px;padding:13px 16px;background:#d5a555;color:#132034;text-align:center;font-size:14px;font-weight:800;transition:background .2s ease}
     .contact-directions:hover{background:#efc47a}
     .contact-map{border:1px solid #40556c;overflow:hidden;border-radius:19px;background:#132338;min-height:425px;box-shadow:0 14px 35px #0004}
@@ -367,7 +368,7 @@
         <div class="contact-panel">
           <div class="contact-item">
             <span class="contact-icon" aria-hidden="true">☎</span>
-            <div><span class="contact-label">Điện thoại</span><a href="tel:+84905890399" class="contact-value">0905 890 399</a><span class="contact-help">Nhấn để gọi điện</span></div>
+            <div><span class="contact-label">Điện thoại</span><span class="contact-value">0905 890 399</span><span class="contact-help">Tư vấn nhanh: bấm <button type="button" class="contact-callai" data-nt-call>📞 Gọi tư vấn ngay</button></span></div>
           </div>
           <div class="contact-item">
             <span class="contact-icon" aria-hidden="true">✉</span>
@@ -625,6 +626,6 @@ dds.forEach(function(d){d.addEventListener('toggle',function(){if(d.open)dds.for
 document.addEventListener('click',function(e){dds.forEach(function(d){if(!d.contains(e.target))d.open=false})});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')dds.forEach(function(d){d.open=false})});})();
 </script>
-<script src="chatbot.js?v=16"></script>
+<script src="chatbot.js?v=17"></script>
 </body>
 </html>
