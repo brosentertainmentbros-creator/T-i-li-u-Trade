@@ -691,7 +691,28 @@
     catch (e) { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
   })();
   var leadT = null, leadSentCount = 0, leadChannel = 'chat';
-  function leadPayload() { return JSON.stringify({ sessionId: SID, channel: leadChannel, transcript: history.slice(-40) }); }
+  // tìm số điện thoại khách đọc/gõ (kể cả đọc bằng chữ: "không chín ba lăm…") để máy chủ không bỏ sót
+  var DIGW = { 'không': '0', 'linh': '0', 'lẻ': '0', 'một': '1', 'mốt': '1', 'hai': '2', 'ba': '3', 'bốn': '4', 'tư': '4', 'năm': '5', 'lăm': '5', 'sáu': '6', 'bảy': '7', 'bẩy': '7', 'tám': '8', 'chín': '9' };
+  function findPhone() {
+    var found = '';
+    history.forEach(function (h) {
+      if (h.role !== 'user') return;
+      var toks = String(h.text).toLowerCase().normalize('NFC').split(/[\s,.;:\-–()\/]+/), run = '';
+      function close() { var d = run.replace(/^\+?84/, '0'); if (/^0\d{9}$/.test(d)) found = d; run = ''; }
+      toks.forEach(function (t) {
+        if (/^\+?\d+$/.test(t)) run += t;
+        else if (DIGW[t] != null) run += DIGW[t];
+        else close();
+      });
+      close();
+    });
+    return found;
+  }
+  function leadPayload() {
+    var tr = history.slice(-40), ph = findPhone();
+    if (ph) tr = tr.concat([{ role: 'user', text: 'Số điện thoại/Zalo của tôi: ' + ph }]);
+    return JSON.stringify({ sessionId: SID, channel: leadChannel, transcript: tr });
+  }
   function userTurns() { return history.filter(function (h) { return h.role === 'user'; }).length; }
   function sendLead(now) {
     if (!CFG.leadEndpoint || userTurns() === 0 || userTurns() === leadSentCount) return;
@@ -702,6 +723,11 @@
       try { fetch(CFG.leadEndpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: leadPayload(), keepalive: true }).catch(function () {}); } catch (e) {}
     }, now ? 0 : 2500);
   }
+  function flushLead() {
+    if (!CFG.leadEndpoint || userTurns() === 0 || userTurns() === leadSentCount || !navigator.sendBeacon) return;
+    clearTimeout(leadT); leadSentCount = userTurns(); navigator.sendBeacon(CFG.leadEndpoint, new Blob([leadPayload()], { type: 'text/plain' }));
+  }
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') flushLead(); }); // điện thoại: chuyển app / khóa màn hình
   window.addEventListener('pagehide', function () {
     if (!CFG.leadEndpoint || userTurns() === 0 || userTurns() === leadSentCount || !navigator.sendBeacon) return;
     leadSentCount = userTurns(); navigator.sendBeacon(CFG.leadEndpoint, new Blob([leadPayload()], { type: 'text/plain' }));
