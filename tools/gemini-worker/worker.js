@@ -15,7 +15,47 @@
 
 const ALLOWED_ORIGINS = ['https://brosentertainmentbros-creator.github.io'];
 const API = 'https://generativelanguage.googleapis.com';
-const CHAT_MODELS = ['gemini-3.8-flash', 'gemini-3.5-flash', 'gemini-2.5-flash'];
+// Gói miễn phí: Flash chỉ 20 lượt/ngày; Flash Lite 500 lượt/ngày; Gemma 14.400 lượt/ngày. Hết lượt model này thì tự sang model kế.
+const CHAT_MODELS = ['gemini-3.5-flash-lite', 'gemini-3.1-flash-lite', 'gemma-4-31b-it', 'gemini-3.8-flash', 'gemini-3.5-flash'];
+const LEAD_MODELS = ['gemma-4-31b-it', 'gemini-3.1-flash-lite', 'gemini-3.5-flash-lite', 'gemma-4-26b-it'];
+
+// Gọi 1 model. Gemma không nhận systemInstruction / thinkingConfig / JSON mode nên ghép lời dặn vào tin nhắn đầu.
+async function gen(env, model, sys, contents, cfg, ms) {
+  const isGemma = /^gemma/i.test(model);
+  const variants = isGemma ? [{}] : [{ thinkingConfig: { thinkingLevel: 'low' } }, {}];
+  let last = { status: 0, text: '', detail: '' };
+  for (const extra of variants) {
+    let body;
+    if (isGemma) {
+      const c = contents.map(x => ({ role: x.role, parts: [{ text: x.parts[0].text }] }));
+      c[0].parts[0].text = 'HƯỚNG DẪN (làm theo, không nhắc lại):\n' + sys + '\n\n---\n' + c[0].parts[0].text;
+      const g = { ...cfg }; delete g.responseMimeType;
+      body = { contents: c, generationConfig: g };
+    } else {
+      body = { systemInstruction: { parts: [{ text: sys }] }, contents, generationConfig: { ...cfg, ...extra } };
+    }
+    const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), ms || 15000);
+    let r = null;
+    try {
+      r = await fetch(`${API}/v1beta/models/${model}:generateContent`, {
+        method: 'POST', signal: ctl.signal,
+        headers: { 'x-goog-api-key': env.GEMINI_API_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+    } catch (e) { clearTimeout(timer); return { status: 'timeout', text: '', detail: String(e).slice(0, 80) }; }
+    clearTimeout(timer);
+    if (!r.ok) {
+      const d = (await r.text()).slice(0, 400);
+      last = { status: r.status, text: '', detail: d };
+      if (r.status === 400 && extra.thinkingConfig && /thinking/i.test(d)) continue;
+      return last;
+    }
+    const j = await r.json();
+    const parts = (j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts) || [];
+    return { status: 200, text: parts.filter(p => p.text && !p.thought).map(p => p.text).join('').trim(), detail: '' };
+  }
+  return last;
+}
 const LIVE_MODELS = ['gemini-3.8-live', 'gemini-3.1-flash-live-preview'];
 
 const PRODUCT_INFO = `SẢN PHẨM & CHƯƠNG TRÌNH
@@ -116,46 +156,13 @@ async function chat(env, data) {
   if (contents[0].role !== 'user') contents.shift();
 
   const models = env.CHAT_MODEL ? [env.CHAT_MODEL] : CHAT_MODELS;
-  let last = null; const errors = [];
+  const t0 = Date.now(); const errors = [];
   for (const model of models) {
-    // tư vấn chat không cần "suy nghĩ" lâu: hạ mức suy nghĩ để trả lời nhanh
-    const variants = [{ thinkingConfig: { thinkingLevel: 'low' } }, {}];
-    let r = null, t0 = Date.now();
-    for (const extra of variants) {
-      const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), 15000);
-      try {
-        r = await fetch(`${API}/v1beta/models/${model}:generateContent`, {
-          method: 'POST', signal: ctl.signal,
-          headers: { 'x-goog-api-key': env.GEMINI_API_KEY, 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            systemInstruction: { parts: [{ text: CHAT_PROMPT }] },
-            contents,
-            generationConfig: { maxOutputTokens: 800, temperature: 0.7, ...extra },
-          }),
-        });
-      } catch (e) { r = null; errors.push({ model, status: 'timeout', ms: Date.now() - t0, detail: String(e).slice(0, 80) }); }
-      clearTimeout(timer);
-      if (!r) break;                                   // quá 15 giây: chuyển model khác
-      if (r.status === 400 && extra.thinkingConfig) {   // model không hỗ trợ mức suy nghĩ: thử lại không có
-        const d = (await r.clone().text());
-        if (/thinking/i.test(d)) { errors.push({ model, status: 400, detail: 'no thinkingLevel' }); continue; }
-      }
-      break;
-    }
-    if (!r) { last = { status: 504, body: { error: 'timeout', errors } }; continue; }
-    if (r.ok) {
-      const j = await r.json();
-      const parts = (j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts) || [];
-      const reply = parts.filter(p => p.text && !p.thought).map(p => p.text).join('').trim();
-      if (reply) return { status: 200, body: { reply, model, ms: Date.now() - t0 } };
-      last = { status: 502, body: { error: 'no reply', model } };
-    } else {
-      const detail = (await r.text()).slice(0, 300); errors.push({ model, status: r.status, detail });
-      last = { status: 502, body: { error: 'upstream', upstream: r.status, model, errors } };
-      if (r.status === 429) break; // hết lượt miễn phí: không thử tiếp
-    }
+    const r = await gen(env, model, CHAT_PROMPT, contents, { maxOutputTokens: 800, temperature: 0.7 }, 15000);
+    if (r.status === 200 && r.text) return { status: 200, body: { reply: r.text, model, ms: Date.now() - t0 } };
+    errors.push({ model, status: r.status || 'empty', detail: r.detail.slice(0, 200) });
   }
-  return last;
+  return { status: 502, body: { error: 'upstream', errors } };
 }
 
 const LEAD_PROMPT = `Đọc đoạn hội thoại tư vấn giữa khách và tư vấn viên Nghề Trader, rút ra thông tin KHÁCH TỰ NÓI. Không đoán, không suy diễn; chỉ ghi điều khách nói rõ. Thiếu thì để chuỗi rỗng.
@@ -171,34 +178,15 @@ async function lead(env, data) {
   const tr = (isCall ? '[CUỘC GỌI]\n' : '[CHAT]\n') + (Array.isArray(data.transcript) ? data.transcript : []).slice(-40)
     .map(t => ((t && t.role) === 'user' ? 'Khách: ' : 'Tư vấn viên: ') + String((t && t.text) || '').slice(0, 600)).join('\n');
   if (!sessionId || !/Khách: \S/.test(tr)) return { status: 400, body: { ok: false, error: 'empty' } };
-  const models = env.CHAT_MODEL ? [env.CHAT_MODEL] : ['gemini-3.5-flash', 'gemini-3.8-flash'];
   let fields = null, lastErr = null;
   const t0 = Date.now(); const steps = [];
-  for (const model of models) {
-    let r = null;
-    for (const extra of [{ thinkingConfig: { thinkingLevel: 'low' } }, {}]) {
-      const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), 15000);
-      try {
-        r = await fetch(`${API}/v1beta/models/${model}:generateContent`, {
-          method: 'POST', signal: ctl.signal,
-          headers: { 'x-goog-api-key': env.GEMINI_API_KEY, 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            systemInstruction: { parts: [{ text: LEAD_PROMPT }] },
-            contents: [{ role: 'user', parts: [{ text: tr }] }],
-            generationConfig: { responseMimeType: 'application/json', temperature: 0, maxOutputTokens: 800, ...extra },
-          }),
-        });
-      } catch (e) { r = null; steps.push(model + ' timeout'); }
-      clearTimeout(timer);
-      if (r && r.status === 400 && extra.thinkingConfig && /thinking/i.test(await r.clone().text())) { steps.push(model + ' no-thinking-level'); continue; }
-      break;
-    }
-    if (!r) { lastErr = 'timeout'; continue; }
+  for (const model of LEAD_MODELS) {
+    const r = await gen(env, model, LEAD_PROMPT + '\nCHỈ trả về MỘT đối tượng JSON, không viết gì thêm.', [{ role: 'user', parts: [{ text: tr }] }],
+      { responseMimeType: 'application/json', temperature: 0, maxOutputTokens: 800 }, 15000);
     steps.push(model + ' ' + r.status + ' ' + (Date.now() - t0) + 'ms');
-    if (!r.ok) { lastErr = r.status; if (r.status === 429) break; continue; }
-    const j = await r.json();
-    const txt = ((j.candidates && j.candidates[0] && j.candidates[0].content && j.candidates[0].content.parts) || []).filter(p => p.text && !p.thought).map(p => p.text).join('');
-    try { fields = JSON.parse(txt.replace(/^```json|```$/g, '').trim()); } catch { fields = null; }
+    if (r.status !== 200) { lastErr = r.status; continue; }
+    const m = r.text.match(/\{[\s\S]*\}/);
+    try { fields = m ? JSON.parse(m[0]) : null; } catch { fields = null; }
     if (fields) break;
   }
   if (!fields) return { status: 502, body: { ok: false, error: 'extract', upstream: lastErr, steps } };
