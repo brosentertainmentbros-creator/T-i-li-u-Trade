@@ -82,6 +82,13 @@ NGƯỜI SÁNG LẬP — CHỊ GIANG ĐOÀN ("Giang Vàng") — là NỮ, luôn 
 - Cộng đồng đang rất đông; khách muốn liên hệ trực tiếp thì hỏi admin trong nhóm Zalo.
 Chỉ nói đúng các ý trên về chị Giang, không thêm lời khen hay thành tích khác. Dùng thông tin này khi khách hỏi "ai đứng sau", "có uy tín không", "anh/chị Giang là ai", "Giang Vàng là ai", hoặc khi khách còn nghi ngờ (kèm mời xem PassView).
 
+SỰ KIỆN TRADEPRO (dùng khi khách hỏi về uy tín, cộng đồng, gặp trực tiếp, sự kiện; đối chiếu với NGÀY HÔM NAY ở đầu)
+%%EVENTS%%
+
+CAM KẾT TRẢI NGHIỆM (dùng khi khách nghi ngờ "cho tiền thật à", "bên em lấy tiền đâu", "có lừa không", hoặc khi giới thiệu chương trình 50$)
+- Bên em không thiếu tiền, sẵn sàng chi tiền để anh/chị trải nghiệm THẬT: tiền thật, lợi nhuận thật.
+- Điều kiện duy nhất: anh/chị phải thật sự vào xem và hiểu sản phẩm, theo dõi bot giao dịch — không phải nhận rồi bỏ đó không xem.
+
 LIÊN HỆ
 - Hotline 0905 890 399: CHỈ đọc khi khách hỏi thẳng số điện thoại; còn lại ưu tiên xin số Zalo của khách để chuyên viên chủ động gọi lại, hoặc mời nhắn nhóm Zalo. Email support@giaiphapgiaodich.com. Website giaiphapgiaodich.com ("giải pháp giao dịch chấm com").
 - Địa chỉ văn phòng: 84A Nguyễn Cửu Vân, Phường Gia Định, TP. Hồ Chí Minh.
@@ -104,12 +111,37 @@ Mỗi lượt chỉ MỘT câu hỏi, lồng tự nhiên vào câu trả lời. 
 Gọi khách bằng tên khi đã biết tên. Khi khách đồng ý tham gia: hướng dẫn đăng ký gói tại giaiphapgiaodich.com (có mail xác nhận) và chuyên viên sẽ liên hệ qua số đã để lại.
 
 CÁCH TƯ VẤN
+- Các mục thông tin ở trên (sản phẩm, gói, sự kiện, chị Giang, cam kết trải nghiệm…) là những ý RIÊNG: chỉ lấy ý hợp với điều khách đang hỏi hoặc đang băn khoăn, nói tự nhiên theo tình huống; không đọc dồn nhiều mục một lượt.
 - Tự tin, tích cực, nói về cơ hội và kết quả của hệ thống; KHÔNG giảng giải về rủi ro, KHÔNG tự nhắc "giao dịch có rủi ro / có thể mất tiền" khi khách không hỏi.
 - Nói số lợi nhuận đúng như mô tả gói ở trên ("mục tiêu", "lên đến") và luôn đi kèm mức Drawdown tối đa của gói đó. Không tự bịa con số khác, không nói "chắc chắn có lời", "không bao giờ lỗ".
 - Khách hỏi thẳng có lỗ không: trả lời ngắn gọn rằng có lúc âm trạng thái, nên mỗi gói đều có ngưỡng rủi ro tối đa, và gói Bảo vệ vốn có admin chuyển bù khi chạm 20% — rồi chuyển ngay sang PassView để khách tự kiểm chứng.
 - Điều gì không có ở trên (phí cụ thể, chi tiết hợp đồng, sàn khác…): nói chuyên viên sẽ báo chính xác, xin số Zalo của khách để chuyên viên gọi lại, hoặc mời nhắn nhóm Zalo.
 - KHÔNG hỏi số tài khoản ngân hàng, mật khẩu tài khoản của khách, mã OTP hay thông tin thẻ.
 - Khách hỏi bạn là người hay máy: nói thật là trợ lý ảo của Nghề Trader.`;
+
+// Sự kiện: tự xếp "đã diễn ra" / "sắp tới" theo ngày hôm nay (giờ Việt Nam). Thêm sự kiện mới vào đây.
+const EVENTS = [
+  { date: '2026-10-25', text: 'Chương trình TradePro quy mô hơn 20 người' },
+  { date: '2026-10-31', text: 'Cà phê trò chuyện (cafe talk) với khách hàng tại Trà Vinh' },
+  { date: '2026-11-08', text: 'Sự kiện TradePro tại khách sạn New World, quy mô gần 100 người' },
+  { date: '2026-11-21', text: 'Sự kiện tại Trà Vinh dịp lễ hội Ok Om Bok' },
+  { date: '2026-11-21', text: 'Sự kiện tại Gia Lai' },
+];
+function vnToday() { return new Date(Date.now() + 7 * 3600 * 1000).toISOString().slice(0, 10); }
+function fmt(d) { const [y, m, dd] = d.split('-'); return `${+dd}/${+m}/${y}`; }
+function eventsBlock(today) {
+  const past = EVENTS.filter(e => e.date < today), todayEv = EVENTS.filter(e => e.date === today), next = EVENTS.filter(e => e.date > today);
+  const L = [];
+  if (next.length) L.push('Sắp tới:\n' + next.map(e => `- ${fmt(e.date)}: ${e.text}`).join('\n'));
+  if (todayEv.length) L.push('Đang diễn ra HÔM NAY:\n' + todayEv.map(e => `- ${e.text}`).join('\n'));
+  if (past.length) L.push('ĐÃ DIỄN RA (sự kiện cũ, KHÔNG được mời khách tham dự, chỉ kể như thành tích):\n' + past.map(e => `- ${fmt(e.date)}: ${e.text}`).join('\n'));
+  if (!next.length && !todayEv.length) L.push('Hiện chưa có lịch sự kiện mới: nói chuyên viên sẽ báo lịch sự kiện tiếp theo qua Zalo.');
+  return L.join('\n');
+}
+function withDate(prompt) {
+  const t = vnToday();
+  return `HÔM NAY LÀ ${fmt(t)} (giờ Việt Nam).\n\n` + prompt.replace('%%EVENTS%%', eventsBlock(t));
+}
 
 const CHAT_PROMPT = `Bạn là tư vấn viên chat của Nghề Trader (website giaiphapgiaodich.com). Tư vấn như một nhân viên sale giỏi và tận tâm: hiểu nhu cầu khách, gợi ý đúng sản phẩm, giải đáp băn khoăn, dẫn khách tới bước tiếp theo. Xưng "em", gọi khách "anh/chị", trả lời bằng tiếng Việt.
 
@@ -165,7 +197,7 @@ async function chat(env, data) {
   const models = env.CHAT_MODEL ? [env.CHAT_MODEL] : CHAT_MODELS;
   const t0 = Date.now(); const errors = [];
   for (const model of models) {
-    const r = await gen(env, model, CHAT_PROMPT, contents, { maxOutputTokens: 800, temperature: 0.7 }, 15000);
+    const r = await gen(env, model, withDate(CHAT_PROMPT), contents, { maxOutputTokens: 800, temperature: 0.7 }, 15000);
     if (r.status === 200 && r.text) return { status: 200, body: { reply: r.text, model, ms: Date.now() - t0 } };
     errors.push({ model, status: r.status || 'empty', detail: r.detail.slice(0, 200) });
   }
@@ -226,7 +258,7 @@ async function liveToken(env) {
           responseModalities: ['AUDIO'],
           speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: env.LIVE_VOICE || 'Aoede' } } },
         },
-        systemInstruction: { parts: [{ text: VOICE_PROMPT }] },
+        systemInstruction: { parts: [{ text: withDate(VOICE_PROMPT) }] },
         inputAudioTranscription: {},
         outputAudioTranscription: {},
       },
@@ -244,7 +276,7 @@ async function liveToken(env) {
           body: {
             token: j.name, model, ver,
             ws: `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.${ver}.GenerativeService.BidiGenerateContentConstrained`,
-            prompt: VOICE_PROMPT,
+            prompt: withDate(VOICE_PROMPT),
           },
         };
       }
