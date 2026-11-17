@@ -62,6 +62,8 @@ const PRODUCT_INFO = `SẢN PHẨM & CHƯƠNG TRÌNH
 - Chương trình TRẢI NGHIỆM 50 ĐÔ đầu tư vàng: Nghề Trader cấp 50$ để khách TRẢI NGHIỆM hệ thống giao dịch thật. Điều kiện: tiền này để trải nghiệm, KHÔNG phải tặng để rút ra. Trải nghiệm xong, khách muốn lên vốn thì tùy khách:
   + Vốn DƯỚI 2.000$: chuyển sang COPYTRADE (sao chép lệnh).
   + Vốn từ 2.000$ đến 5.000$: cho BOT AI TradePro chạy tài khoản. Khách cam kết KHÔNG đánh tay trong thời gian bot giao dịch và không đòi lời lớn.
+- CÁCH NHẬN 50$: khách liên hệ ADMIN PHƯƠNG (qua nhóm Zalo) để được hỗ trợ mở tài khoản sàn VANTAGE và bốc số thứ tự nhận 50$. Nhớ xin số Zalo của khách để admin Phương chủ động liên hệ.
+- RÚT LỢI NHUẬN: số dư dưới 30$ thì phải rút hết tiền trong tài khoản; số dư trên 30$ thì mỗi lần rút tối thiểu 30$.
 - Ngoài ra đội ngũ admin sẵn sàng trích lợi nhuận chia cho khách 2.000 đến 5.000 cent để trải nghiệm hệ thống.
 - Các gói trên giaiphapgiaodich.com (đăng ký tại web, có mail xác nhận):
   + Gói TĂNG TRƯỞNG BỀN VỮNG: cho khách vốn lớn muốn dòng tiền lợi nhuận đều. Lợi nhuận ít hơn nhưng Drawdown (âm trạng thái) cũng ít hơn; rủi ro lớn nhất không quá 20% vốn.
@@ -123,9 +125,9 @@ CÁCH TƯ VẤN
 const EVENTS = [
   { date: '2026-10-25', text: 'Chương trình TradePro quy mô hơn 20 người' },
   { date: '2026-10-31', text: 'Cà phê trò chuyện (cafe talk) với khách hàng tại Trà Vinh' },
+  { date: '2026-11-05', text: 'Sự kiện TradePro tại Gia Lai' },
   { date: '2026-11-08', text: 'Sự kiện TradePro tại khách sạn New World, quy mô gần 100 người' },
   { date: '2026-11-21', text: 'Sự kiện tại Trà Vinh dịp lễ hội Ok Om Bok' },
-  { date: '2026-11-21', text: 'Sự kiện tại Gia Lai' },
 ];
 function vnToday() { return new Date(Date.now() + 7 * 3600 * 1000).toISOString().slice(0, 10); }
 function fmt(d) { const [y, m, dd] = d.split('-'); return `${+dd}/${+m}/${y}`; }
