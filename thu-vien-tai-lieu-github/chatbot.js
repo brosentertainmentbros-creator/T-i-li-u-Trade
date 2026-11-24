@@ -582,14 +582,31 @@
     if (!it) return salesFallback(text);
     return it;
   }
+  // chat: hỏi xong mà khách im lặng → em tự nói tiếp (tối đa 2 lần liên tiếp)
+  var chatSilT = null, chatNudges = 0;
+  function armChatSilence() {
+    clearTimeout(chatSilT);
+    if (!CFG.aiEndpoint || chatNudges >= 2) return;
+    chatSilT = setTimeout(function () {
+      if (callOn || GL || !panel.classList.contains('ntc-open') || input.value.trim() || document.visibilityState !== 'visible') return;
+      chatNudges++;
+      var typing = el('div', 'ntc-typing', 'Trợ lý đang soạn…'); body.appendChild(typing); scrollDown();
+      fetch(CFG.aiEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: '[Hệ thống: khách chưa trả lời câu em vừa hỏi. Đừng dừng lại và đừng hỏi lại y câu đó: tự nói tiếp về chính ý đó — đưa vài câu trả lời mà nhiều anh/chị ở hoàn cảnh tương tự hay gặp, giải thích để khách tự hình dung ra câu trả lời của mình, rồi kết bằng một câu hỏi khác thật dễ trả lời.]', history: history.slice(-10), sessionId: SID }) })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { typing.remove(); if (j && j.reply && !input.value.trim()) { addBot(String(j.reply)); history.push({ role: 'bot', text: String(j.reply) }); saveChat(); armChatSilence(); } })
+        .catch(function () { typing.remove(); });
+    }, 25000);
+  }
   function ask(text, byVoice, cb) {
     text = String(text || '').trim(); if (!text) return;
+    clearTimeout(chatSilT); chatNudges = 0;
     input.value = ''; addUser(text); history.push({ role: 'user', text: text });
     var typing = el('div', 'ntc-typing', 'Trợ lý đang trả lời…'); body.appendChild(typing); scrollDown();
     function finish(ans) {
       typing.remove();
       addBot(ans.a, { video: ans.video, id: ans.id }); setChips(ans.follow || STARTERS);
       history.push({ role: 'bot', text: ans.a }); leadChannel = callOn && !GL ? 'call' : (GL ? 'call' : 'chat'); sendLead(false);
+      if (!callOn && !GL) armChatSilence();
       if (byVoice && callOn) {
         say(ans.id, ans.a, function () { stopBarge(); if (cb) cb(); });
         startBarge(ans.a);                       // nghe trong lúc đang nói để khách nói chen
@@ -791,13 +808,13 @@
   // khách im lặng sau khi em nói xong → nhắc AI nói tiếp nhẹ nhàng (tối đa 2 lần liên tiếp)
   function glArmSilence(g) {
     clearTimeout(g.silT);
-    if ((g.nudges || 0) >= 2) return;
+    if ((g.nudges || 0) >= 3) return;
     var left = 0; try { left = Math.max(0, (g.next || 0) - g.out.currentTime); } catch (e) {}
     g.silT = setTimeout(function () {
       if (GL !== g || g.userText.trim() || g.sources.length || !g.ws || g.ws.readyState !== 1) return;
       g.nudges = (g.nudges || 0) + 1;
-      g.ws.send(JSON.stringify({ clientContent: { turns: [{ role: 'user', parts: [{ text: '[Hệ thống: khách đang im lặng. Nhẹ nhàng nói tiếp một ý ngắn về bản chất TradePro hoặc về AI trong đầu tư, rồi hỏi một câu thật dễ trả lời.]' }] }], turnComplete: true } }));
-    }, left * 1000 + 9000);
+      g.ws.send(JSON.stringify({ clientContent: { turns: [{ role: 'user', parts: [{ text: '[Hệ thống: khách đang im lặng, chưa trả lời câu em vừa hỏi. Đừng dừng lại và đừng hỏi lại y câu đó: tự nói tiếp về chính ý đó — nêu vài câu trả lời mà nhiều anh/chị hay gặp, giải thích để khách tự hình dung ra câu trả lời của mình, hoặc chia sẻ thêm một ý về bản chất TradePro / AI trong đầu tư; rồi hỏi một câu khác thật dễ trả lời.]' }] }], turnComplete: true } }));
+    }, left * 1000 + 5000);
   }
   function glFlushText() {
     if (!GL) return;
