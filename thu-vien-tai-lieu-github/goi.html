@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nghề Trader đang gọi cho bạn…</title>
+<meta name="description" content="Chạm để nói chuyện trực tiếp với tư vấn viên Nghề Trader.">
+<meta property="og:title" content="📞 Nghề Trader – Gọi tư vấn ngay">
+<meta property="og:description" content="Chạm một lần để nói chuyện trực tiếp với tư vấn viên.">
+<meta property="og:image" content="https://brosentertainmentbros-creator.github.io/T-i-li-u-Trade/thu-vien-tai-lieu-github/assets/logo-nghe-trader.webp">
+<link rel="icon" href="assets/logo-nghe-trader.webp">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:radial-gradient(120% 80% at 50% 0%,#17355c 0%,#07111f 60%);color:#fff;font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:space-between;min-height:100dvh;padding:calc(48px + env(safe-area-inset-top)) 24px calc(40px + env(safe-area-inset-bottom));text-align:center}
+  .who{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .ring{position:relative;width:150px;height:150px}
+  .ring img{width:150px;height:150px;border-radius:50%;background:#fff;object-fit:cover;position:relative;z-index:2;box-shadow:0 12px 40px #0009}
+  .ring:before,.ring:after{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid #1fb655;animation:wave 2s infinite}
+  .ring:after{animation-delay:1s}
+  @keyframes wave{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.7);opacity:0}}
+  .name{font-size:28px;font-weight:800;margin:10px 0 0}
+  .sub{color:#a9c0d6;font-size:16px}
+  .dots:after{content:"";animation:dots 1.4s steps(4) infinite}
+  @keyframes dots{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}}
+  .actions{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%}
+  .accept{width:92px;height:92px;border-radius:50%;border:0;background:#1fb655;color:#fff;cursor:pointer;display:grid;place-items:center;box-shadow:0 0 0 0 #1fb655aa;animation:pulse 1.6s infinite}
+  .accept svg{width:42px;height:42px;animation:shake 1.6s infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 22px #1fb65500}100%{box-shadow:0 0 0 0 #1fb65500}}
+  @keyframes shake{0%,50%,100%{transform:rotate(0)}10%,30%{transform:rotate(-16deg)}20%,40%{transform:rotate(16deg)}}
+  .lbl{font-weight:800;font-size:18px}
+  .hint{color:#8ea8c1;font-size:13.5px;max-width:340px}
+  .alt{color:#cfe0f0;font-size:14px;text-decoration:underline;background:none;border:0;cursor:pointer;font-family:inherit}
+  .inapp{display:none;background:#2a1d08;border:1px solid #e7b66366;color:#f6d58f;border-radius:12px;padding:10px 14px;font-size:13.5px;max-width:360px}
+  body:not(.started) .ntc-fab,body:not(.started) .ntc-callfab{display:none!important}
+  body.started .actions,body.started .who{display:none}
+  @media(prefers-reduced-motion:reduce){.ring:before,.ring:after,.accept,.accept svg,.dots:after{animation:none}}
+</style>
+</head>
+<body>
+  <div class="who">
+    <div class="ring"><img src="assets/logo-nghe-trader.webp" alt="Nghề Trader"></div>
+    <div class="name">Nghề Trader</div>
+    <div class="sub">Tư vấn viên đang chờ bạn<span class="dots"></span></div>
+  </div>
+
+  <div class="actions">
+    <div class="inapp" id="inapp">Nếu không nói được, bấm <b>⋯</b> ở góc trên rồi chọn <b>Mở bằng trình duyệt</b> (Chrome/Safari).</div>
+    <button class="accept" id="accept" type="button" aria-label="Nghe máy">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+    </button>
+    <div class="lbl">Chạm để nghe máy</div>
+    <div class="hint">Miễn phí. Lần đầu, trình duyệt sẽ hỏi quyền dùng micro – bấm <b>Cho phép</b> để nói chuyện.</div>
+    <button class="alt" id="chat" type="button">Không tiện nói? Nhắn tin thay</button>
+  </div>
+
+<script src="data.js"></script>
+<script src="chatbot.js?v=17"></script>
+<script>
+  (function(){
+    // trình duyệt trong app Facebook/Zalo/TikTok/Instagram hay chặn micro
+    if (/FBAN|FBAV|FB_IAB|Instagram|Zalo|TikTok|musical_ly|Line\//i.test(navigator.userAgent)) document.getElementById('inapp').style.display = 'block';
+    function go(fn){ if (!window.NTChat) return; document.body.classList.add('started'); fn(); }
+    document.getElementById('accept').addEventListener('click', function(){ go(window.NTChat && window.NTChat.call); });
+    document.getElementById('chat').addEventListener('click', function(){ go(window.NTChat && window.NTChat.open); });
+  })();
+</script>
+</body>
+</html>
