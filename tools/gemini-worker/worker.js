@@ -192,15 +192,18 @@ function findPhone(text) {
   const m = String(text || '').replace(/[.\-\s]/g, '').match(/(?:\+?84|0)\d{9}/);
   return m ? m[0].replace(/^\+?84/, '0') : '';
 }
+let LAST_LOOKUP = '';
 async function lookupPhone(env, phone, sid) {
   if (!env.SHEET_URL || !phone) return null;
   try {
-    const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 6000);
+    const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 9000);
     const r = await fetch(env.SHEET_URL + '?phone=' + encodeURIComponent(phone) + '&sid=' + encodeURIComponent(String(sid || '').slice(0, 40)), { redirect: 'follow', signal: ctl.signal });
     clearTimeout(tm);
-    const j = await r.json();
+    const txt = await r.text();
+    let j = null; try { j = JSON.parse(txt); } catch (e) { LAST_LOOKUP = 'http ' + r.status + ' ' + txt.slice(0, 120); return null; }
+    LAST_LOOKUP = JSON.stringify(j).slice(0, 160);
     return j && j.found ? { name: String(j.name || ''), known: Array.isArray(j.known) ? j.known : [] } : null;
-  } catch (e) { return null; }
+  } catch (e) { LAST_LOOKUP = 'err ' + String(e).slice(0, 80); return null; }
 }
 function knownNote(k) {
   if (!k) return '';
@@ -370,7 +373,7 @@ export default {
     try { data = await request.json(); } catch { /* body rỗng cũng được với /live-token */ }
     try {
       const out = path === '/live-token' ? await liveToken(env) : path === '/lead' ? await lead(env, data)
-        : path === '/lookup' ? { status: 200, body: { note: knownNote(await lookupPhone(env, findPhone(data.phone), data.sessionId)) } }
+        : path === '/lookup' ? { status: 200, body: { note: knownNote(await lookupPhone(env, findPhone(data.phone), data.sessionId)), dbg: LAST_LOOKUP } }
         : await chat(env, data);
       return json(out.body, out.status, origin);
     } catch (e) {
