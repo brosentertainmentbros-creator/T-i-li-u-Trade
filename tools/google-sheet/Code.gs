@@ -10,11 +10,11 @@ var SPREADSHEET_ID = '1YenuLznJUZZtbeBqJNvIC2RBz74QNKDzo5KWua-g754'; // Sheet "N
 var SHEET_NAME = 'Khách hàng';
 var HEADERS = ['Mã phiên', 'Bắt đầu', 'Cập nhật', 'Kênh', 'Tên', 'SĐT / Zalo', 'Tỉnh thành',
   'Kinh nghiệm', 'Thị trường quan tâm', 'Sản phẩm quan tâm', 'Nhu cầu / khó khăn', 'Tóm tắt',
-  'Đồng ý liên hệ', 'Trạng thái', 'Ghi chú', 'Vốn dự kiến', 'Đánh giá / kỳ vọng'];
+  'Đồng ý liên hệ', 'Trạng thái', 'Ghi chú', 'Vốn dự kiến', 'Đánh giá / kỳ vọng', 'Nhóm khách', 'Tiềm năng'];
 /** Chạy hàm này 1 lần trong trình soạn thảo để cấp quyền và tạo dòng tiêu đề. */
 function setup() { sheet_(); }
 
-var FIELD_COL = { name: 5, contact: 6, location: 7, experience: 8, markets: 9, interest: 10, need: 11, summary: 12, consent: 13, capital: 16, expectation: 17 };
+var FIELD_COL = { name: 5, contact: 6, location: 7, experience: 8, markets: 9, interest: 10, need: 11, summary: 12, consent: 13, capital: 16, expectation: 17, segment: 18, potential: 19 };
 
 function sheet_() {
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
@@ -37,7 +37,25 @@ function sheet_() {
   return sh;
 }
 
-function doGet() {
+function doGet(e) {
+  // Tra khách cũ theo SĐT: chỉ trả tên + các mục đã biết (không trả chi tiết hồ sơ)
+  if (e && e.parameter && e.parameter.phone) {
+    var want = String(e.parameter.phone).replace(/\D/g, '').replace(/^84/, '0');
+    var sid = String(e.parameter.sid || '');
+    var sh = sheet_(), n = sh.getLastRow() - 1;
+    if (want.length >= 9 && n > 0) {
+      var rows = sh.getRange(2, 1, n, HEADERS.length).getValues();
+      for (var i = rows.length - 1; i >= 0; i--) {
+        var ph = String(rows[i][5]).replace(/\D/g, '').replace(/^84/, '0');
+        if (ph && ph.slice(-9) === want.slice(-9) && String(rows[i][0]) !== sid) {
+          var known = [];
+          [[4, 'tên'], [6, 'tỉnh thành'], [7, 'kinh nghiệm'], [8, 'thị trường quan tâm'], [9, 'sản phẩm quan tâm'], [15, 'vốn dự kiến'], [5, 'số điện thoại']].forEach(function (c) { if (String(rows[i][c[0]]).trim()) known.push(c[1]); });
+          return out_({ found: true, name: String(rows[i][4]).replace(/\s*\(\?\)$/, ''), known: known });
+        }
+      }
+    }
+    return out_({ found: false });
+  }
   sheet_();
   return ContentService.createTextOutput(JSON.stringify({ ok: true, sheet: SHEET_NAME })).setMimeType(ContentService.MimeType.JSON);
 }

@@ -598,7 +598,7 @@
     if (CFG.aiEndpoint) {
       var local = findIntent(text), done = false;
       var guard = setTimeout(function () { if (!done) { done = true; finish(localAnswer(text)); } }, 20000); // AI chậm quá thì dùng kịch bản
-      fetch(CFG.aiEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text, history: history.slice(-10) }) })
+      fetch(CFG.aiEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text, history: history.slice(-10), sessionId: SID }) })
         .then(function (r) { return r.json(); })
         .then(function (j) {
           if (done) return; done = true; clearTimeout(guard);
@@ -773,16 +773,42 @@
     var t = Math.max(ctx.currentTime + 0.03, GL.next || 0); src.start(t); GL.next = t + buf.duration;
     GL.sources.push(src); src.onended = function () { GL && (GL.sources = GL.sources.filter(function (x) { return x !== src; })); };
   }
+  // khách đọc SĐT trong cuộc gọi → tra xem là khách cũ không, báo cho AI để khỏi hỏi lại
+  function glCheckPhone(g, text) {
+    var ph = (function () { var history = [{ role: 'user', text: text }]; var DW = DIGW, found = '';
+      String(text).toLowerCase().normalize('NFC').split(/[\s,.;:\-–()\/]+/).reduce(function (run, t) {
+        if (/^\+?\d+$/.test(t)) return run + t; if (DW[t] != null) return run + DW[t];
+        var d = run.replace(/^\+?84/, '0'); if (/^0\d{9}$/.test(d)) found = d; return '';
+      }, '').replace(/^\+?84/, '0').replace(/^(0\d{9})$/, function (d) { found = d; return d; });
+      return found; })();
+    if (!ph || !CFG.aiEndpoint || g.phoneChecked === ph) return;
+    g.phoneChecked = ph;
+    fetch(CFG.aiEndpoint.replace(/\/chat$/, '/lookup'), { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ phone: ph, sessionId: SID }) })
+      .then(function (r) { return r.json(); }).then(function (j) {
+        if (GL === g && j && j.note && g.ws && g.ws.readyState === 1) g.ws.send(JSON.stringify({ clientContent: { turns: [{ role: 'user', parts: [{ text: j.note }] }], turnComplete: false } }));
+      }).catch(function () {});
+  }
+  // khách im lặng sau khi em nói xong → nhắc AI nói tiếp nhẹ nhàng (tối đa 2 lần liên tiếp)
+  function glArmSilence(g) {
+    clearTimeout(g.silT);
+    if ((g.nudges || 0) >= 2) return;
+    var left = 0; try { left = Math.max(0, (g.next || 0) - g.out.currentTime); } catch (e) {}
+    g.silT = setTimeout(function () {
+      if (GL !== g || g.userText.trim() || g.sources.length || !g.ws || g.ws.readyState !== 1) return;
+      g.nudges = (g.nudges || 0) + 1;
+      g.ws.send(JSON.stringify({ clientContent: { turns: [{ role: 'user', parts: [{ text: '[Hệ thống: khách đang im lặng. Nhẹ nhàng nói tiếp một ý ngắn về bản chất TradePro hoặc về AI trong đầu tư, rồi hỏi một câu thật dễ trả lời.]' }] }], turnComplete: true } }));
+    }, left * 1000 + 9000);
+  }
   function glFlushText() {
     if (!GL) return;
-    if (GL.userText.trim()) { addUser(GL.userText.trim()); history.push({ role: 'user', text: GL.userText.trim() }); }
+    if (GL.userText.trim()) { glCheckPhone(GL, GL.userText); addUser(GL.userText.trim()); history.push({ role: 'user', text: GL.userText.trim() }); }
     if (GL.botText.trim()) { addBot(GL.botText.trim()); history.push({ role: 'bot', text: GL.botText.trim() }); }
     GL.userText = ''; GL.botText = '';
   }
   function glEnd(reason) {
     var g = GL; if (!g) return; GL = null;
     try { glFlushTextFor(g); } catch (e) {}
-    clearTimeout(g.maxT);
+    clearTimeout(g.maxT); clearTimeout(g.silT);
     try { g.ws && g.ws.close(); } catch (e) {}
     try { g.node && g.node.disconnect(); g.srcNode && g.srcNode.disconnect(); } catch (e) {}
     try { g.stream && g.stream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) {}
@@ -847,7 +873,7 @@
             var kick = prev ? 'Khách này đã trò chuyện với em trước đó:\n' + prev + '\n---\nKhách vừa gọi tới. Chào lại thật ngắn (gọi tên nếu đã biết), KHÔNG hỏi lại điều khách đã nói, rồi tiếp tục tư vấn từ chỗ đang dở.'
                             : 'Khách vừa gọi tới. Chào thật ngắn, giới thiệu là tư vấn viên Nghề Trader, rồi xin tên khách.';
             ws.send(JSON.stringify({ clientContent: { turns: [{ role: 'user', parts: [{ text: kick }] }], turnComplete: true } }));
-            g.maxT = setTimeout(function () { glEnd('Cuộc gọi đã hết thời gian 5 phút. Anh/chị cần hỗ trợ thêm thì bấm **📞** để gọi lại, hoặc nhắn ' + ZALO + ' nhé.'); }, 5 * 60 * 1000);
+            g.maxT = setTimeout(function () { glEnd('Cuộc gọi đã hết thời gian 10 phút. Anh/chị cần hỗ trợ thêm thì bấm **📞** để gọi lại, hoặc nhắn ' + ZALO + ' nhé.'); }, 10 * 60 * 1000);
             return;
           }
           var sc = m.serverContent;
@@ -855,10 +881,12 @@
             if (sc.interrupted) { glStopAudio(); glState('listen', 'Dạ em nghe…'); }
             if (sc.inputTranscription && sc.inputTranscription.text) {
               if (g.botText.trim()) { addBot(g.botText.trim()); history.push({ role: 'bot', text: g.botText.trim() }); g.botText = ''; }
+              clearTimeout(g.silT); g.nudges = 0;
               g.userText += sc.inputTranscription.text; glState('listen', '“' + g.userText.trim() + '”');
             }
             if (sc.outputTranscription && sc.outputTranscription.text) {
-              if (g.userText.trim()) { addUser(g.userText.trim()); history.push({ role: 'user', text: g.userText.trim() }); g.userText = ''; }
+              clearTimeout(g.silT);
+              if (g.userText.trim()) { glCheckPhone(g, g.userText); addUser(g.userText.trim()); history.push({ role: 'user', text: g.userText.trim() }); g.userText = ''; }
               g.botText += sc.outputTranscription.text;
             }
             var parts = (sc.modelTurn && sc.modelTurn.parts) || [];
@@ -868,7 +896,7 @@
                 glPlay(pt.inlineData.data, rate); glState('speak', 'Em đang nói… anh/chị cứ nói chen nếu cần.');
               }
             });
-            if (sc.turnComplete) { glFlushText(); leadChannel = 'call'; sendLead(false); setTimeout(function () { if (GL === g && !g.sources.length) glState('listen', 'Em đang nghe…'); }, 400); }
+            if (sc.turnComplete) { glFlushText(); glArmSilence(g); leadChannel = 'call'; sendLead(false); setTimeout(function () { if (GL === g && !g.sources.length) glState('listen', 'Em đang nghe…'); }, 400); }
           }
           if (m.goAway) glEnd('Cuộc gọi đã kết thúc. Anh/chị cần hỗ trợ thêm cứ bấm 📞 gọi lại nhé.');
         };

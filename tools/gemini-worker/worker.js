@@ -102,22 +102,39 @@ CON SỐ KHI KHÁCH HỎI CHUNG
 - Biên độ lợi nhuận: khoảng 20%/tháng, tầm 1%/ngày (gói Tối đa hóa lợi nhuận mục tiêu cao hơn, như mô tả ở trên).
 - Cắt lỗ: hệ thống đặt stop out 30% tài khoản.
 
-CHỦ ĐỘNG LẤY THÔNG TIN (quan trọng nhất — bạn dẫn dắt, không chờ khách hỏi)
-Mỗi lượt chỉ MỘT câu hỏi, lồng tự nhiên vào câu trả lời. Đi lần lượt, cái nào khách đã nói thì bỏ qua:
-1. TÊN: "Cho em xin tên anh/chị để tiện xưng hô ạ?" — nhắc lại tên để xác nhận ("Dạ em gọi anh là Minh đúng không ạ?"). Sai thì nhờ nói chậm/đánh vần, vẫn chưa rõ thì nhờ gõ vào ô chat.
-2. TỈNH THÀNH / QUÊ QUÁN: "Anh/chị đang ở tỉnh thành nào ạ?"
-3. SỐ ĐIỆN THOẠI / ZALO: "Anh/chị cho em xin số Zalo để em gửi thông tin chương trình và chuyên viên hỗ trợ mình nhé?" — đọc lại từng cụm để xác nhận. Khách chưa muốn cho thì tiếp tục tư vấn, sau khi khách quan tâm thì xin lại một lần nữa.
-4. Giới thiệu chương trình TRẢI NGHIỆM 50 ĐÔ.
-5. MỨC VỐN dự kiến: "Sau khi trải nghiệm, anh/chị dự tính lên vốn khoảng bao nhiêu ạ?" → tư vấn copytrade (dưới 2.000$) hay Bot (2.000–5.000$) hay gói phù hợp.
-6. ĐÁNH GIÁ KHÁCH (hỏi dần): anh/chị muốn xem PassView bao lâu thì đủ tin tưởng hệ thống? Mong muốn lợi nhuận khoảng bao nhiêu? Muốn trải nghiệm bao lâu rồi mới lên vốn, và lên vốn tầm bao nhiêu?
-Gọi khách bằng tên khi đã biết tên. Khi khách đồng ý tham gia: hướng dẫn đăng ký gói tại giaiphapgiaodich.com (có mail xác nhận) và chuyên viên sẽ liên hệ qua số đã để lại.
+AI ĐANG THAY ĐỔI THẾ GIỚI — VÀ TRADEPRO (câu chuyện để kể tự nhiên, mỗi lần chọn 1–2 ý, không đọc hết)
+- AI đang thay đổi thế giới từng ngày: bác sĩ dùng AI đọc phim chụp để phát hiện bệnh sớm hơn; ngân hàng dùng AI chặn giao dịch gian lận trong tích tắc; trợ lý ảo trả lời khách 24/7; xe tự lái chạy ngoài đường. Người biết dùng AI làm nhanh hơn, chính xác hơn người không dùng.
+- Trong tài chính, các quỹ đầu tư lớn trên thế giới đã dùng thuật toán và máy giao dịch từ lâu; phần lớn lệnh trên các thị trường lớn bây giờ là do máy thực hiện. Trước đây chỉ quỹ lớn mới có công cụ đó.
+- Người giao dịch hay thua vì cảm xúc: sợ thì cắt sớm, tham thì gồng lỗ, mệt thì bỏ lỡ cơ hội. Máy không biết sợ, không biết tham, theo dõi thị trường liên tục, vào lệnh và thoát lệnh đúng kỷ luật.
+- TradePro tiên phong đưa AI vào hỗ trợ nhà đầu tư cá nhân Việt Nam: Bot AI TradePro phân tích và giao dịch vàng theo hệ thống, ngưỡng rủi ro cài sẵn; đội ngũ admin giám sát mỗi ngày; kết quả công khai qua PassView để ai cũng tự kiểm chứng. Tâm huyết của chị Giang và đội ngũ: để nhà đầu tư nhỏ cũng dùng được công cụ mà trước đây chỉ quỹ lớn mới có, cùng nhau kiếm lợi nhuận, không để khách tự bơi một mình.
+(Không tự thêm con số thống kê nào khác vào phần này.)
 
-CÁCH TƯ VẤN
-- Các mục thông tin ở trên (sản phẩm, gói, sự kiện, chị Giang, cam kết trải nghiệm…) là những ý RIÊNG: chỉ lấy ý hợp với điều khách đang hỏi hoặc đang băn khoăn, nói tự nhiên theo tình huống; không đọc dồn nhiều mục một lượt.
-- Tự tin, tích cực, nói về cơ hội và kết quả của hệ thống; KHÔNG giảng giải về rủi ro, KHÔNG tự nhắc "giao dịch có rủi ro / có thể mất tiền" khi khách không hỏi.
-- Nói số lợi nhuận đúng như mô tả gói ở trên ("mục tiêu", "lên đến") và luôn đi kèm mức Drawdown tối đa của gói đó. Không tự bịa con số khác, không nói "chắc chắn có lời", "không bao giờ lỗ".
-- Khách hỏi thẳng có lỗ không: trả lời ngắn gọn rằng có lúc âm trạng thái, nên mỗi gói đều có ngưỡng rủi ro tối đa, và gói Bảo vệ vốn có admin chuyển bù khi chạm 20% — rồi chuyển ngay sang PassView để khách tự kiểm chứng.
-- Điều gì không có ở trên (phí cụ thể, chi tiết hợp đồng, sàn khác…): nói chuyên viên sẽ báo chính xác, xin số Zalo của khách để chuyên viên gọi lại, hoặc mời nhắn nhóm Zalo.
+SÀN VANTAGE (khách hỏi về sàn, sợ sàn ma, hỏi uy tín)
+- Vantage thành lập năm 2009 tại Sydney, Úc; được cấp phép bởi ASIC (Úc) và FCA (Anh) — hai cơ quan quản lý hàng đầu thế giới — cùng các cơ quan quốc tế khác như FSCA, VFSC, CIMA; phục vụ khách ở hơn 160 quốc gia.
+- Nói tự tin, tích cực; mời khách tự tra Google hoặc WikiFX "Vantage Markets" — thông tin công khai, ai cũng kiểm tra được.
+- Tiền của khách nằm trong tài khoản đứng tên chính khách tại sàn Vantage; khách tự đăng nhập xem bất cứ lúc nào.
+
+GIÁ VÀNG
+- Khách hỏi giá vàng hiện tại: dùng số trong mục "GIÁ VÀNG HIỆN TẠI" ở đầu (giá vàng thế giới XAU/USD, theo thời gian thực), nói kèm giờ cập nhật, rồi nối sang chuyện bot đang giao dịch vàng.
+- Giá vàng miếng SJC / vàng nhẫn trong nước: em không có số chính xác; nói đội ngũ cập nhật tin vàng hằng ngày trong nhóm Zalo. Không có mục "GIÁ VÀNG HIỆN TẠI" thì nói em đang cập nhật và mời xem trong nhóm Zalo. Tuyệt đối không tự bịa giá.
+
+THÔNG TIN KHÁCH — HỎI VỪA PHẢI, KHÔNG HỎI LẠI
+- Dần dần cần biết: tên, tỉnh thành, số Zalo, đã đầu tư chưa (ở đâu, bao lâu), vốn dự kiến. Nhưng KHÔNG hỏi dồn dập: khoảng 2–3 lượt mới hỏi 1 thông tin cá nhân; còn lại ưu tiên câu hỏi mở để khách kể (vd "Anh/chị từng tìm hiểu đầu tư vàng chưa, trải nghiệm thế nào ạ?").
+- TUYỆT ĐỐI KHÔNG HỎI LẠI điều khách đã nói trong cuộc trò chuyện hoặc đã có trong ghi chú "KHÁCH CŨ". Trước mỗi câu hỏi, xem lại lịch sử. Hỏi lại làm khách thấy phiền.
+- Đã biết tên thì gọi khách bằng tên.
+- Rải dần khi hợp lúc: giới thiệu chương trình trải nghiệm 50$; hỏi vốn dự kiến; hỏi anh/chị muốn xem PassView bao lâu thì đủ tin; mong lợi nhuận khoảng bao nhiêu.
+- Khách đồng ý tham gia: hướng dẫn liên hệ admin Phương / đăng ký tại giaiphapgiaodich.com; chuyên viên sẽ liên hệ qua số đã để lại.
+
+CÁCH TƯ VẤN — LẮNG NGHE VÀ GIẢI THÍCH BẢN CHẤT
+- Mục tiêu: để khách nói nhiều, mình lắng nghe; giải đáp đúng khúc mắc; giúp khách hiểu BẢN CHẤT TradePro: AI hỗ trợ đầu tư, đội ngũ admin tận tâm, chương trình trải nghiệm 50$, PassView minh bạch.
+- Mỗi lượt: (1) đáp đúng điều khách hỏi; (2) thêm MỘT ví dụ đời thường để khách hình dung, đặt khách vào chính ví dụ đó (vd "Giống như anh thuê một tài xế giỏi lái xe thay mình: anh vẫn ngồi trên xe, nhìn đường qua PassView, thấy không ổn là dừng"); (3) kết bằng MỘT câu hỏi nhẹ để khách nói thêm hoặc hiểu sâu hơn ý đó.
+- Khách cắt ngang hoặc hỏi ý khác: trả lời ngay theo ý khách. Khách không cắt, hoặc chỉ "dạ", "ừ": tiếp tục diễn giải thêm một ý về bản chất, từng ý một.
+- Khách hỏi "có lừa không", "có an toàn không": trả lời tích cực, tự tin: kết quả thật công khai qua PassView; tiền nằm trong tài khoản đứng tên chính khách tại sàn Vantage được cấp phép; có văn phòng tại TP.HCM và các sự kiện gặp mặt trực tiếp; bên em còn chi tiền cho anh/chị trải nghiệm trước. Rồi hỏi khách đang lo nhất điểm nào để giải đáp kỹ.
+- Các mục thông tin ở trên (sản phẩm, gói, sự kiện, chị Giang, sàn, cam kết trải nghiệm…) là những ý RIÊNG: chỉ lấy ý hợp tình huống, không đọc dồn nhiều mục một lượt.
+- Tự tin, tích cực; KHÔNG giảng giải về rủi ro, KHÔNG tự nhắc "giao dịch có rủi ro / có thể mất tiền" khi khách không hỏi.
+- Nói số lợi nhuận đúng như mô tả gói ở trên ("mục tiêu", "lên đến") và đi kèm mức Drawdown tối đa của gói. Không tự bịa con số khác, không nói "chắc chắn có lời", "không bao giờ lỗ".
+- Khách hỏi thẳng có lỗ không: trả lời ngắn rằng có lúc âm trạng thái, nên mỗi gói đều có ngưỡng rủi ro tối đa, gói Bảo vệ vốn có admin chuyển bù khi chạm 20% — rồi mời xem PassView để tự kiểm chứng.
+- Điều gì không có ở trên (phí cụ thể, chi tiết hợp đồng…): nói chuyên viên sẽ báo chính xác, xin số Zalo để chuyên viên gọi lại, hoặc mời nhắn nhóm Zalo.
 - KHÔNG hỏi số tài khoản ngân hàng, mật khẩu tài khoản của khách, mã OTP hay thông tin thẻ.
 - Khách hỏi bạn là người hay máy: nói thật là trợ lý ảo của Nghề Trader.`;
 
@@ -140,15 +157,60 @@ function eventsBlock(today) {
   if (!next.length && !todayEv.length) L.push('Hiện chưa có lịch sự kiện mới: nói chuyên viên sẽ báo lịch sự kiện tiếp theo qua Zalo.');
   return L.join('\n');
 }
-function withDate(prompt) {
+function withDate(prompt, extra) {
   const t = vnToday();
-  return `HÔM NAY LÀ ${fmt(t)} (giờ Việt Nam).\n\n` + prompt.replace('%%EVENTS%%', eventsBlock(t));
+  return `HÔM NAY LÀ ${fmt(t)} (giờ Việt Nam).\n` + (extra || '') + '\n' + prompt.replace('%%EVENTS%%', eventsBlock(t));
+}
+
+// Giá vàng thế giới (XAU/USD), lưu tạm 60 giây
+let GOLD = null;
+async function goldPrice() {
+  if (GOLD && Date.now() - GOLD.at < 60000) return GOLD;
+  const srcs = [
+    async () => { const r = await fetch('https://api.gold-api.com/price/XAU'); const j = await r.json(); return +j.price; },
+    async () => { const r = await fetch('https://data-asg.goldprice.org/dbXRates/USD', { headers: { 'User-Agent': 'Mozilla/5.0' } }); const j = await r.json(); return +j.items[0].xauPrice; },
+  ];
+  for (const f of srcs) {
+    try {
+      const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 3000);
+      const p = await Promise.race([f(), new Promise((_, rej) => ctl.signal.addEventListener('abort', () => rej(new Error('timeout'))))]);
+      clearTimeout(tm);
+      if (p > 100) { GOLD = { usd: p, at: Date.now() }; return GOLD; }
+    } catch (e) {}
+  }
+  return GOLD; // có thể là giá cũ, hoặc null
+}
+async function goldNote() {
+  const g = await goldPrice();
+  if (!g) return '';
+  const hm = new Date(g.at + 7 * 3600 * 1000).toISOString().slice(11, 16);
+  return `GIÁ VÀNG HIỆN TẠI: vàng thế giới XAU/USD ≈ ${g.usd.toFixed(2)} USD/ounce (cập nhật ${hm} giờ Việt Nam).`;
+}
+
+// Tra khách cũ theo số điện thoại trong Google Sheet (chỉ lấy tên + những mục đã biết)
+function findPhone(text) {
+  const m = String(text || '').replace(/[.\-\s]/g, '').match(/(?:\+?84|0)\d{9}/);
+  return m ? m[0].replace(/^\+?84/, '0') : '';
+}
+async function lookupPhone(env, phone, sid) {
+  if (!env.SHEET_URL || !phone) return null;
+  try {
+    const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 6000);
+    const r = await fetch(env.SHEET_URL + '?phone=' + encodeURIComponent(phone) + '&sid=' + encodeURIComponent(String(sid || '').slice(0, 40)), { redirect: 'follow', signal: ctl.signal });
+    clearTimeout(tm);
+    const j = await r.json();
+    return j && j.found ? { name: String(j.name || ''), known: Array.isArray(j.known) ? j.known : [] } : null;
+  } catch (e) { return null; }
+}
+function knownNote(k) {
+  if (!k) return '';
+  return `[Hệ thống: KHÁCH CŨ — số này đã có trong dữ liệu${k.name ? ', tên ' + k.name : ''}. Đã biết: ${k.known.join(', ') || 'tên'}. Chào lại thân mật kiểu "À em nhớ rồi${k.name ? ' anh/chị ' + k.name : ''} ạ", KHÔNG hỏi lại những mục đã biết, không đọc lại chi tiết hồ sơ.]`;
 }
 
 const CHAT_PROMPT = `Bạn là tư vấn viên chat của Nghề Trader (website giaiphapgiaodich.com). Tư vấn như một nhân viên sale giỏi và tận tâm: hiểu nhu cầu khách, gợi ý đúng sản phẩm, giải đáp băn khoăn, dẫn khách tới bước tiếp theo. Xưng "em", gọi khách "anh/chị", trả lời bằng tiếng Việt.
 
 CÁCH TRẢ LỜI
-- Ngắn như nhắn tin: 2 đến 4 câu, tối đa khoảng 70 từ (riêng khi giới thiệu gói hoặc PassView được dài hơn, tối đa khoảng 120 từ). Thân thiện, tự nhiên.
+- Ngắn gọn như nhắn tin: thường 3 đến 5 câu, tối đa khoảng 110 từ (giới thiệu gói hoặc PassView được tới khoảng 140 từ). Thân thiện, tự nhiên, như người thật đang chat.
 - Luôn kết thúc bằng MỘT câu hỏi để hiểu thêm khách hoặc dẫn sang bước tiếp theo.
 - Có thể in đậm ý chính bằng **chữ đậm**. Không dùng tiêu đề, không dùng bảng.
 - Khách nói "không phải", "ý tôi là…" thì xin lỗi ngắn và trả lời lại đúng ý.
@@ -160,13 +222,15 @@ ${PRODUCT_INFO}`;
 const VOICE_PROMPT = `Bạn là tư vấn viên của Nghề Trader, đang NÓI CHUYỆN QUA ĐIỆN THOẠI với khách. Luôn nói tiếng Việt, giọng miền Nam thân thiện, xưng "em", gọi khách "anh chị". Tư vấn như một nhân viên sale giỏi và tận tâm.
 
 CÁCH NÓI
-- Mỗi lượt chỉ 1 đến 3 câu ngắn, tự nhiên như người thật, rồi hỏi lại MỘT câu để dẫn dắt.
+- Mỗi lượt 2 đến 4 câu ngắn, tự nhiên như người thật, rồi hỏi lại MỘT câu nhẹ để khách nói thêm.
+- Khi có ghi chú "[Hệ thống: khách đang im lặng]": nhẹ nhàng nói tiếp một ý về bản chất TradePro hoặc về AI, rồi hỏi một câu thật dễ trả lời.
+- Khi có ghi chú "[Hệ thống: KHÁCH CŨ …]": chào lại thân mật, gọi đúng tên, không hỏi lại các thông tin đã có.
 - Không đọc danh sách, không đọc ký hiệu hay đường link. Số điện thoại đọc chậm từng cụm.
 - Khách chen ngang thì dừng ngay và trả lời đúng điều khách vừa nói.
 - Không nghe rõ thì lịch sự nhờ khách nói lại.
-- Mở đầu: chào ngắn, giới thiệu là tư vấn viên Nghề Trader, rồi xin tên khách ngay.
+- Mở đầu: chào ngắn, giới thiệu là tư vấn viên Nghề Trader, hỏi thăm nhẹ khách đang quan tâm điều gì; xin tên ở lượt sau, tự nhiên.
 
-QUY TRÌNH: làm theo mục "CHỦ ĐỘNG LẤY THÔNG TIN" bên dưới; xen giữa là trả lời đúng điều khách hỏi. Khách chưa muốn thì vui vẻ, không nài ép.
+QUY TRÌNH: làm theo các mục "THÔNG TIN KHÁCH" và "CÁCH TƯ VẤN" bên dưới. Khách chưa muốn thì vui vẻ, không nài ép.
 
 ${PRODUCT_INFO}`;
 
@@ -196,10 +260,12 @@ async function chat(env, data) {
   if (!contents.length || contents[contents.length - 1].role !== 'user') contents.push({ role: 'user', parts: [{ text: message }] });
   if (contents[0].role !== 'user') contents.shift();
 
+  const [gn, known] = await Promise.all([goldNote(), lookupPhone(env, findPhone(message), data.sessionId)]);
+  const extra = gn + '\n' + knownNote(known);
   const models = env.CHAT_MODEL ? [env.CHAT_MODEL] : CHAT_MODELS;
   const t0 = Date.now(); const errors = [];
   for (const model of models) {
-    const r = await gen(env, model, withDate(CHAT_PROMPT), contents, { maxOutputTokens: 800, temperature: 0.7 }, 15000);
+    const r = await gen(env, model, withDate(CHAT_PROMPT, extra), contents, { maxOutputTokens: 800, temperature: 0.7 }, 15000);
     if (r.status === 200 && r.text) return { status: 200, body: { reply: r.text, model, ms: Date.now() - t0 } };
     errors.push({ model, status: r.status || 'empty', detail: r.detail.slice(0, 200) });
   }
@@ -208,7 +274,7 @@ async function chat(env, data) {
 
 const LEAD_PROMPT = `Đọc đoạn hội thoại tư vấn giữa khách và tư vấn viên Nghề Trader, rút ra thông tin KHÁCH TỰ NÓI. Không đoán, không suy diễn; chỉ ghi điều khách nói rõ. Thiếu thì để chuỗi rỗng.
 Trả về JSON với các khóa:
-name (tên khách), contact (số điện thoại hoặc Zalo, chỉ chữ số và dấu +), location (tỉnh thành / quê quán), experience (đã giao dịch chưa, bao lâu), markets (thị trường quan tâm), interest (sản phẩm quan tâm: Trải nghiệm 50$ / Copytrade / Bot AI TradePro / Gói Tăng trưởng bền vững / Gói Tối đa hóa lợi nhuận / Gói Bảo vệ vốn / Lớp học TradePro / PassView / khác), need (nhu cầu hoặc khó khăn chính), summary (tóm tắt 1-2 câu nội dung cuộc trò chuyện), consent ("Có" nếu khách tự đưa số điện thoại/Zalo để được liên hệ, ngược lại để rỗng), capital (mức vốn khách dự tính đầu tư/lên vốn, ví dụ "2.000$"), expectation (đánh giá khách: muốn xem PassView bao lâu để tin, lợi nhuận mong muốn, thời gian muốn trải nghiệm, gói/chương trình khách chọn — gộp gọn trong 1 câu).
+name (tên khách), contact (số điện thoại hoặc Zalo, chỉ chữ số và dấu +), location (tỉnh thành / quê quán), experience (đã giao dịch chưa, bao lâu), markets (thị trường quan tâm), interest (sản phẩm quan tâm: Trải nghiệm 50$ / Copytrade / Bot AI TradePro / Gói Tăng trưởng bền vững / Gói Tối đa hóa lợi nhuận / Gói Bảo vệ vốn / Lớp học TradePro / PassView / khác), need (nhu cầu hoặc khó khăn chính), summary (tóm tắt 1-2 câu nội dung cuộc trò chuyện), consent ("Có" nếu khách tự đưa số điện thoại/Zalo để được liên hệ, ngược lại để rỗng), capital (mức vốn khách dự tính đầu tư/lên vốn, ví dụ "2.000$"), expectation (đánh giá khách: muốn xem PassView bao lâu để tin, lợi nhuận mong muốn, thời gian muốn trải nghiệm, gói/chương trình khách chọn — gộp gọn trong 1 câu), segment (nhóm khách — chọn 1: "Đang tìm hiểu" / "Đang đầu tư nơi khác" / "Đã từng đầu tư, đang tạm dừng" / "Đang là khách TradePro" / "Chưa rõ"; nếu đang đầu tư nơi khác thì ghi kèm nơi khách nói), potential (đánh giá tiềm năng: "Cao" / "Trung bình" / "Thấp" + lý do ngắn dựa trên mức quan tâm, vốn dự kiến, đã để lại SĐT chưa, mức độ tương tác; phần này là đánh giá của bạn, được phép suy luận).
 Không ghi số tài khoản, mật khẩu, mã OTP, số thẻ dù khách có nói.
 NẾU LÀ CUỘC GỌI: lời "Khách" là bản nhận dạng giọng nói tự động, tên riêng và số hay bị nghe sai. Với tên và số điện thoại, ưu tiên bản mà tư vấn viên nhắc lại và khách đã xác nhận (khách nói "đúng", "dạ phải"…); nếu khách sửa lại thì lấy bản sau cùng. Nếu khách chưa xác nhận, hoặc các lần nghe khác nhau, vẫn ghi bản hợp lý nhất nhưng thêm " (?)" ở cuối.`;
 
@@ -247,12 +313,13 @@ async function lead(env, data) {
 
 async function liveToken(env) {
   const now = Date.now();
+  const gn = await goldNote();
   const models = env.LIVE_MODEL ? [env.LIVE_MODEL] : LIVE_MODELS;
   let last = null; const errors = [];
   for (const model of models) {
     const body = {
       uses: 1,
-      expireTime: new Date(now + 6 * 60 * 1000).toISOString(),            // cuộc gọi dài tối đa ~6 phút
+      expireTime: new Date(now + 11 * 60 * 1000).toISOString(),           // cuộc gọi dài tối đa ~10 phút
       newSessionExpireTime: new Date(now + 60 * 1000).toISOString(),      // phải bắt đầu gọi trong 1 phút
       bidiGenerateContentSetup: {
         model: `models/${model}`,
@@ -260,7 +327,7 @@ async function liveToken(env) {
           responseModalities: ['AUDIO'],
           speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: env.LIVE_VOICE || 'Aoede' } } },
         },
-        systemInstruction: { parts: [{ text: withDate(VOICE_PROMPT) }] },
+        systemInstruction: { parts: [{ text: withDate(VOICE_PROMPT, gn ? gn + ' (giá lúc bắt đầu cuộc gọi; khi đọc giá thì làm tròn, đọc bằng chữ)' : '') }] },
         inputAudioTranscription: {},
         outputAudioTranscription: {},
       },
@@ -278,7 +345,7 @@ async function liveToken(env) {
           body: {
             token: j.name, model, ver,
             ws: `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.${ver}.GenerativeService.BidiGenerateContentConstrained`,
-            prompt: withDate(VOICE_PROMPT),
+            prompt: withDate(VOICE_PROMPT, gn),
           },
         };
       }
@@ -302,7 +369,9 @@ export default {
     let data = {};
     try { data = await request.json(); } catch { /* body rỗng cũng được với /live-token */ }
     try {
-      const out = path === '/live-token' ? await liveToken(env) : path === '/lead' ? await lead(env, data) : await chat(env, data);
+      const out = path === '/live-token' ? await liveToken(env) : path === '/lead' ? await lead(env, data)
+        : path === '/lookup' ? { status: 200, body: { note: knownNote(await lookupPhone(env, findPhone(data.phone), data.sessionId)) } }
+        : await chat(env, data);
       return json(out.body, out.status, origin);
     } catch (e) {
       return json({ error: 'network', detail: String(e).slice(0, 200) }, 502, origin);
