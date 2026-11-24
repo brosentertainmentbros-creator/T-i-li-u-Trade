@@ -197,7 +197,7 @@ async function lookupPhone(env, phone, sid) {
   if (!env.SHEET_URL || !phone) return null;
   try {
     const ctl = new AbortController(); const tm = setTimeout(() => ctl.abort(), 9000);
-    const r = await fetch(env.SHEET_URL + '?phone=' + encodeURIComponent(phone) + '&sid=' + encodeURIComponent(String(sid || '').slice(0, 40)), { redirect: 'follow', signal: ctl.signal });
+    const r = await fetch(env.SHEET_URL, { method: 'POST', redirect: 'follow', signal: ctl.signal, headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ action: 'lookup', phone, sid: String(sid || '').slice(0, 40) }) });
     clearTimeout(tm);
     const txt = await r.text();
     let j = null; try { j = JSON.parse(txt); } catch (e) { LAST_LOOKUP = 'http ' + r.status + ' ' + txt.slice(0, 120); return null; }

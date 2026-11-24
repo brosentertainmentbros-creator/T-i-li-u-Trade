@@ -37,25 +37,28 @@ function sheet_() {
   return sh;
 }
 
-function doGet(e) {
+function lookup_(phone, sid) {
   // Tra khách cũ theo SĐT: chỉ trả tên + các mục đã biết (không trả chi tiết hồ sơ)
-  if (e && e.parameter && e.parameter.phone) {
-    var want = String(e.parameter.phone).replace(/\D/g, '').replace(/^84/, '0');
-    var sid = String(e.parameter.sid || '');
-    var sh = sheet_(), n = sh.getLastRow() - 1;
-    if (want.length >= 9 && n > 0) {
-      var rows = sh.getRange(2, 1, n, HEADERS.length).getValues();
-      for (var i = rows.length - 1; i >= 0; i--) {
-        var ph = String(rows[i][5]).replace(/\D/g, '').replace(/^84/, '0');
-        if (ph && ph.slice(-9) === want.slice(-9) && String(rows[i][0]) !== sid) {
-          var known = [];
-          [[4, 'tên'], [6, 'tỉnh thành'], [7, 'kinh nghiệm'], [8, 'thị trường quan tâm'], [9, 'sản phẩm quan tâm'], [15, 'vốn dự kiến'], [5, 'số điện thoại']].forEach(function (c) { if (String(rows[i][c[0]]).trim()) known.push(c[1]); });
-          return out_({ found: true, name: String(rows[i][4]).replace(/\s*\(\?\)$/, ''), known: known });
-        }
+  var want = String(phone).replace(/\D/g, '').replace(/^84/, '0');
+  sid = String(sid || '');
+  var sh = sheet_(), n = sh.getLastRow() - 1;
+  if (want.length >= 9 && n > 0) {
+    var rows = sh.getRange(2, 1, n, HEADERS.length).getValues();
+    for (var i = rows.length - 1; i >= 0; i--) {
+      var ph = String(rows[i][5]).replace(/\D/g, '').replace(/^84/, '0');
+      if (ph && ph.slice(-9) === want.slice(-9) && String(rows[i][0]) !== sid) {
+        var known = [];
+        [[4, 'tên'], [6, 'tỉnh thành'], [7, 'kinh nghiệm'], [8, 'thị trường quan tâm'], [9, 'sản phẩm quan tâm'], [15, 'vốn dự kiến'], [5, 'số điện thoại']].forEach(function (c) { if (String(rows[i][c[0]]).trim()) known.push(c[1]); });
+        return { found: true, name: String(rows[i][4]).replace(/\s*\(\?\)$/, ''), known: known };
       }
     }
-    return out_({ found: false });
   }
+  return { found: false };
+}
+
+function doGet(e) {
+  // Tra khách cũ theo SĐT: chỉ trả tên + các mục đã biết (không trả chi tiết hồ sơ)
+  if (e && e.parameter && e.parameter.phone) return out_(lookup_(e.parameter.phone, e.parameter.sid));
   sheet_();
   return ContentService.createTextOutput(JSON.stringify({ ok: true, sheet: SHEET_NAME })).setMimeType(ContentService.MimeType.JSON);
 }
@@ -65,6 +68,7 @@ function doPost(e) {
   lock.waitLock(10000);
   try {
     var d = JSON.parse(e.postData.contents || '{}');
+    if (d.action === 'lookup') return out_(lookup_(d.phone, d.sid));
     if (!d.sessionId || !d.fields) return out_({ ok: false, error: 'bad request' });
     var sh = sheet_();
     var now = new Date();
