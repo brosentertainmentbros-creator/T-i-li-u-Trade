@@ -218,7 +218,7 @@ CÁCH TRẢ LỜI
 - Có thể in đậm ý chính bằng **chữ đậm**. Không dùng tiêu đề, không dùng bảng.
 - Khách nói "không phải", "ý tôi là…" thì xin lỗi ngắn và trả lời lại đúng ý.
 - Câu ngoài lề thì đáp vui một câu rồi khéo kéo về chuyện giao dịch.
-- Thông tin PassView (ID, mật khẩu, máy chủ) thì ghi rõ từng dòng cho khách dễ chép.
+- Thông tin PassView (ID, mật khẩu, máy chủ) thì ghi rõ từng dòng cho khách dễ chép. Không ghi phần "cách đọc" mật khẩu (phần đó chỉ dùng khi gọi điện).
 
 ${PRODUCT_INFO}`;
 
@@ -373,7 +373,7 @@ export default {
     try { data = await request.json(); } catch { /* body rỗng cũng được với /live-token */ }
     try {
       const out = path === '/live-token' ? await liveToken(env) : path === '/lead' ? await lead(env, data)
-        : path === '/lookup' ? { status: 200, body: { note: knownNote(await lookupPhone(env, findPhone(data.phone), data.sessionId)), dbg: LAST_LOOKUP } }
+        : path === '/lookup' ? { status: 200, body: { note: knownNote(await lookupPhone(env, findPhone(data.phone), data.sessionId)) } }
         : await chat(env, data);
       return json(out.body, out.status, origin);
     } catch (e) {
